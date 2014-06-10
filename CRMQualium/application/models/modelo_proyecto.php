@@ -9,7 +9,7 @@
 		# $post['fecha inicio'], $post['fechafinal'], 
 		# $post['descripción' ]	
 
-		protected function create($args)
+		public function create($args)
         {   
             $this->db->insert('proyectos', $args);
             return $this->get($this->db->insert_id());     
