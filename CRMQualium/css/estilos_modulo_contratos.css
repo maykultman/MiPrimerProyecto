@@ -1,0 +1,125 @@
+.fecha{
+
+	width: 150px !important;
+	
+}
+
+#buscar{
+	float:left;
+	margin-top: -38px;
+	margin-left:375px; 
+	
+}
+
+.color_cabecera  {
+
+  background-color: #f9f9f9;
+  color: #333;
+
+
+}
+
+.datos_primarios{
+
+	display:inline-block;
+	float: left;
+	margin-right: 100px !important;
+	width: 400px;
+
+}
+
+#radio1{
+
+float: left !important;
+
+
+
+
+}
+
+#radio2{
+
+	float: left;
+	margin-left: 70px; 
+
+
+}
+
+#tipo_plan{
+
+	float: left;
+	width: 600px;
+
+}
+
+#info_servicio{
+
+    display: none;
+	height: 125px;
+}
+
+
+#panel_contrato{
+
+	width: 580px;
+}
+
+#serv_obtenidos {
+
+	display: inline-block;
+    
+	width: 100%;
+
+}
+
+tbody.scrollContent2 { 
+	display: block; /*obligado*/ 
+	height: 165px; /*la que necesites*/ 
+	overflow: auto; /*obligado*/
+	width: 578px;
+	
+	}
+
+#icono_mas {
+
+	float: right;
+	margin-left: -10px;
+	margin-top: 15px;
+
+}
+
+
+.precio {
+	width: 78px;
+	height: 20px;
+	margin-top: 1px;
+}
+
+.descuento {
+	width: 50px;
+	height: 20px;
+}
+
+.linea { 
+  
+	border-right: black 1px solid;
+
+}
+
+.txt{
+
+	text-align: center;
+}
+
+#precio_total{
+
+	margin-top:-18px; 
+}
+
+
+--------Historial de contratos------------------
+
+
+
+
+

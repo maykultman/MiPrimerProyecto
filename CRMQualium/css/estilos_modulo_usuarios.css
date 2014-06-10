@@ -1,0 +1,116 @@
+/*----------------Estilo Usuarios----------------*/
+
+#btn_guardar{
+
+	float: left;	
+	margin-top: 40px;
+}
+
+
+
+/*------Estilos Perfiles--------------------------*/
+
+#contenido_nuevoperfil{    
+   
+	height: 500px;
+	
+}
+
+.chek {
+    
+ width: 30% !important;
+
+}
+
+#btnes{
+
+	float: left;
+	margin-left: 22px;
+}
+
+.flecha_abajo{
+
+	float: right !important;
+}
+
+#perfil_nuevo{
+
+	float: right;
+	margin-top:15px; 
+
+
+}
+
+
+/*tbody.scrollpermisos { 
+	display: block; 
+	height: 148px; 
+	overflow: auto; 
+	width: 398px;
+	
+	}*/
+
+	/*margin-left: auto; 
+     margin-right: auto; */
+
+
+ /* ----------------Estilos de Permisos----------------------   */
+		
+#lista_permisos{
+	width: 400px;
+	margin-top:15px; 
+}	
+
+tbody#scroll_permisos{ 
+	display: block; 
+	height: 250px; 
+	overflow: auto; 
+	width: 400px;
+}
+
+.eliminar_permiso{
+
+	float:right;
+	margin-top: 5px;
+}
+
+.linea_x{
+	width: 400px !important;
+}
+
+.contenido_permisos{
+    
+
+	display: inline-block;
+	float: left;
+	margin-right: 35px;
+	width: 500px;
+	
+}
+				
+/*---------estilos de catalogo de empleado--------*/
+
+.titulo{
+display: inline-block;
+
+}
+#nuevo_empleado{
+
+	float: right;
+	margin-top:15px; 
+}
+
+.titulo_empleados{
+
+	color: #0492e6;
+
+
+}
+
+.contenedor_empleado{
+	width: 450px !important;
+}
+
+.linea_x2{
+	width: 450px !important;
+}
