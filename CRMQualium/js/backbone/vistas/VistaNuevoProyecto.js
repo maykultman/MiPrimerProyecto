@@ -46,7 +46,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'keyup #duracion'					: 'calcularEntrega',
 
 		'click #btn_guardarProyecto'		: 'guadarProyecto',
-		'click #btn_cancelarProyecto'		: 'formAnterior',
+		'click #btn_cancelarProyecto'		: '',
 		'click #btn_guardarRoles'			: 'guadarRoles',
 		'click #btn_cancelarRoles'			: 'formAnterior',
 
@@ -88,8 +88,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$tbody_archivos	= $('#tbody_archivos');
 
 		this.idProyecto;
-
-		this.next_fs;this.current_fs;this.left;this.opacity;this.scale;this.animating;
 	},
 	render				: function () {
 		return this;
@@ -219,9 +217,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// .click('toggle');//Conmutamos el botón
 	},
 	guadarProyecto		: function (elem) {
-		this.formSiguiente(elem);
-		elem.preventDefault();
-		return;
+		// this.formSiguiente(elem);
+		// elem.preventDefault();
+		// return;
 		var esto = this;
 		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
 
@@ -449,69 +447,71 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 /*Otros controladores*/
 	formSiguiente				: function (elem) {
-		if(this.animating) return false;
-		this.animating = true;
+		var next_fs,current_fs,left,opacity,scale,animating;
+
+		if(animating) return false;
+		animating = true;
 		
-		this.current_fs = $(elem.currentTarget).parent().parent().parent();
-		console.log(this.current_fs);
-		this.next_fs = $(elem.currentTarget).parent().parent().parent().next();
+		current_fs = $(elem.currentTarget).parent().parent().parent();
+		next_fs = $(elem.currentTarget).parent().parent().parent().next();
 		
-		//activate next step on progressbar using the index of this.next_fs
-		$("#progressbar li").eq($("#divSecciones section").index(this.next_fs)).addClass("active");
+		//activate next step on progressbar using the index of next_fs
+		$("#progressbar li").eq($("#divSecciones section").index(next_fs)).addClass("active");
 		
 		//show the next fieldset
-		this.next_fs.show(); 
+		next_fs.show(); 
 		//hide the current fieldset with style
-		this.current_fs.animate({this.opacity: 0}, {
+		current_fs.animate({opacity: 0}, {
 			step: function(now, mx) {
-				//as the this.opacity of this.current_fs reduces to 0 - stored in "now"
-				//1. this.scale this.current_fs down to 80%
-				this.scale = 1 - (1 - now) * 0.2;
-				//2. bring this.next_fs from the right(50%)
-				this.left = (now * 50)+"%";
-				//3. increase this.opacity of this.next_fs to 1 as it moves in
-				this.opacity = 1 - now;
-				this.current_fs.css({'transform': 'scale('+this.scale+')'});
-				this.next_fs.css({'left': this.left, 'opacity': this.opacity});
+				//as the opacity of current_fs reduces to 0 - stored in "now"
+				//1. scale current_fs down to 80%
+				scale = 1 - (1 - now) * 0.2;
+				//2. bring next_fs from the right(50%)
+				left = (now * 50)+"%";
+				//3. increase opacity of next_fs to 1 as it moves in
+				opacity = 1 - now;
+				current_fs.css({'transform': 'scale('+scale+')'});
+				next_fs.css({'left': left, 'opacity': opacity});
 			}, 
 			duration: 800, 
 			complete: function(){
-				this.current_fs.hide();
-				this.animating = false;
+				current_fs.hide();
+				animating = false;
 			}, 
 			//this comes from the custom easing plugin
 			easing: 'easeInOutBack'
 		});
 	},
 	formAnterior		: function (elem) {
-		if(this.animating) return false;
-		this.animating = true;
+		var previous_fs,current_fs,left,opacity,scale,animating;
+		if(animating) return false;
+		animating = true;
 		
-		this.current_fs = $(elem.currentTarget).parent().parent().parent();
+		current_fs = $(elem.currentTarget).parent().parent().parent();
 		previous_fs = $(elem.currentTarget).parent().parent().parent().prev();
 		
 		//de-activate current step on progressbar
-		$("#progressbar li").eq($("fieldset").index(this.current_fs)).removeClass("active");
+		$("#progressbar li").eq($("#divSecciones section").index(current_fs)).removeClass("active");
 		
 		//show the previous fieldset
 		previous_fs.show(); 
 		//hide the current fieldset with style
-		this.current_fs.animate({this.opacity: 0}, {
+		current_fs.animate({opacity: 0}, {
 			step: function(now, mx) {
-				//as the this.opacity of this.current_fs reduces to 0 - stored in "now"
-				//1. this.scale previous_fs from 80% to 100%
-				this.scale = 0.8 + (1 - now) * 0.2;
-				//2. take this.current_fs to the right(50%) - from 0%
-				this.left = ((1-now) * 50)+"%";
-				//3. increase this.opacity of previous_fs to 1 as it moves in
-				this.opacity = 1 - now;
-				this.current_fs.css({'left': this.left});
-				previous_fs.css({'transform': 'scale('+this.scale+')', 'opacity': this.opacity});
+				//as the opacity of current_fs reduces to 0 - stored in "now"
+				//1. scale previous_fs from 80% to 100%
+				scale = 0.8 + (1 - now) * 0.2;
+				//2. take current_fs to the right(50%) - from 0%
+				left = ((1-now) * 50)+"%";
+				//3. increase opacity of previous_fs to 1 as it moves in
+				opacity = 1 - now;
+				current_fs.css({'left': left});
+				previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
 			}, 
 			duration: 800, 
 			complete: function(){
-				this.current_fs.hide();
-				this.animating = false;
+				current_fs.hide();
+				animating = false;
 			}, 
 			//this comes from the custom easing plugin
 			easing: 'easeInOutBack'

@@ -59,13 +59,56 @@
 				height: 100%;
 			}
 		}
-	</style>
 
-	<div class="progress">
-		<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-		</div>
-	</div>
+		/*#divSecciones {
+			position: relative;
+		}
+		#divSecciones section {
+			box-sizing: border-box;
+			width: 100%;
+			position: absolute;
+		}
+		#divSecciones section:not(:first-of-type) {
+			display: none;
+		}
+		#progressbar {
+			margin-bottom: 30px;
+			overflow: hidden;
+			counter-reset: step;
+		}
+		#progressbar li {
+			list-style-type: none;
+			text-transform: uppercase;
+			text-align: center;
+			font-size: 9px;
+			width: 33.33%;
+			float: left;
+			position: relative;
+		}
+		#progressbar li:before {
+			content: counter(step);
+			counter-increment: step;
+			line-height: 20px;
+			display: block;
+			font-size: 10px;
+			color: #333;
+			background: white;
+			margin: 0 auto 5px auto;
+		}
+		#progressbar li:first-child:after {
+			content: none; 
+		}
+		#progressbar li.active:before,  #progressbar li.active:after{
+			background: #27AE60;
+			color: white;
+		}*/
+	</style>
 	<div id="divSecciones">
+		<ul id="progressbar">
+			<li class="active">Datos de proyecto</li>
+			<li>Roles del proyecto</li>
+			<li>Archivos del proyecto</li>
+		</ul>
 		<section id="paso1" class="section_Visible"><!-- section_Oculto -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">Datos de proyecto</div>
@@ -170,7 +213,7 @@
 
 		<section id="paso2" class="section_Visible">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Asignar roles al proyecto</div>
+				<div class="panel-heading">Roles del proyecto</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-3">
@@ -223,7 +266,7 @@
 
 		<section id="paso3" class="section_Visible">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Archivos de proyecto</div>
+				<div class="panel-heading">Archivos del proyecto</div>
 				<div class="panel-body">
 					<form id="form_subirArchivos">
 						<label class="btn btn-success fileinput-button">
@@ -243,7 +286,12 @@
 				    <br>
 					<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
 						<thead>
-							<tr><th colspan="4">Archivos a subir</th></tr>
+							<tr>
+								<th>Archivos a subir</th>
+								<th>Tipo</th>
+								<th>Tanaño</th>
+								<th></th>
+							</tr>
 						</thead>
 						<tbody id="tbody_archivos">
 						</tbody>
@@ -350,8 +398,8 @@
 
 	<script type="text/template" id="tr_archivo">
 		<tr class="<%- i %>">
-			<td><%- tipo %></td>
 			<td><%- nombre %></td>
+			<td><%- tipo %></td>
 			<td><%- tamaño %></td>
 			<td class="icon-eliminar">
 		    	<label id="<%- i %>" class="icon-circledelete eliminarArchivo"></label>
@@ -366,6 +414,8 @@
 	app.coleccionDeRoles 	 = <?php echo json_encode($roles)?>;
 </script>
 
+<!-- plugin jquery -->
+	<script type="text/javascript" src="js/plugin/jquery.easing.min.js"></script>
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
