@@ -8,10 +8,8 @@
 
         function insert_mult()
         {
-          
           if(!empty($_FILES))
           {
-            // var_dump($_FILES); die();
                if(array_key_exists('fotoCliente', $_FILES)&&$_FILES['fotoCliente']['name']!="")
                {
                    $carpeta="img/fotosClientes/";

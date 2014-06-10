@@ -48,7 +48,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'click #btn_guardarProyecto'		: 'guadarProyecto',
 		'click #btn_cancelarProyecto'		: '',
 		'click #btn_guardarRoles'			: 'guadarRoles',
-		'click #btn_cancelarRoles'			: 'formAnterior',
+		'click #btn_regresar'			: 'formAnterior',
 
 		'change .btn_marcarTodos'			: 'marcarTodos',
 		'click .cerrar'						: 'cerrarAlerta',
@@ -86,6 +86,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$inputArchivos		= $('#inputArchivos');
 		this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
 		this.$tbody_archivos	= $('#tbody_archivos');
+		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
+		this.$tablaProyecto = $('#form_subirArchivos #tabla');
 
 		this.idProyecto;
 	},
@@ -235,6 +237,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			{
 				wait	: true,
 				success	: function (exito) {
+					esto.guadarServiciosProyecto(exito.get('id'),servicios);
 					/*----------------------------------------------*/
 					esto.globalizarIdProyecto(exito);
 					/*----------------------------------------------*/
@@ -248,6 +251,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					/*----------------------------------------------*/
 					esto.cargarEmpleados();
 					/*----------------------------------------------*/
+					esto.$propietarioArchivo.val(exito.get('id'));
+					esto.$tablaProyecto.val('proyectos');
 				},
 				error	: function (error) {
 					esto.$error
@@ -261,9 +266,25 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 
-
-
 		elem.preventDefault();
+	},
+	guadarServiciosProyecto	: function (idproyecto,servicios) {
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		app.coleccionServiciosProyecto.create(
+			{ idproyecto:idproyecto, idservicio:servicios },
+			{
+				wait 	:true,
+				success : function (exito) {
+					console.log(exito)
+				},
+				error 	: function (error) {
+					console.log(error)
+				}
+			}
+		);
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
 	},
 	globalizarIdProyecto: function (modelo) {
 		this.idProyecto = modelo.get('id');
@@ -382,8 +403,10 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			for (var i = archivos.length - 1; i >= 0; i--) {
 				if ( this.arrArchivos.indexOf(String(i)) == -1 ) {
 				this.$tbody_archivos.children('.'+i).children('.icon-eliminar').html('<img src="img/ajax-loader25x25.gif">');
-					var formData = new FormData();
+					var formData = new FormData(document.getElementById('form_subirArchivos'));
+					// formData.append('tabla','proyectos');
 					formData.append('archivo[]',archivos[i]);
+					// formData.append('idpropietario',this.idProyecto);
 					var resp = $.ajax({
 			            url: 'http://crmqualium.com/api_archivos',  
 			            type: 'POST',

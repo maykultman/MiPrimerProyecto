@@ -258,8 +258,9 @@
 					</div> <!-- Fin class row -->
 				</div>
 				<div class="panel-footer">
-					<button type="button" id="btn_cancelarRoles" class="btn btn-default">Cancelar</button>
+					<button type="button" id="btn_regresar" class="btn btn-default">Atras</button>
 					<button type="button" id="btn_guardarRoles" class="btn btn-primary">Guardar</button>
+					<button type="button" id="btn_cancelarRoles" class="btn btn-default">Cancelar</button>
 				</div>
 			</div>
 		</section>
@@ -268,7 +269,6 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">Archivos del proyecto</div>
 				<div class="panel-body">
-					<form id="form_subirArchivos">
 						<label class="btn btn-success fileinput-button">
 		                    <span class="icon-paperclip"></span>
 		                    <span>Adjuntar archivos</span>
@@ -282,6 +282,9 @@
 		                    <i class="glyphicon glyphicon-ban-circle"></i>
 		                    <span>Cancelar</span>
 		                </button>
+					<form id="form_subirArchivos">
+		                <input type="hidden" id="idpropietario" name="idpropietario">
+		                <input type="hidden" id="tabla" name="tabla">
 				    </form>
 				    <br>
 					<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
@@ -434,6 +437,7 @@
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRolesProyectos.js'?>"></script>
 	<!-- vistas -->

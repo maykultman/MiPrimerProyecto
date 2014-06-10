@@ -9,10 +9,16 @@
 
 		public function create($post) 
 		{   
-			$this->db->insert('servicios_proy', $post)->insert_id();
-			return $this->get($this->db->insert_id());	
-		}
-
+			if(count($post['idservicio'])>1)
+			{
+				for($i = 0; $i<count($post['idservicio']); $i++)
+				
+				$data[$i] = array(  'idproyecto'=>$post['idproyecto'], 'idservicio'=>$post['idservicio'][$i], 'status'=>0);
+				return $this->db->insert_batch('servicios_proy', $data);
+			}
+			return $this->db->insert('servicios_proy', $post);						 	
+		}	
+		
 		public function get($id=FALSE) 
 		{
 		    $args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
