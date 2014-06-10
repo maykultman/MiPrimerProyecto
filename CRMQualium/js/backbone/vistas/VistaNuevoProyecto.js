@@ -32,7 +32,6 @@ app.VistaServicioProyecto = app.VistaServicio.extend({
 app.VistaNuevoProyecto = Backbone.View.extend({
 	el					: '.contenedor_principal_modulos',
 
-	
 	plantillaServicio 	: _.template($('#tds_servicio').html()),
 	plantillaArchivo	: _.template($('#tr_archivo').html()),
 
@@ -47,9 +46,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'keyup #duracion'					: 'calcularEntrega',
 
 		'click #btn_guardarProyecto'		: 'guadarProyecto',
-		'click #btn_cancelarProyecto'		: '',
+		'click #btn_cancelarProyecto'		: 'formAnterior',
 		'click #btn_guardarRoles'			: 'guadarRoles',
-		'click #btn_cancelarRoles'			: '',
+		'click #btn_cancelarRoles'			: 'formAnterior',
 
 		'change .btn_marcarTodos'			: 'marcarTodos',
 		'click .cerrar'						: 'cerrarAlerta',
@@ -89,6 +88,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$tbody_archivos	= $('#tbody_archivos');
 
 		this.idProyecto;
+
+		this.next_fs;this.current_fs;this.left;this.opacity;this.scale;this.animating;
 	},
 	render				: function () {
 		return this;
@@ -218,6 +219,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// .click('toggle');//Conmutamos el botón
 	},
 	guadarProyecto		: function (elem) {
+		this.formSiguiente(elem);
+		elem.preventDefault();
+		return;
 		var esto = this;
 		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
 
@@ -259,17 +263,19 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 
+
+
 		elem.preventDefault();
 	},
 	globalizarIdProyecto: function (modelo) {
 		this.idProyecto = modelo.get('id');
 	},
 	guadarRoles			: function (elem) {
-		var esto = this;
-		var forms = $('#paso2 form');
+		this.formSiguiente(elem);
+		elem.preventDefault();
+		return;
 
-		// Backbone.emulateHTTP = true;
-		// Backbone.emulateJSON = true;
+		var forms = $('#paso2 form');
 
 		for (var iForm = 0; iForm < forms.length; iForm++) {
 			var modelo = this.pasarAJson(this.$(forms[iForm]).serializeArray());
@@ -282,57 +288,24 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				/*Comprobamos si hay más de un rol nuevo*/
 				if ($.isArray(modelo.idrol)) {
 					this.guadarRolRecursivo({
-						// id 			: modelo.id, 
 						idproyecto 	: modelo.idproyecto, 
 						idpersonal 	: modelo.idpersonal,
 						idrol 		: modelo.idrol.concat(this.guardarRolesNuevos({nombre:nuevosRoles.nombre}))
 					});
 				} else{
 					this.guadarRolRecursivo({
-						// id 			: modelo.id, 
 						idproyecto 	: modelo.idproyecto, 
 						idpersonal 	: modelo.idpersonal,
 						idrol 		: [modelo.idrol].concat(this.guardarRolesNuevos({nombre:nuevosRoles.nombre}))
 					});
 				};
 			};
-			/*Comprobamos si el empleado ejercera más de un rol*/
-			// if ($.isArray(modelo.idrol)) {
-			// 	for (var iRol = 0; iRol < modelo.idrol.length; iRol++) {
-			// 		app.coleccionRolesProyectos.create(
-			// 			{ 
-			// 				id:modelo.id, 
-			// 				idproyecto:modelo.idproyecto, 
-			// 				idpersonal:modelo.idpersonal, 
-			// 				idrol:modelo.idrol[iRol] 
-			// 			},
-			// 			{
-			// 				wait	: true,
-			// 				success	: function (exito) {},
-			// 				error	: function (error) {}
-			// 			}
-			// 		);
-			// 	};
-			// } else{
-			// 	app.coleccionRolesProyectos.create(
-			// 		modelo,
-			// 		{
-			// 			wait	: true,
-			// 			success	: function (exito) {},
-			// 			error	: function (error) {}
-			// 		}
-			// 	);
-			// };
 		};
-		// Backbone.emulateHTTP = false;
-		// Backbone.emulateJSON = false;
 	},
 	guadarRolRecursivo	: function (modelo) {
-		// console.log(modelo);
 		if ($.isArray(modelo.idrol)) {
 			for (var i = 0; i < modelo.idrol.length; i++) {
-				this.guadarRolRecursivo({ 
-					// id:modelo.id,
+				this.guadarRolRecursivo({
 					idproyecto:modelo.idproyecto, 
 					idpersonal:modelo.idpersonal, 
 					idrol:modelo.idrol[i]
@@ -353,7 +326,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			Backbone.emulateJSON = false;
 		};	
 	},
-
 	guardarRolesNuevos	: function (roles) {
 		var vistaRol = new app.VistaRol();
 		var array = new Array();
@@ -388,20 +360,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			};
 		};
 	},
-	pasarAJson			: function (objSerializado) {
-	    var json = {};
-	    $.each(objSerializado, function () {
-	        if (json[this.name]) {
-	            if (!json[this.name].push) {
-	                json[this.name] = [json[this.name]];
-	            };
-	            json[this.name].push(this.value || '');
-	        } else{
-	            json[this.name] = this.value || '';
-	        };
-	    });
-	    return json;
-	},
 /*Controladores para carga de archivos*/
 	cargarArchivos		: function (elem) {
 		this.$tbody_archivos.html('');
@@ -409,7 +367,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// if ( this.arrArchivos == $(elem.currentTarget).prop('files') ) {console.log('Si')} else{console.log('No')};
 		var archivos = $(elem.currentTarget).prop('files');
 		for (var i = 0; i < archivos.length; i++) {
-			this.$tbody_archivos.append( this.plantillaArchivo( {i:i, tipo:archivos[i].type, nombre:archivos[i].name, tamaño:archivos[i].size} ) );
+			this.$tbody_archivos.append( this.plantillaArchivo( {i:i, tipo:(archivos[i].type).split('/')[1], nombre:archivos[i].name, tamaño:(archivos[i].size/1024).toFixed() +' KB'} ) );
 		};
 	},
 	eliminarFileList	: function () {
@@ -422,6 +380,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		var esto = this;
 		esto.classTr =  archivos.length - 1;
 		if (this.arrArchivos) {
+			// for (var i = 0; i < archivos.length; i++) {
 			for (var i = archivos.length - 1; i >= 0; i--) {
 				if ( this.arrArchivos.indexOf(String(i)) == -1 ) {
 				this.$tbody_archivos.children('.'+i).children('.icon-eliminar').html('<img src="img/ajax-loader25x25.gif">');
@@ -451,10 +410,20 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			};
 		}			
 	},
-	guardarArchivo		: function (direccion) {
+	guardarArchivo		: function (archivo) {
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
-		// app.
+		app.COLECCIONDEARCHIVOSPARAPROYECTOS.create(
+			{
+				idproyecto 	: this.idProyecto,
+				direccion	: 'archivos/'+archivo
+			},
+			{
+				wait 	: true,
+				success : function (exito) {},
+				error 	: function (error) {}
+			}
+		);
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 	},
@@ -477,7 +446,91 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		if ($(elem.currentTarget).attr('id') == 'continuar') {
 			$(elem.currentTarget).parents('div').children('.cerrar').click();
 		};
-	}
+	},
+/*Otros controladores*/
+	formSiguiente				: function (elem) {
+		if(this.animating) return false;
+		this.animating = true;
+		
+		this.current_fs = $(elem.currentTarget).parent().parent().parent();
+		console.log(this.current_fs);
+		this.next_fs = $(elem.currentTarget).parent().parent().parent().next();
+		
+		//activate next step on progressbar using the index of this.next_fs
+		$("#progressbar li").eq($("#divSecciones section").index(this.next_fs)).addClass("active");
+		
+		//show the next fieldset
+		this.next_fs.show(); 
+		//hide the current fieldset with style
+		this.current_fs.animate({this.opacity: 0}, {
+			step: function(now, mx) {
+				//as the this.opacity of this.current_fs reduces to 0 - stored in "now"
+				//1. this.scale this.current_fs down to 80%
+				this.scale = 1 - (1 - now) * 0.2;
+				//2. bring this.next_fs from the right(50%)
+				this.left = (now * 50)+"%";
+				//3. increase this.opacity of this.next_fs to 1 as it moves in
+				this.opacity = 1 - now;
+				this.current_fs.css({'transform': 'scale('+this.scale+')'});
+				this.next_fs.css({'left': this.left, 'opacity': this.opacity});
+			}, 
+			duration: 800, 
+			complete: function(){
+				this.current_fs.hide();
+				this.animating = false;
+			}, 
+			//this comes from the custom easing plugin
+			easing: 'easeInOutBack'
+		});
+	},
+	formAnterior		: function (elem) {
+		if(this.animating) return false;
+		this.animating = true;
+		
+		this.current_fs = $(elem.currentTarget).parent().parent().parent();
+		previous_fs = $(elem.currentTarget).parent().parent().parent().prev();
+		
+		//de-activate current step on progressbar
+		$("#progressbar li").eq($("fieldset").index(this.current_fs)).removeClass("active");
+		
+		//show the previous fieldset
+		previous_fs.show(); 
+		//hide the current fieldset with style
+		this.current_fs.animate({this.opacity: 0}, {
+			step: function(now, mx) {
+				//as the this.opacity of this.current_fs reduces to 0 - stored in "now"
+				//1. this.scale previous_fs from 80% to 100%
+				this.scale = 0.8 + (1 - now) * 0.2;
+				//2. take this.current_fs to the right(50%) - from 0%
+				this.left = ((1-now) * 50)+"%";
+				//3. increase this.opacity of previous_fs to 1 as it moves in
+				this.opacity = 1 - now;
+				this.current_fs.css({'left': this.left});
+				previous_fs.css({'transform': 'scale('+this.scale+')', 'opacity': this.opacity});
+			}, 
+			duration: 800, 
+			complete: function(){
+				this.current_fs.hide();
+				this.animating = false;
+			}, 
+			//this comes from the custom easing plugin
+			easing: 'easeInOutBack'
+		});
+	},
+	pasarAJson			: function (objSerializado) {
+	    var json = {};
+	    $.each(objSerializado, function () {
+	        if (json[this.name]) {
+	            if (!json[this.name].push) {
+	                json[this.name] = [json[this.name]];
+	            };
+	            json[this.name].push(this.value || '');
+	        } else{
+	            json[this.name] = this.value || '';
+	        };
+	    });
+	    return json;
+	},
 });
 
 app.vistaNuevoProyecto = new app.VistaNuevoProyecto();
