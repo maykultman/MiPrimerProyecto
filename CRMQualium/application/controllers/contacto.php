@@ -24,18 +24,18 @@ class  Contacto extends Api {
     private function get()
     {
         $query = $this->contact->get( $this->id() );
-        $this->pre_response($query, 'create'); 
+        $this->pre_response($query, 'get'); 
     }
 
     private function update()
     {
         $query = $this->contact->save(  $this->id(), $this->put()  );
-         $this->pre_response($query, 'create');        
+         $this->pre_response($query, 'update');        
     }
 
     private function delete()
     {
         $query = $this->contact->delete(  $this->id()  ); 
-        $this->pre_response($query, 'create');         
+        $this->pre_response($query, 'delete');         
     }   
 } # Fin de la Clase Api_contacto

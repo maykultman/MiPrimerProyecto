@@ -1,12 +1,11 @@
  <?php
-    /**
-    * Operaciones en la base de datos con los contactos
-    */
-    class Modelo_archivos extends CI_Model
-    {          
-        function obj(){  return $obj = new modelo_rit();  }
+    require_once 'Modelo_crud.php';
+    class Modelo_archivos extends Modelo_crud
+    {   
+        private $archivo;       
+        function obj(){  }
 
-        function insert_mult()
+        function create($post)
         {
           if(!empty($_FILES))
           {
@@ -18,7 +17,8 @@
                    if(copy($_FILES['fotoCliente']['tmp_name'], $destino))
                    {
                        return $_FILES['fotoCliente']['name'];
-                   } 
+                   }
+                   return FALSE;  
                }
                elseif(array_key_exists('fotoUsuario', $_FILES)&&$_FILES['fotoUsuario']['name']!="")
                {
@@ -28,45 +28,45 @@
                    if(copy($_FILES['fotoUsuario']['tmp_name'], $destino))
                    {
                        return $_FILES['fotoUsuario']['name'];
-                   }  
+                   }
+                   return FALSE;   
                }
                elseif(array_key_exists('archivo', $_FILES)&&$_FILES['archivo']['name']!="")
                {
-                   $carpeta="archivos/";
-                   opendir($carpeta);
-                     for($i=0; $i<count($_FILES['archivo']['name']);$i++)
-                     {
-                       $destino=$carpeta.$_FILES['archivo']['name'][$i];  
+                  $carpeta="archivos/";
+                  opendir($carpeta);
+                  $destino=$carpeta.$_FILES['archivo']['name'][0];  
 
-                       if(copy($_FILES['archivo']['tmp_name'][$i], $destino))
-                       {
-                           $archivos[$i] = $_FILES['archivo']['name'][$i];
-                       }
-                     }
-                     return $archivos;
-               }
-            }
-           
+                    if(copy($_FILES['archivo']['tmp_name'][0], $destino))
+                    {
+                        $this->archivo = 
+                        array(  'idpropietario'=> $post['idpropietario'],
+                                'tabla'        => $post['tabla'],
+                                'nombre'       => $_FILES['archivo']['name'][0],
+                                'ruta'         => $destino);
+                        return $this->db->insert('multimedia', $this->archivo);
+                    }
+                  return FALSE;                
+                }
+            }           
            return false;
-        } # Fin del metodo insert_mcontact()...
+        } # Fin del metodo insert_mult()...
 
-        function get_mult($id)
+        public function get($id)
         {
-           
-        
+          $result = $this->where($id);
+          return $this->db->get( 'multimedia' )->$result();
                    	
-        } # Fin del metodo get_cotizacion()...
-        function patch_mult($id, $put)
-        {
-            
-        }
-        function update_mult()
-        {
-        	
-        }
-        private function delete_mult($id)
-        {
-
+        } # Fin del metodo get_mult()...
+        
+        public function save (  $id,  $put ) 
+        {   
+          return $this->db->update( 'multimedia', $put, array('id' => $id)  );   
+        }       
+        
+        public function destroy (  $id  ) 
+        {   
+          return $this->db->delete( 'multimedia', array('id' => $id)  ); 
         }
 
     } # Fin de la clase...

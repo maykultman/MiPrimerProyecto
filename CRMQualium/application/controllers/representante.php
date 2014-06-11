@@ -16,7 +16,7 @@ class  Representante extends Api {
 
     private function create()
     {
-        $query = $this->rep->create_rep(  $this->ipost()  );
+        $query = $this->rep->create(  $this->ipost()  );
         # El metodo pre_response() establece el codigo de respuesta y acepta dos parametros 
         # El resultado de la $query y el metodo que se acaba de ejecutar...
         $this->pre_response($query, 'create');        
@@ -24,19 +24,19 @@ class  Representante extends Api {
 
     private function get()
     {
-        $query = $this->rep->get_rep( $this->id() ); 
+        $query = $this->rep->get( $this->id() ); 
         $this->pre_response($query, 'get');     
     }
 
     private function update()
     {
-        $query = $this->rep->update_rep(  $this->id(), $this->put()  );
+        $query = $this->rep->update(  $this->id(), $this->put()  );
         $this->pre_response($query, 'update');  
     }
 
     private function delete()
     {
-        $query = $this->rep->delete_rep(  $this->id()  ); 
+        $query = $this->rep->delete(  $this->id()  ); 
        $this->pre_response($query, 'delete');  
     }   
 } # Fin de la Clase Api_contacto

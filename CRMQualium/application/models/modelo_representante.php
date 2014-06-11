@@ -11,23 +11,23 @@
       
       protected function create($args)
       {   
-            $this->db->insert('contactos', $args);
+            $this->db->insert('representantes', $args);
             return $this->get($this->db->insert_id());     
       }
         
       public function get ( $id = FALSE ) 
       {  
         $reply = $this->where(  $id  );  # Ejecutamos el metodo where...      
-        return $this->db->get  ( 'contactos' )->$reply();  # Este metodo ejecuta get con y sin ID...
+        return $this->db->get  ( 'representantes' )->$reply();  # Este metodo ejecuta get con y sin ID...
       }
 
       public function save (  $id,  $put ) 
       {   
-        return $this->db->update('contactos', $put, array('id' => $id)  );   
+        return $this->db->update('representantes', $put, array('id' => $id)  );   
       }       
         
       public function destroy (  $id  ) 
       {   
-        return $this->db->delete('contactos', array('id' => $id)  ); 
+        return $this->db->delete('representantes', array('id' => $id)  ); 
       }
   }    

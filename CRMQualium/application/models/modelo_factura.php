@@ -4,7 +4,7 @@
     */
     class Modelo_factura extends CI_Model
     {          
-        function insert_fact()
+        function create()
         {
           // var_dump($_FILES); die();
             if(!empty($_FILES))
@@ -33,23 +33,20 @@
            return false;
         } # Fin del metodo insert_mcontact()...
 
-        function get_mult($id)
-        {
-                   	
-        } # Fin del metodo get_cotizacion()...
-
-        function patch_mult($id, $put)
-        {
-            
+        public function get ( $id = FALSE ) 
+        {  
+           $reply = $this->where( $id );  # Ejecutamos el metodo where...      
+           return $this->db->get  ( 'facturas' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
-        function update_mult()
-        {
-        	
-        }
-        private function delete_mult($id)
-        {
-
+        public function save (  $id,  $put ) 
+        {   
+            return $this->db->update('facturas', $put, array('id' => $id)  );   
+        }       
+        
+        public function destroy (  $id  ) 
+        {   
+            return $this->db->delete('facturas', array('id' => $id)  ); 
         }
 
     } # Fin de la clase...

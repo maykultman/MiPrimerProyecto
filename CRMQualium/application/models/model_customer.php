@@ -1,17 +1,11 @@
 <?php
-	/**
-	* Operaciones en la base de datos con los clientes
-	*/
-  # Modelo Relación de Id´s cliente, representante o contacto con Id´s de telefonos
-	require_once 'modelo_rit.php';
 	class Model_customer extends CI_Model
 	{
 		
 		public function __construct(){}
 
 		function insert_customer($post)
-		{
-			 $obj = new modelo_rit();			
+		{		
 			$x=0; # Este es un contador para mi array de inserción...	
 			# Se almacena campos obligatorios en la tabla de clientes... 						
 			$query = $this->db->insert('clientes', array('nombreComercial'=>$post['nombreComercial'], 
@@ -60,8 +54,6 @@
 		public function get_customers($ruta)
 		{
 			($ruta=='modulo_consulta_clientes'||$ruta=='api_cliente'||$ruta=='modulo_cliente_nuevo') ?	$tipoCliente ='cliente' : $tipoCliente = 'prospecto';
-
-			$obj = new modelo_rit();
 			###$cont RELLENA EL ARREGLO DATOS, $contrep RELLENA EL ARRELGO DE REPRESENTANTES y $conCont CONTACTOS###
 			$cont=0;	$contrep=0;		$contCont=0; $contTCont=0;
 			#############################TRAEMOS A TODOS LOS CLIENTES#######################################
