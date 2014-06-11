@@ -7,7 +7,7 @@
 		#				            DATOS DEL MODELO ROL
 		#				 $post ['nombre']........$post ['descripcion']
 		
-		protected function create($args)
+		public function create($args)
         {   
             $this->db->insert('roles', $args);
             return $this->get($this->db->insert_id());     

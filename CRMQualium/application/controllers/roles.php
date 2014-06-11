@@ -17,25 +17,25 @@ class  Roles extends Api {
     
     private function create()
     {
-        $query = $this->rol->create_rol(  $this->ipost()  );
+        $query = $this->rol->create(  $this->ipost()  );
         $this->pre_response($query, 'create');                  
     }
 
     private function get()
     {
-        $query = $this->rol->get_rol( $this->id() ); 
+        $query = $this->rol->get( $this->id() ); 
         $this->pre_response($query, 'get'); 
     }
 
     private function update()
     {
-        $query = $this->rol->update_rol(  $this->id(), $this->put()  );
+        $query = $this->rol->update(  $this->id(), $this->put()  );
         $this->pre_response($query, 'update');                 
     }
 
     private function delete()
     {
-        $query = $this->rol->delete_rol(  $this->id()  ); 
+        $query = $this->rol->delete(  $this->id()  ); 
         $this->pre_response($query, 'delete');        
     }   
 } # Fin de la Clase Api_cliente
