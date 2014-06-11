@@ -28,7 +28,7 @@ app.VistaRol = Backbone.View.extend({
 			{
 				wait	: true,
 				success : function (exito) {
-					callBack(exito.get('id'));
+					// callBack(exito.get('id')); //BORRAR
 				},
 				error 	: function (error) {}
 			}

@@ -18,7 +18,7 @@
     </div>
 
     <!-- REGISTRO DEL CLIENTE -->
-    <div id="formularioCliente" class="visibleR ocultoR">
+    <div id="formularioCliente" class="visibleR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
         <h2>Registro para nuevo cliente</h2>
         <hr>
@@ -173,7 +173,7 @@
         <br>
     </div>
     <!-- REGISTRO DEL CONTACTO -->
-    <div id="formularioContacto" class="visibleR">
+    <div id="formularioContacto" class="visibleR ocultoR">
         <!-- <button type="button" id="ir" class="btn btn-default btn-xs">Conmutar</button> -->
         <div id="div_nombreCliente">
             <!-- <h2>Backbone</h2><h3>Registro para representante y contactos</h3> -->

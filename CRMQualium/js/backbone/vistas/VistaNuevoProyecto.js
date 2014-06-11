@@ -63,6 +63,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 
 	initialize			: function () {
+		this.listenTo(app.coleccionRoles, 'add', this.funcionHola);
+
 		this.$busqueda			= $('#busqueda');
 		this.$hidden_idCliente	= $('#hidden_idCliente');
 
@@ -114,6 +116,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 	cargarServicios		: function () {
 		app.coleccionServicios.each( this.cargarServicio, this );
+	},
+	funcionHola			: function () {
+		this.cargarServicio(app.coleccionRoles.last());
 	},
 	cargarEmpleado		: function (empleado) {
 		/*añadimos una nueva propiedad al modelo de empledo para
@@ -332,7 +337,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		};
 	},
 	guadarRolRecursivo	: function (modelo) {
-		console.log(modelo);
 		if ($.isArray(modelo.idrol)) {
 			for (var i = 0; i < modelo.idrol.length; i++) {
 				this.guadarRolRecursivo({
@@ -358,21 +362,12 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 	guardarRolesNuevos	: function (roles) {
 		var vistaRol = new app.VistaRol();
-		var array = new Array();
 		if ($.isArray(roles.nombre)) {
 			for (var i = 0; i < roles.nombre.length; i++) {
-				vistaRol.guardarRol(
-					{nombre:roles.nombre[i]},
-					function (id) {  array.push(id) }
-				);
+				vistaRol.guardarRol({nombre:roles.nombre[i]});
 			};
-			return array;
 		} else{
-			vistaRol.guardarRol(
-				{nombre:roles.nombre},
-				function (id) {  array.push(id) }
-			);
-			return array;
+			vistaRol.guardarRol({nombre:roles.nombre});
 		};
 	},
 	marcarTodos 		: function (elem) {
