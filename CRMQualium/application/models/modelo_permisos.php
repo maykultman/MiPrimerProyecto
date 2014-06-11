@@ -8,7 +8,7 @@
 
 		public function create($post) 
 		{   
-			$this->db->insert('permisos', $post)->insert_id();
+			$this->db->insert('permisos', $post);
 			return $this->get($this->db->insert_id());	
 		}
 

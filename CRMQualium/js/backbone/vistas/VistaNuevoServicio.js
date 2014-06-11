@@ -4,8 +4,8 @@ app.VistaNuevoServicio = Backbone.View.extend({
 	el	: '#catalogo_servicio',
 	events	: {
 		// 'click .nombreServicio'	: 'obtenerNombre',
-		'click #enviar'	: 'guardarServicio',
-		'click .cerrar'	: 'cerrarAlerta',
+		'click #enviar'		  : 'guardarServicio',
+		'click .cerrar'		  : 'cerrarAlerta',
 		'click #btn_cancelar' : 'cancelarRegistro'
 	},
 

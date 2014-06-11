@@ -8,13 +8,13 @@ class  catalogoTelefonos extends Api {
         $this->load->model('Modelo_catalogoTelefonos', 'Ctel');             
     }
 
-     public function api() 
+    public function api() 
     {
         $metodo = $this->request();
         $this->$metodo();
     }
 
-   private function create()
+    private function create()
     {
         $query = $this->Ctel->create(  $this->ipost()  );
         $this->pre_response($query, 'create');                  

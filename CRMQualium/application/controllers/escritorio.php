@@ -19,6 +19,7 @@ class Escritorio extends Api {
         $this->load->model('modelo_usuarios',        'usuario');
         $this->load->model('modelo_empleado',        'empleado');
         $this->load->model('Model_budget',           'budget');
+        $this->load->model('Modelo_permisos',        'permisos');
     }  
 
 	//Vista inicial
@@ -45,8 +46,8 @@ class Escritorio extends Api {
 		}
 		if($this->ruta() == 'catalogo_permisos')
 		{
-			
-			$this->load->view($this->ruta());	
+			$data['permisos'] = $this->permisos->get();
+			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_empleados')
 		{
@@ -128,7 +129,7 @@ class Escritorio extends Api {
 		$this->area_Estatica('modulo_contratos');
 		$data['clientes']		  = $this->customer->get_customers($this->ruta());	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_sNuevoCliente();              	# Lista de Servicios
-		$data['representantes']	  =$this->representa->get_rep();					# List de representantes
+		$data['representantes']	  =$this->representa->get();					# List de representantes
 		if($this->ruta() == 'modulo_contratos_nuevo')
 		{
 			$this->load->view($this->ruta());

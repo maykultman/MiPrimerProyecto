@@ -29,7 +29,7 @@ class  Proyectos extends Api {
 
     private function update()
     {
-        $query = $this->proy->update( $this->id() , $this->put()  );
+        $query = $this->proy->save( $this->id() , $this->put()  );
         $this->pre_response($query, 'update');                 
     }
 
