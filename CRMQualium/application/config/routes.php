@@ -50,6 +50,9 @@ $route['catalogo_Servicios']  = 'escritorio/catalogos';
 $route['catalogo_perfiles']  = 'escritorio/catalogos';
 $route['catalogo_permisos']  = 'escritorio/catalogos';
 $route['catalogo_empleados']  = 'escritorio/catalogos';
+$route['catalogo_roles']  = 'escritorio/catalogos';
+$route['catalogo_telefonos']  = 'escritorio/catalogos';
+$route['catalogo_planes']  = 'escritorio/catalogos';
 
 
 // $route['modulo_catologos'] = 'escritorio/catologos/$1';

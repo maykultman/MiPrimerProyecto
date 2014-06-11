@@ -130,7 +130,8 @@ display: inline-block;
 
 .ancho_campos2{
 
-	width:350px !important; 
+	width:350px !important;
+	display: inline-block; 
 
 }
 
@@ -138,7 +139,7 @@ display: inline-block;
 .campos_edicion {
 	display: inline-block;
 	float: left;
-	margin-right: 45px;
-	width: 350px !important;
+	margin-right: 27px;
+	width: 368px !important;
 }
 	

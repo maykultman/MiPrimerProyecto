@@ -87,7 +87,7 @@
 								    	<form>
 								        	<div class="campos_edicion">
 												<input type="text" class="form-control ancho_campos2" placeholder="Nombre">
-												<!-- <label class="icon-uniF479 exito"></label> -->
+												<label class="icon-uniF479 exito"></label>
 												<select class="form-control ancho_campos2">
 												  <option>Community Manager</option>
 												  <option>Director General</option>

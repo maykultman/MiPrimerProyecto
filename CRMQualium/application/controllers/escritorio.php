@@ -54,6 +54,21 @@ class Escritorio extends Api {
 			
 			$this->load->view($this->ruta());	
 		}
+		if($this->ruta() == 'catalogo_roles')
+		{
+			
+			$this->load->view($this->ruta());	
+		}
+		if($this->ruta() == 'catalogo_telefonos')
+		{
+			
+			$this->load->view($this->ruta());	
+		}
+		if($this->ruta() == 'catalogo_planes')
+		{
+			
+			$this->load->view($this->ruta());	
+		}
 
 
 	}
