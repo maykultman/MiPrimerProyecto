@@ -1,18 +1,23 @@
+<style type="text/css">
+  #color_titulos hr {
+    line-height: 10px;
+  }
+</style>
   <div id="posicion_infotd">
    <table id="tbla_cliente" class="table table-striped">
       <thead>
         <tr id="color_titulos">
-          <th style="text-align:center;">Todos<input type="checkbox"></th>
+          <th style="text-align:center;">Todos<!-- <input type="checkbox"> --></th>
           <th></th>
           <th>
-            <!-- <input type="text" class="form-control" placeholder="Proyecto"> -->
-            <!-- <span class="icon-search busqueda"></span> -->
-            Proyecto
+            <input type="text" class="form-control" placeholder="Proyecto">
+            <span class="icon-search busqueda"></span>
+            <!-- Proyecto -->
           </th>  
-          <!--<th><input type="text" class="form-control" placeholder="Rsponsable">
+          <th><input type="text" class="form-control" placeholder="Rsponsable">
             <span class="icon-search busqueda"></span>
           </th>
-          <th>Status</th>-->
+          <th>Status</th>
           <th>Entrega</th>           
           <th>Operaciones</th>
         </tr>
@@ -32,82 +37,7 @@
             <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
             <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
          </td>
-       </tr>
-       <tr>
-         <td><input type="checkbox"></td>
-         <td><img src="img/fotosClientes/cliente4.png" alt="" class="img-thumbnail"></td>
-         <td>Kiper </td>                    
-         <td>jose alberto canul may</td>
-         <td><span  class="badge color_status1">50</span></td>
-         <td>04/06/2014</td>            
-         <td class="icon-operaciones">
-            <div class="eliminar_cliente">
-              <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-            </div>
-            <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-            <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-         </td>
-        </tr>
-        <tr>
-          <td><input type="checkbox"></td>
-          <td><img src="img/fotosClientes/cliente4.png" alt="" class="img-thumbnail"></td>
-          <td>Kiper </td>
-          <td>jose alberto canul may</td>
-          <td><span class="badge color_status1">50</span></td>           
-          <td>04/06/2014</td>    
-          <td class="icon-operaciones">
-           <div class="eliminar_cliente">
-              <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-           </div>
-            <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-            <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-          </td>
-        </tr>
-        <tr>
-         <td><input type="checkbox"></td>
-         <td><img src="img/fotosClientes/cliente4.png" alt="" class="img-thumbnail"></td>
-         <td>Kiper </td>
-         <td>jose alberto canul may</td>
-         <td><span class="badge color_status">50</span></td>           
-         <td>04/06/2014</td>    
-         <td class="icon-operaciones">
-            <div class="eliminar_cliente">
-              <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-            </div>
-            <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-            <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-         </td>
-        </tr>
-        <tr>
-         <td><input type="checkbox"></td>
-         <td><img src="img/fotosClientes/cliente4.png" alt="" class="img-thumbnail"></td>
-         <td>Kiper </td>
-         <td>jose alberto canul may</td>
-         <td><span  class="badge color_status2">50</span></td>           
-         <td>04/06/2014</td>    
-         <td class="icon-operaciones">
-           <div class="eliminar_cliente">
-             <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-           </div>
-           <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-           <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-         </td>
-        </tr>
-        <tr>
-         <td><input type="checkbox"></td>
-         <td><img src="img/fotosClientes/cliente4.png" alt="" class="img-thumbnail"></td>
-         <td>Kiper </td>
-         <td>jose alberto canul may</td>
-         <td><span  class="badge color_status2">50</span></td>           
-         <td>04/06/2014</td>    
-         <td class="icon-operaciones">
-           <div class="eliminar_cliente">
-             <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-           </div>
-           <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-           <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-         </td>
-        </tr>-->
+       </tr>-->
       </tbody>  
     </table>
     <button type="button" class="btn btn-default">Eliminar varios</button>
@@ -133,9 +63,9 @@
     <td><input  type="checkbox"></td>
     <td><img src="img/imgProyectos/holamundo.png" alt="" class="img-thumbnail"></td>
     <td><%- nombre %></td>                     
-    <!--<td>Responsable</td>
-    <td ><span  class="badge color_status">45</span></td> -->
-    <td ><%- f_final %></td>                   
+    <td>Responsable</td>
+    <td ><span  class="badge color_status">45</span></td>
+    <td ><%- fechafinal %></td>                   
     <td class="icon-operaciones">
       <div class="eliminar_cliente">
         <span class="icon-trash eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
@@ -144,17 +74,23 @@
       <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
     </td>
   </script>
-
+<script type="text/javascript">
+  var app = app || {};
+  app.coleccionDeClientes = [];
+</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <!-- Librerias Backbone -->
   <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
   <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-  <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
-
+<!-- Utilerias -->
+  <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- MV* -->
   <!-- modelos -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
   <!-- colecciones -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
   <!-- vistas -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaProyecto.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaProyectos.js'?>"></script>

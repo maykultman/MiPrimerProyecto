@@ -93,6 +93,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		this.$cargoContacto = $('#otroContactoCargo');
 		$('#contactosLista').html('');
 		this.otroContacto();
+		$('#myModal').modal('hide');
 	},
 // -----buscarServicioI--&--buscarServicioC------- 
 
@@ -580,16 +581,17 @@ app.VistaNuevoCliente = Backbone.View.extend({
 		Este elemento DOM sirve como referencia para
 		obtener html y encajarla en nuevo html. Al final
 		el nuevo html se imprime el una lista de teléfonos.*/
-		this.$(elemento.currentTarget).parent().parent().parent().parent().append('<div class="copia">'+this.$(elemento.currentTarget).parent().parent().parent().html()+'</div>');
+		this.$(elemento.currentTarget).parents('.telefonos').prepend('<div class="copia">'+this.$(elemento.currentTarget).parent().parent().parent().html()+'</div>');
 		/*Se añade en el atributo class un nuevo nombre donde 
 		apunta el selector*/
-		$('.copia .icon-uniF476').addClass('icon-uniF477'); 
+		$('.copia .icon-uniF476').addClass('icon-uniF477 eliminarCopia'); 
 		/*Primero se elimina y luego se añade un nuevo nombere 
 		en el atributo class del elemento donde apunta el selector*/
 		$('.copia .otroTelefono').removeClass().addClass('eliminarCopia'); 
 	},
 //------otroContacto------------------------------ 
 	otroContacto 	: function (contacto) {
+		console.log(JSON.stringify(this.arregloDeContactos));
 		/*Se obtienen los objetos DOM en donde los atributos name coincidan
 		y se almacenan en las variables correspondientes*/
 		var numero;
@@ -647,9 +649,13 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			};
 
 			// En todo caso se limpian los campos tras respaldar lo datos
-			this.$nombreContacto.val('');
-			this.$correoContacto.val('');
-			this.$cargoContacto.val('');
+			// this.$nombreContacto.val('');
+			// this.$correoContacto.val('');
+			// this.$cargoContacto.val('');
+			// this.$('.telefonoContacto').val('');
+			$('#myModal form')[0].reset();
+
+			$('#myModal').modal('show');
 		}
 	},
 // -----recursividadTelefonos--------------------- 

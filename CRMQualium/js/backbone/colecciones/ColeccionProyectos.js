@@ -19,7 +19,11 @@ var ColeccionProyectos = Backbone.Collection.extend({
 
 	obtenerUltimo	: function () {
 		return this.last();
-	}
+	},
+
+	// parse	: function (response) {
+	// 	return response;
+	// },
 });
 
 app.coleccionProyectos = new ColeccionProyectos();

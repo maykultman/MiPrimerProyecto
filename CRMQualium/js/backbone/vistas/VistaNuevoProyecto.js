@@ -286,13 +286,13 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 	},
-	globalizarIdProyecto: function (modelo) {
+	globalizarIdProyecto	: function (modelo) {
 		this.idProyecto = modelo.get('id');
 	},
 	guadarRoles			: function (elem) {
-		this.formSiguiente(elem);
-		elem.preventDefault();
-		return;
+		// this.formSiguiente(elem);
+		// elem.preventDefault();
+		// return;
 
 		var forms = $('#paso2 form');
 
@@ -318,10 +318,21 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 						idrol 		: [modelo.idrol].concat(this.guardarRolesNuevos({nombre:nuevosRoles.nombre}))
 					});
 				};
+			} else {
+				// if ($.isArray(modelo.idrol)) {
+					this.guadarRolRecursivo(modelo);
+				// } else{
+					// this.guadarRolRecursivo({
+					// 	idproyecto 	: modelo.idproyecto, 
+					// 	idpersonal 	: modelo.idpersonal,
+					// 	idrol 		: [modelo.idrol]
+					// });
+				// };
 			};
 		};
 	},
 	guadarRolRecursivo	: function (modelo) {
+		console.log(modelo);
 		if ($.isArray(modelo.idrol)) {
 			for (var i = 0; i < modelo.idrol.length; i++) {
 				this.guadarRolRecursivo({
@@ -469,7 +480,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		};
 	},
 /*Otros controladores*/
-	formSiguiente				: function (elem) {
+	formSiguiente		: function (elem) {
 		var next_fs,current_fs,left,opacity,scale,animating;
 
 		if(animating) return false;
