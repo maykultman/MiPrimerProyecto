@@ -12,7 +12,7 @@
 	                </a>
 	            </li>
 				<li>
-					<a href="">
+					<a href="catalogo_planes">
 						<div class="icono_menu_modulo">
 							<span class="icon-resellerhosting"></span>
 					    </div>
@@ -36,7 +36,7 @@
 	                </a>
 	            </li>
 	             <li>
-	            	<a href="">
+	            	<a href="catalogo_roles">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-friends"></span>
 	              	   </div>
@@ -52,7 +52,7 @@
 	                </a>
 	            </li>        
 	            <li>
-	            	<a href="">
+	            	<a href="catalogo_telefonos">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-phonebook"></span>
 	              	   </div>

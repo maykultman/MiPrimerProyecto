@@ -9,7 +9,7 @@
 	    	<button id="perfil_nuevo" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Perfil
 			</button>
 			<hr style="margin-top: 0px !important"><br>			
-			<div style="margin-top:15px;" class="panel-group" id="accordion">
+			<!-- <div style="margin-top:15px;" class="panel-group" id="accordion"> -->
 				<div class="panel panel-default">
 					<div class="panel-heading">
 					  <h4 class="panel-title">
@@ -635,110 +635,113 @@
 					  	</div>
 					</div>
 				</div>
-            </div>
+           <!--  </div> -->
             <!-- Modal NUEVO PERFIL-->
             <div  class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"        
-			aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			 aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<div id="contenido_nuevoperfil"  class="modal-content">
-					  <div class="modal-header">
+					    <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					        <h4 class="modal-title">Nuevo Perfil</h4>
-					  </div>					    
-				      <div class="modal-body">  
-				            <input  type="search" class="form-control" placeholder="Nombre del perfil"><br>
-					        <div style="width:850px; " class="panel panel-primary permisos">	     
-					            <div class="panel-heading">Asignar Permisos</div>				           
-				            	<div class="row">
-								  	<div class="col-md-4">
-								  	    <div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver contratos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Agregar clientes
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver proyectos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver catalogos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Crear catalogos catalogos
-										    </label>
-										</div>
-								  	</div>
-								  	<div class="col-md-4">
-									  	<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver contratos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Agregar clientes
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver proyectos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver catalogos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Crear catalogos catalogos
-										    </label>
-										</div>
-								   </div>
-								   <div class="col-md-4">
-								  		<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver contratos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Agregar clientes
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver proyectos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Ver catalogos
-										    </label>
-										</div>
-										<div class="checkbox">
-										    <label>
-										      <input class="chek" type="checkbox">Crear catalogos catalogos
-										    </label>
-										</div>
-								    </div>
-								</div>								   
-					        </div>
-					        <button  class="btn btn-default" type="button">Marcar Todos</button>
-				        </div>
-				        <div id="btnes">				            
-				            <button type="button" class="btn btn-primary">Guardar</button>
-				            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				        </div>
+					    </div>					    
+				        <div class="modal-body">
+                            <form>
+					            <input  type="search" class="form-control" placeholder="Nombre del perfil"><br>
+						        <div style="width:850px; " class="panel panel-primary permisos">  
+						            <div class="panel-heading">Asignar Permisos</div>           
+					            	<div class="row">
+									  	<div class="col-md-4">
+									  	    <div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver contratos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Agregar clientes
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver proyectos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver catalogos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Crear catalogos catalogos
+											    </label>
+											</div>
+									  	</div>
+									  	<div class="col-md-4">
+										  	<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver contratos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Agregar clientes
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver proyectos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver catalogos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Crear catalogos catalogos
+											    </label>
+											</div>
+									   </div>
+									   <div class="col-md-4">
+									  		<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver contratos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Agregar clientes
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver proyectos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Ver catalogos
+											    </label>
+											</div>
+											<div class="checkbox">
+											    <label>
+											      <input class="chek" type="checkbox">Crear catalogos catalogos
+											    </label>
+											</div>
+									    </div>
+									</div>								   
+						        </div>
+					            <button  class="btn btn-default" type="button">Marcar Todos
+					            </button><br><br>
+					            <div id="btnes">				            
+						            <button type="button" class="btn btn-primary">Guardar</button>
+						            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					            </div>
+					        </form>    
+				        </div>					       
 		            </div><!-- /.modal-content -->
 		        </div><!-- /.modal-dialog -->
 	        </div><!-- /.modal -->

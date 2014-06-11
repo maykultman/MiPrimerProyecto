@@ -3,10 +3,17 @@
 #btn_guardar{
 
 	float: left;	
-	margin-top: 40px;
+	margin-top: 100px;
 }
 
 
+
+.ancho_campos{
+
+       
+    width: 370px !important;
+   
+}
 
 /*------Estilos Perfiles--------------------------*/
 
@@ -25,7 +32,7 @@
 #btnes{
 
 	float: left;
-	margin-left: 22px;
+	
 }
 
 .flecha_abajo{
@@ -63,9 +70,9 @@
 
 tbody#scroll_permisos{ 
 	display: block; 
-	height: 250px; 
+	height: 210px; 
 	overflow: auto; 
-	width: 400px;
+	width: 570px;
 }
 
 .eliminar_permiso{
@@ -88,7 +95,7 @@ tbody#scroll_permisos{
 	
 }
 				
-/*---------estilos de catalogo de empleado--------*/
+/*---------estilos de catalogo de empleados--------*/
 
 .titulo{
 display: inline-block;
@@ -108,9 +115,25 @@ display: inline-block;
 }
 
 .contenedor_empleado{
-	width: 450px !important;
+	width: auto !important;
 }
 
-.linea_x2{
-	width: 450px !important;
+/*.linea_x2{
+	width: 1000px !important;
 }
+*/
+
+.ancho_campos2{
+
+	width:350px !important; 
+
+}
+
+    
+.campos_edicion {
+	display: inline-block;
+	float: left;
+	margin-right: 45px;
+	width: 350px !important;
+}
+	
