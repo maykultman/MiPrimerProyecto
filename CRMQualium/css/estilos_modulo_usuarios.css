@@ -94,6 +94,11 @@ tbody#scroll_permisos{
 	width: 500px;
 	
 }
+
+.panel-body span{
+	padding: 5px;
+	opacity: 1;
+}
 				
 /*---------estilos de catalogo de empleados--------*/
 
