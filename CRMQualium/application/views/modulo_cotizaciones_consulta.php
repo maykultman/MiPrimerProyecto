@@ -37,7 +37,7 @@
 		<button type="button" class="btn btn-default">Desmarcar todos</button>
 	</section>
 </div>
-
+<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type="text/javascript">
 	$(document).on('ready',function(){
 		$('.icon-trash').on('click',function(){
@@ -75,7 +75,11 @@
 </script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'?>">			 </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>">             </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>">     </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCotizacion.js'?>">			 </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'?>">  </script>
 <script type="text/javascript">	var app = app || {};													 </script>
+
+

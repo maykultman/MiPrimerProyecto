@@ -16,10 +16,15 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 
 	 render : function (){},
 
-	 cargarCotizacion : function (modeloc){
+	 cargarCotizacion : function (modelocotizacion){
+
+	 	var cliente = app.coleccionClientes.where({ id : modelocotizacion.get('idcliente') }); 
+	 	console.log(cliente); return;
+	 	// // modelocotizacion.set({'nombre' : cliente.nombreComercial});
+	 	// var vistaCotizacion = new app.VistaCotizacion({model : modelocotizacion});
 	 	
-	 	var vistaCotizacion = new app.VistaCotizacion({model : modeloc});
-	 	this.$tablaCotizaciones.append( vistaCotizacion.render().el);
+	 	// console.log(vistaCotizacion);
+	 	// // this.$tablaCotizaciones.append( vistaCotizacion.render().el);
 	 },
 
 	 cargarCotizaciones : function (){
@@ -28,9 +33,9 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 },
 
 	 establecerNombres : function (){
-	 	var coleccionDeClientes = app.coleccionDeClientes();
+	 	
 	 	var coleccionDeEmpleados = app.coleccionDeEmpleados();
-	 	var coleccionCotizaciones = app.coleccionCotizaciones();
+	 	
 	 }
 
 });
