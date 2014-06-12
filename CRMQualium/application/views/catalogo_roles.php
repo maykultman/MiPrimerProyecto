@@ -6,21 +6,23 @@
         </script>
 		<section id="catalogo_roles">		    
 		  	<h3>Nuevo Rol</h3>
-		  	<hr>				
+		  	<hr><br>				
 			<form id="registro_rol">	        						
-				<input id="rol" type="text"  name="nombre" class="form-control" placeholder="Nombre del rol" style="display: inline-block;">		
+				<input id="rol" type="text"  name="nombre" class="form-control" placeholder="Nombre del rol" style="width:85%; display: inline-block;">		
 				<div style="display: inline-block;">
 					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
 		       	    <button type="button" class="btn btn-default">Cancelar</button>
 	            </div>
 		    </form><br>
 		    <h3>Roles</h3>
-		  	<hr>				
-		  	<div class="panel panel-primary" style="width:580px;">
+		  	<hr><br>	       
+	        <input type="search" class="form-control" placeholder="Search" style="width:100%; ">
+	        <span id="busqueda_rol" class="glyphicon glyphicon-search"></span>    			
+		  	<div class="panel panel-primary" style="width:100%;">
 		  		<table class="table table-hover">
     				<tbody id="scroll_roles">
 						<tr>
-							<td style="width: 562px; " class="icon-operaciones">			
+							<td style="width: 1% !important; " class="icon-operaciones">			
 								<label for="" name="">Administrador</label>
 								<div class="eliminar_permiso">
 									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>

@@ -149,5 +149,12 @@ tbody#scroll_roles{
 	display: block; 
 	height: 210px; 
 	overflow: auto; 
-	width: 578px;
+	width: 100%!important;
+}
+
+#busqueda_rol{
+
+	float: right;	
+	margin-top: -38px;
+	margin-right: 10px;
 }
