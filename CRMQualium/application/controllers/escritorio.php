@@ -20,6 +20,7 @@ class Escritorio extends Api {
         $this->load->model('modelo_empleado',        'empleado');
         $this->load->model('Model_budget',           'budget');
         $this->load->model('Modelo_permisos',        'permisos');
+        $this->load->model('Modelo_servicioCotizado','SC');
     }  
 
 	//Vista inicial
@@ -127,7 +128,9 @@ class Escritorio extends Api {
 		$this->area_Estatica('modulo_cotizaciones');
 		$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
 		$data['servicios'] 		  = $this->serv->get_s();  	# Lista de Servicios
-		$data['representantes']	  =$this->representa->get();					# List de representantes
+		$data['representantes']	  = $this->representa->get();					# List de representantes
+		$data['empleados']	      = $this->empleado->get();
+		$data['serviciosCotizados'] = $this->SC->get();
 		if($this->ruta() == 'modulo_cotizaciones_nuevo')
 		{
 			$this->load->view($this->ruta(), $data);

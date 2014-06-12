@@ -9,7 +9,7 @@
          # 'idempleado' => $post['idempleado'],  'fecha'           =>$post['fecha'          ],
          # 'detalles'   => $post['detalles'  ]
          
-        protected function create($args)
+        public function create($args)
         {   
             $this->db->insert('cotizaciones', $args);
             return $this->get($this->db->insert_id());     

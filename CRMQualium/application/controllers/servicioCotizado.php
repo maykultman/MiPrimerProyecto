@@ -18,27 +18,27 @@ class  ServicioCotizado extends Api {
     private function create()
     { 
         # La función ipost()... Recupera todos los post que viene desde la petición        
-        $query = $this->servCotizado->insert_servicioCotizado($this->ipost());
+        $query = $this->servCotizado->create($this->ipost());
         $this->pre_response($query, 'create');                  
     }
 
     private function get()
     {
-       $query = $this->servCotizado->get_servicioCotizado($this->id()); 
+       $query = $this->servCotizado->get($this->id()); 
        $this->pre_response($query, 'get'); 
     }
 
-    // private function update($id)
-    // {   
-    //     $query = $this->servCotizado->patch_customer($id, $this->put());
-    //     $this->pre_response($query, 'update');         
-    // }
+    private function update($id)
+    {   
+        $query = $this->servCotizado->save($id, $this->put());
+        $this->pre_response($query, 'update');         
+    }
 
-    // private function delete($id)
-    // {
-    //     $query = $this->servCotizado->delete_customer($id);
-    //     $this->pre_response($query, 'delete'); 
-    // }
+    private function delete($id)
+    {
+        $query = $this->servCotizado->delete($id);
+        $this->pre_response($query, 'delete'); 
+    }
 
 } # Fin de la Claase Api_cliente
 

@@ -15,7 +15,7 @@ class  Cotizaciones extends Api {
     }
     
     private function create()
-    {
+    {   
         $query = $this->budget->create(  $this->ipost()  );
         $this->pre_response($query, 'create');                  
     }

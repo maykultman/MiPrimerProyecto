@@ -10,4 +10,4 @@ var ColeccionServiciosCotizados = Backbone.Collection.extend({
 	// },
 });
 
-app.coleccionServiciosCotizados = new ColeccionServiciosCotizados();
+app.coleccionServiciosCotizados = new ColeccionServiciosCotizados(app.coleccionServiciosCotizados);
