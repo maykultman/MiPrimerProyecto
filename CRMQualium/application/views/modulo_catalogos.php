@@ -11,14 +11,14 @@
 	                   Empleados
 	                </a>
 	            </li>
-				<li>
+				<!-- <li>
 					<a href="catalogo_planes">
 						<div class="icono_menu_modulo">
 							<span class="icon-resellerhosting"></span>
 					    </div>
 						Planes
 		            </a>
-				</li>
+				</li> -->
 				 <li>
 	            	<a href="catalogo_perfiles">
 	             	   <div class="icono_menu_modulo">
@@ -51,14 +51,7 @@
 	                   Servicios
 	                </a>
 	            </li>        
-	            <li>
-	            	<a href="catalogo_telefonos">
-	             	   <div class="icono_menu_modulo">
-	                	 <span class="icon-phonebook"></span>
-	              	   </div>
-	                   Teléfonos
-	                </a>
-	            </li>                                
+	                                 
 		    </ul> 
 		</nav>	  
     </section>

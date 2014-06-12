@@ -143,3 +143,11 @@ display: inline-block;
 	width: 368px !important;
 }
 	
+/*-------------Catalogo ROLES---------*/
+
+tbody#scroll_roles{ 
+	display: block; 
+	height: 210px; 
+	overflow: auto; 
+	width: 578px;
+}
