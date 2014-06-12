@@ -3,11 +3,13 @@ var app = app || {};
 app.VistaCliente = Backbone.View.extend({
 	tagName	: 'tr',
 	plantilla : _.template($('#plantilla_td_de_cliente').html()),
+	plantillaCliente : _.template($('#modalCliente').html()),
 	events	: {
 		//Es el boton de eliminar del tr del CLIENTE
 			'click #tr_btn_eliminar'		: 'advertenciaEliminar',
 		//Boton para accesar rapidamente a la edición del cliente
 					'click #tr_btn_editar'	: 'editando',
+							'click .verInfo'	: 'verInfo',
 
 		//Es el boton de eliminar la ficha información del CLIENTE
 			'click #modal_btn_eliminar'		: 'advertenciaEliminar',
@@ -122,6 +124,15 @@ app.VistaCliente = Backbone.View.extend({
 		return this;
 	},
 	//---------------------------------------------
+	verInfo	: function () {
+		this.$el.append(this.plantillaCliente( this.model.toJSON() ));
+		var esto = this;
+		var modal = this.$el.find('#cerrar_consulta');
+		modal.on('click',function(){
+			$(this).parents('#'+esto.model.get('id')).modal('hide').remove();
+		});
+		
+	},
 	nuevoContacto	: function (submit) {
 
 		var serializado = this.$formNuevoContacto.serializeArray();
@@ -270,7 +281,6 @@ app.VistaCliente = Backbone.View.extend({
 		// window.location.href = "modulo_consulta_clientes";
 
 		submit.preventDefault();
-
 	},
 	advertenciaEliminar : function (elemento) {
 		// if (elemento.keyCode != 13) {

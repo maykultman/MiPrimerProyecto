@@ -63,7 +63,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 
 	initialize			: function () {
-		this.listenTo(app.coleccionRoles, 'add', this.funcionHola);
+		// this.listenTo(app.coleccionRoles, 'add', this.funcionHola);
 
 		this.$busqueda			= $('#busqueda');
 		this.$hidden_idCliente	= $('#hidden_idCliente');
@@ -92,6 +92,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$tablaProyecto = $('#form_subirArchivos #tabla');
 
 		this.idProyecto;
+
+		this.array = new Array();
 	},
 	render				: function () {
 		return this;
@@ -117,9 +119,11 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	cargarServicios		: function () {
 		app.coleccionServicios.each( this.cargarServicio, this );
 	},
-	funcionHola			: function () {
-		this.cargarServicio(app.coleccionRoles.last());
-	},
+	// funcionHola			: function () {
+		// this.cargarServicio(app.coleccionRoles.last());
+		// var nuevoRol = app.coleccionRoles.last();
+		
+	// },
 	cargarEmpleado		: function (empleado) {
 		/*añadimos una nueva propiedad al modelo de empledo para
 		tener en cada formulario rol el id del proyecto, de esta 
@@ -281,10 +285,10 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			{
 				wait 	:true,
 				success : function (exito) {
-					console.log(exito)
+					console.log('recordar validar que seleccione servicios para el proyecto');
 				},
 				error 	: function (error) {
-					console.log(error)
+					// console.log(error)
 				}
 			}
 		);
@@ -305,10 +309,15 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			var modelo = this.pasarAJson(this.$(forms[iForm]).serializeArray());
 			/*Comprobamos si hay roles nuevos*/
 			if ( typeof modelo.nombre !== 'undefined' ) {
+				$(document.getElementsByName('nombre')).remove();
 				/*Aislamos los nuevos roles*/
 				var nuevosRoles = {};
 				nuevosRoles.nombre = modelo.nombre;
 				delete modelo.nombre;
+				// this.guardarRolesNuevos({nombre:nuevosRoles.nombre});
+
+				// this.guadarRoles(elem);
+				// return;
 				/*Comprobamos si hay más de un rol nuevo*/
 				if ($.isArray(modelo.idrol)) {
 					this.guadarRolRecursivo({
@@ -324,15 +333,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					});
 				};
 			} else {
-				// if ($.isArray(modelo.idrol)) {
-					this.guadarRolRecursivo(modelo);
-				// } else{
-					// this.guadarRolRecursivo({
-					// 	idproyecto 	: modelo.idproyecto, 
-					// 	idpersonal 	: modelo.idpersonal,
-					// 	idrol 		: [modelo.idrol]
-					// });
-				// };
+				this.guadarRolRecursivo(modelo);
 			};
 		};
 	},
@@ -361,14 +362,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		};	
 	},
 	guardarRolesNuevos	: function (roles) {
-		var vistaRol = new app.VistaRol();
-		if ($.isArray(roles.nombre)) {
-			for (var i = 0; i < roles.nombre.length; i++) {
-				vistaRol.guardarRol({nombre:roles.nombre[i]});
-			};
-		} else{
-			vistaRol.guardarRol({nombre:roles.nombre});
-		};
+		/**//**//**//**/
 	},
 	marcarTodos 		: function (elem) {
 		var checkboxTabla = document

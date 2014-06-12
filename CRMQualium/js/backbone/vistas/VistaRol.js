@@ -19,7 +19,7 @@ app.VistaRol = Backbone.View.extend({
 		this.$el.attr('value', this.model.get('id')+'_'+this.model.get('nombre'));
 		return this;
 	},
-	guardarRol		: function (modelo, callBack) {
+	guardarRol		: function (modelo, callBack) {/**/
 		var esto = this;
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
@@ -28,14 +28,15 @@ app.VistaRol = Backbone.View.extend({
 			{
 				wait	: true,
 				success : function (exito) {
-					// callBack(exito.get('id')); //BORRAR
+					// esto.globalizarId(exito.get('id'));
+					if (!(!variable)) {
+						callBack(exito.get('id'));
+					};
 				},
 				error 	: function (error) {}
 			}
 		);
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
-
-		
 	}
 });

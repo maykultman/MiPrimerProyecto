@@ -42,6 +42,8 @@ app.VistaNuevoCliente = Backbone.View.extend({
 			'blur .telefonoRepresentante'	: 'validarTelefono',
 			'blur #otroContactoEmail'		: 'validarCorreo',
 
+			'keyup #rfc'	: 'validarRFC',
+
 
 					//Eventos para las advertencias
 							'click #cerrar'	: 'cerrarAlerta'
@@ -748,6 +750,9 @@ app.VistaNuevoCliente = Backbone.View.extend({
 	cerrarAlerta	: function () {
 		$('#error').toggleClass('oculto');
 	},
+validarRFC	: function (elem) {
+	$(elem.currentTarget).val($(elem.currentTarget).val().toUpperCase());
+},
 // -----limpiarJSON------------------------------- 
 	limpiarJSON	: function (objeto) {
 		/*La variable valorJson y el ciclo for eliminan los
