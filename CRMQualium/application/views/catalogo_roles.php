@@ -20,82 +20,32 @@
 	        <span id="busqueda_rol" class="glyphicon glyphicon-search"></span>    			
 		  	<div class="panel panel-primary" style="width:100%;">
 		  		<table class="table table-hover">
-    				<tbody id="scroll_roles">
-						<tr>
-							<td style="width: 1% !important; " class="icon-operaciones">			
-								<label for="" name="">Administrador</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-			            			<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-	            				</div>			
-							</td>    
-	    				</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">Programador</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">Intendente</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">vendedor</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">Supervisor</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>				
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">Lider de proyecto</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">residente</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>
-						<tr>
-							<td class="icon-operaciones">							
-								<label for="" name="">Practicante</label>
-								<div class="eliminar_permiso">
-									<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
-						            <span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
-					            </div>	
-							</td>
-						</tr>							
-					</tbody>
+    				<tbody id="scroll_roles"></tbody>
 				</table>							    	      
             </div>										
 		</section>
 	</section>
 <div>
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+<script type = "text/plantilla" id="listaRoles">
+	
+	<td style="width: 1% !important; " class="icon-operaciones">			
+		<label for="" name="<%-id %>"><%- nombre %></label>
+		<div class="eliminar_permiso">
+			<span class="icon-trash" id="" data-toggle="tooltip" title="Eliminar"></span>
+		   	<span class="icon-edit" id="" data-toggle="tooltip"  title="Editar"></span>
+	    </div>			
+	</td>
+
+</script>
+<!-- Librerias -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+
+<script type="text/javascript">
+	var app = app || {};
+	app.coleccionDeRoles = <?php echo json_encode($roles)  ?>;
+</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoRol.js'?>"></script>

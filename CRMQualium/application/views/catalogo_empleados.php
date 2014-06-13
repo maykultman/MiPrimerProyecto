@@ -12,11 +12,12 @@
 		  $(function() {
 		    $( ".datepicker" ).datepicker({
 		      changeMonth: true,
-		      changeYear: true
+		      changeYear: true,
+		      yearRange : "1970 : 2000" 
 		    });
 		  });
 		</script>  
-		<section>			
+		<section id='#catalogo_empleados'>			
 			<h3 class="titulo">Empleados</h3> 
 			<button id="nuevo_empleado" class="btn btn-primary" data-toggle="modal" data-target="#modal_nuevo_empleado">
 			  Nuevo
@@ -30,42 +31,46 @@
 				        <h4 class="modal-title">Nuevo Empleado</h4>
 			        </div>
 			        <div class="modal-body">
-				        <form>
+				        <form id="registro">
 				        	<div style="margin-left:85px; ">
-								<input type="text"  class="form-control" placeholder="Nombre">
-								<select class="form-control">
-								  <option>Community Manager</option>
-								  <option>Director General</option>
-								  <option>Diseñador Gráfico Sr</option>
-								   <option>Diseñador Gráfico</option>
-								  <option>Diseñador Comercial</option>
-								  <option>Director Administrativo</option>	  
-								  <option>Programador</option>
-								  <option selected disabled>Cargo</option>
+								<input  id="nombre"  name="nombre" type="text"  class="form-control" placeholder="Nombre" >
+								<select id="puesto"  name="puesto"              class="form-control"                      >
+								  
+								  <option> Community Manager		</option>
+								  <option> Director General			</option>
+								  <option> Diseñador Gráfico Sr		</option>
+								  <option> Diseñador Gráfico		</option>
+								  <option> Diseñador Comercial		</option>
+								  <option> Director Administrativo	</option>	  
+								  <option> Programador				</option>
+								  <option selected disabled>Cargo   </option>
+
 								</select>
-								<input type="text"  class="form-control" placeholder="Dirección">
-								<input type="text"  class="form-control" placeholder="Telefono Móvil">
-								<input type="email
-								"  class="form-control" placeholder="Email">
-								<input class="form-control datepicker" type="text" id="" placeholder="Fecha de nacimiento">
+
+								<input name="direccion" 		  type="text"   class="form-control" 			 placeholder="Dirección"		   >
+								<input name="movil"     		  type="text"   class="form-control"             placeholder="Telefono Móvil"	   >
+								<input name="casa"      		  type="text"   class="form-control"             placeholder="Telefono casa"	   >									
+								<input name="correo"    		  type="email"  class="form-control" 			 placeholder="Email"			   >
+								<input name="fecha_nacimiento"    type="text"   class="form-control datepicker"  placeholder="Fecha de nacimiento" >
 							</div>
 						</form>	
 				    </div>
 			        <div class="modal-footer">
-				      	<button type="button" class="btn btn-primary">Guardar</button>
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>		        
+				      	<button id="guardar"  type="button" class="btn btn-primary">Guardar</button>
+				        <button id="cancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>		        
 			        </div>
 			    </div><!-- /.modal-content -->
 			  </div><!-- /.modal-dialog -->
 			</div><!-- /.modal --><br>
+
 			<div class="tabbable tabs-right">
 		        <ul class="nav nav-tabs">
-		          <li class="active"><a href="#rA" data-toggle="tab">Directores</a></li>
-		          <li class=""><a href="#rB" data-toggle="tab">Gerentes</a></li>
-		          <li class=""><a href="#rC" data-toggle="tab">Programadores</a></li>
-		          <li class=""><a href="#rD" data-toggle="tab">Diseñadores</a></li>
-		          <li class=""><a href="#rE" data-toggle="tab">Community Managers</a></li>
-		          <li class=""><a href="#rF" data-toggle="tab">Otros</a></li>
+		          <li class="active"> <a href="#rA" data-toggle="tab">  Directores		    </a> </li>
+		          <li class="">		  <a href="#rB" data-toggle="tab">  Gerentes			</a> </li>
+		          <li class="">		  <a href="#rC" data-toggle="tab">  Programadores		</a> </li>
+		          <li class="">		  <a href="#rD" data-toggle="tab">  Diseñadores		    </a> </li>
+		          <li class="">		  <a href="#rE" data-toggle="tab">  Community Managers  </a> </li>
+		          <li class="">		  <a href="#rF" data-toggle="tab">  Otros				</a> </li>
 		        </ul>
 		        <div class="tab-content">
 		            <div class="tab-pane active" id="rA">
@@ -236,3 +241,22 @@
 		</section>
 	</section>
 </div>
+
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+
+<!-- Librerias -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+<script type="text/javascript">
+	var app = app || {};
+	app.coleccionDeEmpleados      	= <?php echo json_encode($empleados) 			?>;
+</script>
+<!-- MVC -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">          </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>">          </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">  </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionTelefonos.js'?>">  </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaEmpleado.js'?>">            </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoEmpleado.js'?>">       </script>
+<script type="text/javascript">	var app = app || {};												   </script>
+

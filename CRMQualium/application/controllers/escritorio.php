@@ -52,13 +52,13 @@ class Escritorio extends Api {
 		}
 		if($this->ruta() == 'catalogo_empleados')
 		{
-			
-			$this->load->view($this->ruta());	
+			$data['empleados'] = $this->empleado->get();
+			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_roles')
 		{
-			
-			$this->load->view($this->ruta());	
+			$data['roles'] = $this->Roles->get();
+			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_telefonos')
 		{

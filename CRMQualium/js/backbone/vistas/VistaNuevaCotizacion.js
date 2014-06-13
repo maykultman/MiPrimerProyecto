@@ -4,7 +4,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	el : '.contenedor_principal_modulos',
 
         events : {
-
             
             'click    #cliente'   : 'buscarCliente',     //Cuando escribes una letra, despliega un menu de sugerencias
             'click 	  #guardar'	  : 'guardarCotizacion', //Guarda la cotización
@@ -201,7 +200,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
           var longitud = serviciosCotizados.id;
 
            Backbone.emulateHTTP = true; //Variables Globales
-		   Backbone.emulateJSON = true; //Variables Globales 
+		       Backbone.emulateJSON = true; //Variables Globales 
            app.coleccionCotizaciones.create
            (
            		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
