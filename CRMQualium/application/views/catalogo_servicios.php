@@ -20,16 +20,15 @@
 			<hr><br>
 			<div  id="consulta_servicios" class="panel panel-primary" style="width:100%;">	
 				<table id="consulta_tablaservicio" class="table table-striped">
-					<thead >
+					<thead style="display: inline-table">
 						<tr>
-							<th id="chekcentro">Todos
-							<input type="checkbox"></th>
-							<th >Nombre</th>
-							<th >Concepto</th>
-							<th >Precio</th>
-							<th >Realización</th>
-							<th >Descripción</th>						
-							<th >Opciones</th>
+							<th style="width: 80px;"></th>
+							<th style="width: 335px;">Nombre</th>
+							<th style="width: 180px;">Concepto</th>
+							<th style="width: 100px;">Precio</th>
+							<th style="width: 160px;">Realización</th>
+							<th style="width: 300px;">Descripción</th>						
+							<th style="width: 70px;">Opciones</th>
 						</tr>	
 					</thead>
 					<tbody class="scrollCatalogo">
@@ -80,9 +79,9 @@
 	<td style="width:180px;"> <label class="oculto2 visible2"><%- concepto %> </label><input type="text" name="concepto" value="<%- concepto %>" class="oculto2"> </td>
 	<td style="width:100px;"> <label class="oculto2 visible2"><%- precio %> </label><input type="text" name="precio" value="<%- precio %>" class="oculto2"> </td>
 	<td style="width:160px;"> <label class="oculto2 visible2"><%- realizacion %> </label><input type="text" name="realizacion" value="<%- realizacion %>" class="oculto2"></td>
-	<td><label  class="oculto2 visible2"><%- descripcion %> </label><input type="text" name="descripcion" value="<%- descripcion %>" class="oculto2"></td>
+	<td style="width:300px;"><label  class="oculto2 visible2"><%- descripcion %> </label><input type="text" name="descripcion" value="<%- descripcion %>" class="oculto2"></td>
 	 <!-- <td> <label class="oculto2 visible2"><%- masiva %> </label><input type="text" name="masiva" value="<%- masiva %>" class="oculto2"> -->
-	<td class="iconos-operaciones">
+	<td style="width:70px;"class="iconos-operaciones">
 		<div>
 	     <span class="icon-trash eliminar2"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span><span class="icon-uniF756 editar2"   data-toggle="tooltip" data-placement="top" title="Editar"></span>
 	    </div>

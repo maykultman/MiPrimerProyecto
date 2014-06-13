@@ -1,4 +1,6 @@
 	    <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" type="text/css">
+	    <link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css">
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
 	    <section id="datosUsuario">
 		    <h3>Nuevo Usuario</h3>
 		    <hr><br>		
@@ -16,6 +18,11 @@
 						</select>
 						<input type="text" id="usuario" class="form-control ancho_campos" placeholder="Usuario">
 				        <input type="password" class="form-control ancho_campos" id="contrasena" placeholder="Password">
+				        <label class="btn btn-success fileinput-button" style="float: left;">
+	                    <span class="icon-paperclip"></span>
+	                    <span>Adjuntar Foto</span>
+	                    <input type="file" id="input_foto" multiple name="">
+	                	</label><br><br>	              
 				        <div id="btn_guardar">
 				        	<button type="button" class="btn btn-primary">Guardar</button>
 					    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
