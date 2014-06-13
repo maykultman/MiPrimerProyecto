@@ -105,10 +105,10 @@ class  Api extends CI_Controller {
         if($obj||$obj2)
         {
             # Si es objeto lo convierte en array...
-            if      (is_object($obj2))  {  $put = $this->validar(array($obj2));  }
-            else                        {         parse_str($obj, $var);   
-                                           $put = $this->validar($var);          }
-            return  ($put) ? $put : false;
+            if(is_object($obj2))  {  return (array)$obj2;          }
+            
+            else                  {  parse_str($obj, $var);   
+                                     return $this->validar($var);  }
         }
         return FALSE;       
 

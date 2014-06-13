@@ -20,22 +20,22 @@ class  ServiciosInteres extends Api {
         $this->pre_response($query, 'create');                  
     }
 
-    private function get($id){
+    private function get(){
 
-    	$query = $this->servint->get_servInteres($id);                        
+    	$query = $this->servint->get_servInteres($this->id());                        
     	$this->pre_response($query, 'get'); 
     	
     }
 
-    private function update($id){
+    private function update(){
 
-    	$query = $this->servint->update_servInteres($id, $this->put());
+    	$query = $this->servint->update_servInteres($this->id(), $this->put());
         $this->pre_response($query, 'update');         
     }
 
-    private function delete($id){
+    private function delete(){
 
-    	$query = $this->servint->delete_servInteres($id);    	
+    	$query = $this->servint->delete_servInteres($this->id());    	
         $this->pre_response($query, 'delete'); 
     }
 

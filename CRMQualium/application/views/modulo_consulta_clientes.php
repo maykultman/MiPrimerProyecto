@@ -75,7 +75,7 @@
             <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
             <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#<%- id %>" title="Editar"></span>
             <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
-            <span class="icon-eye verInfo" data-toggle="modal" data-target="#<%- id %>" title="Ver información"></span>
+            <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
             <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
             <div id="alertasCliente">
                 <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
@@ -104,7 +104,7 @@
     </script>
     <!--  --><!--  --><!--  --><!--  --><!--  -->
     <script type="text/template" id="modalCliente">
-        <div class="modal fade" id="<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modal<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
             <div class="modal-dialog">
 
@@ -114,7 +114,7 @@
                     <div class="btn-group-vertical">
                         <button type="button" class="btn btn-primary" id="modal_btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
                         <button type="button" class="btn btn-primary" id="modal_btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
-                        <button type="button" class="btn btn-primary" id="modal_btn_contactos"><label class="icon-friends"  data-toggle="tooltip" data-placement="top" title="Contactos"></label></button>
+                        <button type="button" class="btn btn-primary" id="btn_verContactos"><label class="icon-friends"  data-toggle="tooltip" data-placement="top" title="Contactos"></label></button>
                     </div>
                 </div>
                 <div class="panel panel-primary">
@@ -129,7 +129,7 @@
                             </td>
                             <td style="padding:0px 10px 0px 10px; vertical-align: bottom;">
                                 <h3 class="editar editando"><b><%- nombreComercial %></b></h3>
-                                <input type="text" class="form-control editar" name="nombreComercial" value="<%- nombreComercial %>">
+                                <input type="text" id="nombreComercial" class="form-control editar" name="nombreComercial" value="<%- nombreComercial %>">
                             </td>
                             <td class="respuesta" style="vertical-align: bottom;"></td>
                         </tr>
@@ -164,7 +164,7 @@
                         
                         <!-- -------PRIMERA PAGINA DE INFORMACION DEL CLIENTE------- -->
                         <div class="visible" id="divCliente">
-                            <form id="formCliente" method="post">
+                            <form class="formCliente" method="post">
                                 <table class="table table-striped">
                                     <tr class="trCliente"> <!--Nombre fical-->
                                         <td class="atributo"><b>Nombre Físcal:</b></td>
@@ -290,14 +290,14 @@
                                     <tr class="trCliente"> <!--Correo-->
                                         <td class="atributo"><b>Correo electrónico:</b></td>
                                         <td>
-                                            <% if (typeof correo != "undefined") { %>
+                                            <% if (typeof email != "undefined") { %>
                                                 <a class="editar editando" href="#">
-                                                    <%- correo %>
+                                                    <%- email %>
                                                 </a>
-                                                <input type="text" id="mail" class="form-control editar" name="correo" value="<%- correo %>">
+                                                <input type="text" id="mail" class="form-control editar" name="email" value="<%- email %>">
                                             <% } else { %>
                                                 <label class="editar editando">No especificado</label>
-                                                <input type="text" id="mail" class="form-control editar" name="correo">
+                                                <input type="text" id="mail" class="form-control editar" name="email">
                                             <% }; %>
                                         </td>
                                         <td class="respuesta">

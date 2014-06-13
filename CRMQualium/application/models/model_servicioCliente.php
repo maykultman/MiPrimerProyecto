@@ -33,7 +33,6 @@
 
 		public function update_servCliente($id, $put)
 		{
-			$put = (array)$put[0];
 			$this->db->where('id', $id);
 			// $update = array('status'=>$put['status']);
 			# la variable $put devuelve los campos especificando que datos se actualizaron.

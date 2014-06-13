@@ -30,7 +30,7 @@ class  Representante extends Api {
 
     private function update()
     {
-        $query = $this->rep->update(  $this->id(), $this->put()  );
+        $query = $this->rep->save(  $this->id(), $this->put()  );
         $this->pre_response($query, 'update');  
     }
 

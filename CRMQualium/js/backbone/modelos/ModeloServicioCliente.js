@@ -4,7 +4,7 @@ app.ModeloServicioCliente = Backbone.Model.extend({
 
 	// urlRoot	:'http://crmqualium.com/',
 	defaults	: {
-		status	: true
+		status	: 1
 	},
 
 	cambiarStatus	: function (elemento) {

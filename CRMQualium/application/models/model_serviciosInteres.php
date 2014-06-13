@@ -34,7 +34,6 @@
 
 		public function update_servInteres($id, $put)
 		{
-			$put = (array)$put[0];
 			$this->db->where('id', $id);
 			# la variable $put devuelve los campos especificando que datos se actualizaron.
 			$query = $this->db->update('servicios_interes', array('status'=>$put['status']));

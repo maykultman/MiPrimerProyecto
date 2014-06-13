@@ -60,7 +60,7 @@
 			}
 		}
 
-		/*#divSecciones {
+		#divSecciones {
 			position: relative;
 		}
 		#divSecciones section {
@@ -101,7 +101,7 @@
 		#progressbar li.active:before,  #progressbar li.active:after{
 			background: #27AE60;
 			color: white;
-		}*/
+		}
 	</style>
 	<div id="divSecciones">
 		<ul id="progressbar">
@@ -256,11 +256,16 @@
 							</table>
 						</div>
 					</div> <!-- Fin class row -->
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+						40%
+					</div>
+				</div>
 				</div>
 				<div class="panel-footer">
-					<button type="button" id="btn_regresar" class="btn btn-default">Atras</button>
+					<button type="button" class="btn btn-default btn_regresar">Atras</button>
+					<button type="button" id="btn_omitir_paso" class="btn btn-default">Omitir paso</button>
 					<button type="button" id="btn_guardarRoles" class="btn btn-primary">Guardar</button>
-					<button type="button" id="btn_cancelarRoles" class="btn btn-default">Cancelar</button>
 				</div>
 			</div>
 		</section>
@@ -269,19 +274,19 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">Archivos del proyecto</div>
 				<div class="panel-body">
-						<label class="btn btn-success fileinput-button">
-		                    <span class="icon-paperclip"></span>
-		                    <span>Adjuntar archivos</span>
-		                    <input type="file" id="inputArchivos" multiple name="archivo[]">
-		                </label>
-		                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start">
-		                    <i class="glyphicon glyphicon-upload"></i>
-		                    <span>Subir</span>
-		                </button>
-		                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
-		                    <i class="glyphicon glyphicon-ban-circle"></i>
-		                    <span>Cancelar</span>
-		                </button>
+					<label class="btn btn-success fileinput-button">
+	                    <span class="icon-paperclip"></span>
+	                    <span>Adjuntar archivos</span>
+	                    <input type="file" id="inputArchivos" multiple name="archivo[]">
+	                </label>
+	                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start">
+	                    <i class="glyphicon glyphicon-upload"></i>
+	                    <span>Subir</span>
+	                </button>
+	                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
+	                    <i class="glyphicon glyphicon-ban-circle"></i>
+	                    <span>Cancelar</span>
+	                </button>
 					<form id="form_subirArchivos">
 		                <input type="hidden" id="idpropietario" name="idpropietario">
 		                <input type="hidden" id="tabla" name="tabla">
@@ -301,6 +306,7 @@
 					</table>
 				</div>
 				<div class="panel-footer">
+					<button type="button" class="btn btn-default btn_regresar">Atras</button>
 					<button type="button" class="btn btn-default">Finalizar</button>
 				</div>
 			</div>

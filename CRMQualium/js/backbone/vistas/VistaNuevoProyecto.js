@@ -47,8 +47,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 
 		'click #btn_guardarProyecto'		: 'guadarProyecto',
 		'click #btn_cancelarProyecto'		: '',
-		'click #btn_guardarRoles'			: 'guadarRoles',
-		'click #btn_regresar'			: 'formAnterior',
+		'click #btn_omitir_paso'			: 'formSiguiente',
+		'click #btn_guardarRoles'			: 'validarRolesEmpleados',
+		'click .btn_regresar'				: 'formAnterior',
 
 		'change .btn_marcarTodos'			: 'marcarTodos',
 		'click .cerrar'						: 'cerrarAlerta',
@@ -63,8 +64,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 
 	initialize			: function () {
-		// this.listenTo(app.coleccionRoles, 'add', this.funcionHola);
-
 		this.$busqueda			= $('#busqueda');
 		this.$hidden_idCliente	= $('#hidden_idCliente');
 
@@ -119,11 +118,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	cargarServicios		: function () {
 		app.coleccionServicios.each( this.cargarServicio, this );
 	},
-	// funcionHola			: function () {
-		// this.cargarServicio(app.coleccionRoles.last());
-		// var nuevoRol = app.coleccionRoles.last();
-		
-	// },
 	cargarEmpleado		: function (empleado) {
 		/*añadimos una nueva propiedad al modelo de empledo para
 		tener en cada formulario rol el id del proyecto, de esta 
@@ -228,9 +222,12 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// .click('toggle');//Conmutamos el botón
 	},
 	guadarProyecto		: function (elem) {
-		// this.formSiguiente(elem);
+
+		/*Efecto slide de formulario*/
+		this.formSiguiente(elem);
 		// elem.preventDefault();
 		// return;
+
 		var esto = this;
 		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
 
@@ -262,6 +259,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					/*----------------------------------------------*/
 					esto.$propietarioArchivo.val(exito.get('id'));
 					esto.$tablaProyecto.val('proyectos');
+					return;
 				},
 				error	: function (error) {
 					esto.$error
@@ -298,41 +296,41 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	globalizarIdProyecto	: function (modelo) {
 		this.idProyecto = modelo.get('id');
 	},
-	guadarRoles			: function (elem) {
-		// this.formSiguiente(elem);
+/*Funciones para la dinamina de roles de empleados sobre el nuevo proyecto*/
+	validarRolesEmpleados			: function (elem) {
+		this.formSiguiente(elem);
 		// elem.preventDefault();
 		// return;
 
 		var forms = $('#paso2 form');
-
-		for (var iForm = 0; iForm < forms.length; iForm++) {
-			var modelo = this.pasarAJson(this.$(forms[iForm]).serializeArray());
+		for (var i = 0; i < forms.length; i++) {
+			var modelo = this.pasarAJson(this.$(forms[i]).serializeArray());
 			/*Comprobamos si hay roles nuevos*/
 			if ( typeof modelo.nombre !== 'undefined' ) {
-				$(document.getElementsByName('nombre')).remove();
 				/*Aislamos los nuevos roles*/
 				var nuevosRoles = {};
 				nuevosRoles.nombre = modelo.nombre;
-				delete modelo.nombre;
-				// this.guardarRolesNuevos({nombre:nuevosRoles.nombre});
 
-				// this.guadarRoles(elem);
-				// return;
-				/*Comprobamos si hay más de un rol nuevo*/
-				if ($.isArray(modelo.idrol)) {
-					this.guadarRolRecursivo({
-						idproyecto 	: modelo.idproyecto, 
-						idpersonal 	: modelo.idpersonal,
-						idrol 		: modelo.idrol.concat(this.guardarRolesNuevos({nombre:nuevosRoles.nombre}))
-					});
+				if (modelo.idrol) {
+					console.log(modelo.idrol.length + nuevosRoles.nombre.length);
+
 				} else{
-					this.guadarRolRecursivo({
-						idproyecto 	: modelo.idproyecto, 
-						idpersonal 	: modelo.idpersonal,
-						idrol 		: [modelo.idrol].concat(this.guardarRolesNuevos({nombre:nuevosRoles.nombre}))
-					});
+					console.log(nuevosRoles.nombre.length);
 				};
+				return;
+				
+				delete modelo.nombre;
+				this.guadarRolRecursivo(modelo);
+				this.guardarRolesNuevos({
+					idproyecto 	: modelo.idproyecto, 
+					idpersonal 	: modelo.idpersonal,
+					nombre 		: nuevosRoles.nombre
+				});
 			} else {
+
+				console.log( modelo.idrol.length );
+				return;
+				
 				this.guadarRolRecursivo(modelo);
 			};
 		};
@@ -361,23 +359,40 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			Backbone.emulateJSON = false;
 		};	
 	},
-	guardarRolesNuevos	: function (roles) {
-		/**//**//**//**/
-	},
-	marcarTodos 		: function (elem) {
-		var checkboxTabla = document
-							.getElementsByName(
-								$(elem.currentTarget).attr('id')
-							 );
-		if ($(elem.currentTarget).is(':checked')) {
-			for (var i = 0; i < checkboxTabla.length; i++) {
-				checkboxTabla[i].checked = true;
-			};
+	guardarRolesNuevos	: function (nuevosRoles) {
+		var esto = this;
+
+		if ($.isArray(nuevosRoles.nombre)) {
+				for (var i = 0; i < nuevosRoles.nombre.length; i++) {
+					this.guardarRolesNuevos({
+						idproyecto:nuevosRoles.idproyecto, 
+						idpersonal:nuevosRoles.idpersonal, 
+						nombre:nuevosRoles.nombre[i]
+					});
+				};
 		} else{
-			for (var i = 0; i < checkboxTabla.length; i++) {
-				checkboxTabla[i].checked = false;
-			};
-		};
+			console.log(nuevosRoles);
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionRoles.create(
+				{nombre:nuevosRoles.nombre},
+				{
+					wait	: true,
+					success : function (exito) {
+						esto.guadarRolRecursivo({
+							idproyecto:nuevosRoles.idproyecto, 
+							idpersonal:nuevosRoles.idpersonal, 
+							idrol:exito.get('id')
+						});
+					},
+					error 	: function (error) {
+						console.log('error');
+					}
+				}
+			);
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		};	
 	},
 /*Controladores para carga de archivos*/
 	cargarArchivos		: function (elem) {
@@ -553,6 +568,21 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	        };
 	    });
 	    return json;
+	},
+	marcarTodos 		: function (elem) {
+		var checkboxTabla = document
+							.getElementsByName(
+								$(elem.currentTarget).attr('id')
+							 );
+		if ($(elem.currentTarget).is(':checked')) {
+			for (var i = 0; i < checkboxTabla.length; i++) {
+				checkboxTabla[i].checked = true;
+			};
+		} else{
+			for (var i = 0; i < checkboxTabla.length; i++) {
+				checkboxTabla[i].checked = false;
+			};
+		};
 	},
 });
 

@@ -8,7 +8,7 @@
 		# $post ['ipropietario']         $post ['tabla']
 		# $post ['numero'      ] 		 $post ['tipo' ]
 		
-		protected function create($args)
+		public function create($args)
         {   
             $this->db->insert('telefonos', $args);
             return $this->get($this->db->insert_id());     
