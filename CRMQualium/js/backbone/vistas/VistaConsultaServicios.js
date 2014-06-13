@@ -6,7 +6,7 @@ app.VistaConsultaServicios = Backbone.View.extend({
 	events	: {},
 
 	initialize	: function () {
-		this.$tablaServicios = this.$('#tablaServicios');
+		this.$tablaServicios = this.$('#consulta_tablaservicio');
 		this.cargarServicios();
 		this.listenTo( app.coleccionServicios, 'add', this.cargarServicio );
 	    this.listenTo( app.coleccionServicios, 'reset', this.cargarServicios );

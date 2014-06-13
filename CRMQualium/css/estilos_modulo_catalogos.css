@@ -46,7 +46,7 @@ tbody.scrollCatalogo {
 	display: block; /*obligado*/ 
 	height: 398px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/
-	width:100%;
+	width:100% !important;
 	
 	}
 

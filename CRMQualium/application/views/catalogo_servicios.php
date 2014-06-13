@@ -1,5 +1,42 @@
 		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_catalogos.css'?>" type="text/css">
 		<section id="catalogo_servicio">			
+			<h3>Nuevo Servicio</h3>
+			<hr><br>
+			<form id="formServicio">
+				<div class="nuevoServicio">	
+					<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
+					<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio">
+				</div>
+				<div class="nuevoServicio">
+				 	<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto">
+					<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado">
+				</div>
+				<div class="desborde"></div>
+				<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea><br>
+				<button id="enviar" style=";" type="button" class="btn btn-default">Guardar</button>
+				<button id="btn_cancelar" type="button" class="btn btn-default">Cancelar</button>	
+			</form><br>
+			<h3>Servicios</h3>
+			<hr><br>
+			<div  id="consulta_servicios" class="panel panel-primary" style="width:100%;">	
+				<table id="consulta_tablaservicio" class="table table-striped">
+					<thead >
+						<tr>
+							<th id="chekcentro">Todos
+							<input type="checkbox"></th>
+							<th >Nombre</th>
+							<th >Concepto</th>
+							<th >Precio</th>
+							<th >Realización</th>
+							<th >Descripción</th>						
+							<th >Opciones</th>
+						</tr>	
+					</thead>
+					<tbody class="scrollCatalogo">
+					</tbody>	
+					
+				</table>
+			</div>
 			<!-- {{{{{ALERTAS}}}}}}}}}-->
 		    <div id="alertasCliente">
 		        <!-- Mensaje de advertencia y erro. Se establece el mensaje desde backbone
@@ -32,48 +69,9 @@
 		        </div>
 		    </div>
 		    <!-- {{{{{ALERTAS}}}}}}}}} -->
-			<h3>Nuevo Servicio</h3>
-			<hr><br>
-			<form id="formServicio">
-				<div class="nuevoServicio">	
-					<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
-					<input type="text" id="precio" name="precio" class="form-control" placeholder="Precio">
-				</div>
-				<div class="nuevoServicio">
-				    <!-- <input type="text" id="masiva" name="masiva" class="form-control" placeholder="Precio + IVA"> -->
-					<input type="text" id="concepto" name="concepto" class="form-control" placeholder="Concepto">
-					<input type="text" id="realizacion" name="realizacion" class="form-control" placeholder="Tiempo Estimado">
-				</div>
-				<div class="desborde"></div>
-				<textarea id="descripcion" name="descripcion" class="form-control" placeholder="Descripción"></textarea><br>
-				<button id="enviar" style=";" type="button" class="btn btn-default">Guardar</button>
-				<button id="btn_cancelar" type="button" class="btn btn-default">Cancelar</button>	
-			</form><br>
-			<h3>Servicios</h3>
-			<hr><br>
-			<div  id="consulta_servicios">
-				<table id="tablaServicios" class="table table-striped">
-					<thead id="thead_Catalogo">
-						<tr>
-							<th id="chekcentro">Todos
-							<input type="checkbox"></th>
-							<th style="width:310px;">Nombre</th>
-							<th style="width:178px;">Concepto</th>
-							<th style="width:100px;">Precio</th>
-							<th style="width:158px;">Realización</th>
-							<th style="width:295px;">Descripción</th>						
-							<th >Opciones</th>
-						</tr>	
-					</thead>
-					<tbody class="scrollCatalogo">
-					</tbody>	
-					
-				</table>
-			</div>
 		</section>
     </section>
-</div>
-	
+</div>	
 <!--Plantillas -->
 <script type="text/plantilla" id="plantilla_servicio">
 
