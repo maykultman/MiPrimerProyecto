@@ -101,7 +101,7 @@
 		    	<h4>Datos personales</h4>
 		    	<form>
 		        	<div class="campos_edicion">
-		     		    <input type="text" class="form-control ancho_campos2" placeholder="Nombre">
+		     		    <input type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
 						<label class="icon-uniF479 exito"></label>
 						<select class="form-control ancho_campos2">
 						    <option>Community Manager</option>
@@ -115,12 +115,13 @@
 						</select>
 					</div>
 					<div class="campos_edicion">	
-						<input type="text"  class="form-control ancho_campos2" placeholder="Dirección">
-						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil">
+						<input type="text"  class="form-control ancho_campos2" placeholder="Dirección" value="<%- direccion%>">
+						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil" value="">
+						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Casa" value="">
 					</div>
 					<div class="campos_edicion">	
-						<input type="text"  class="form-control ancho_campos2" placeholder="Email">
-						<input class="form-control ancho_campos2 datepicker" type="text" id="" placeholder="Fecha de nacimiento">
+						<input type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
+						<input class="form-control ancho_campos2 datepicker" type="text" id="" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
 					</div>
 				</form>	      
 			</div>
