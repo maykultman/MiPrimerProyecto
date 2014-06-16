@@ -6,26 +6,17 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 	events : {
 		'click #guardar'      : 'guardar',
 		'click .opciones'	  : 'opciones'
-		// 'click #directores'	  : directores
-		// 'click #gerentes'     : gerentes
-		// 'click #programadores':
-		// 'click #diseñadores'  :
-		// 'click #community'    :
-		// 'click #otros'        :
 	},
 
 	initialize : function (){
 		this.$divEmpleado = this.$('#divEmpleado');
-
 		this.cargarEmpleados();
-		// this.opciones();
 	},
 
 	render : function()	{	return this; },
 
 	opciones : function(evento)
-	{
-		// var plantilla =  _.template($('#datosEmpleado').html());
+	{		
 		this.$divEmpleado.html('');
 		var puesto = $(evento.currentTarget).attr('id');
 
@@ -41,24 +32,19 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 
 			});
 
-		// plantilla.
-
-		//var vistaEmpleado = new app.VistaCatalogoEmpleado({ model : evens });
-		//this.$divEmpleado.append(vistaEmpleado.render().el);
 		for(i in evens){
 			var viewEmpleado = new app.VistaCatalogoEmpleado();
 			this.$divEmpleado.append(viewEmpleado.render({ filtrado : evens[i]}).el);
 		}
-		// return evens;
-		// this.$divEmpleado.append(vistaEmpleado.render().el);
-		// alert(JSON.stringify(evens));
-		
 	},
 
 	cargarEmpleado : function(empleado)
 	{
-		// empleado = this.opciones();
 		var vistaEmpleado = new app.VistaCatalogoEmpleado();
+
+		var telefono  = app.coleccionTelefonos.where ({ idpropietario : empleado.get('id'), tabla : 'empleados' });
+		console.log(telefono);
+
 		this.$divEmpleado.append(vistaEmpleado.render({model : empleado}).el);
 	},
 

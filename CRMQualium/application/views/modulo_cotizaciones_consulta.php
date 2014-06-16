@@ -63,16 +63,16 @@
 	app.coleccionServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
 </script>
 <!-- MVC -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'?>">			 </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>">             </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">            </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'?>">          </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'?>"> </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>">     </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionServiciosCotizados.js'?>">     </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCotizacion.js'?>">			 </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">    </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'?>">  </script>
-<script type="text/javascript">	var app = app || {};													 </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'?>">			 		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>">             		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">            		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'?>">           </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'?>"> 		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>">     		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionServiciosCotizados.js'?>">  </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCotizacion.js'?>">			 		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">    		</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'?>">  		</script>
+<script type="text/javascript">	var app = app || {};													 		</script>
 
 
