@@ -106,20 +106,20 @@ class Escritorio extends Api {
 	public function proyectos()
 	{
 		$this->area_Estatica('modulo_proyectos');
+		$this->load->model('modelo_servicioProyecto', 'serProy');
+
 		$data['clientes']    = $this->customer->get_customerProyect();	# Lista de clientes
 		$data['empleados'] 	 = $this->empleado->get();  				# Proyectos
 		$data['servicios'] 	 = $this->serv->get_Servicios_Proyecto();   # Servicios Relacionados con los proyectos
 		$data['roles']		 = $this->Roles->get();  					# Lista de Roles.
-
+		$data['proyectoRoles'] = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
+		$data['proyectos'] = $this->proyecto->get();
+		$data['servicios_proy'] = $this->serProy->get('','proyectos');
+		
 		if($this->ruta() == 'modulo_proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
 		if($this->ruta() == 'modulo_proyectos_consulta')
-		{
-			$this->load->model->('modelo_servicioProyecto', 'serProy');
-
-			$data['proyectoRoles'] = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
-			$data['proyectos'] = $this->proyecto->get();
-			$data['servicios_proy'] = $this->serProy->get('','proyectos');
+		{			
 			$this->load->view($this->ruta(), $data);			
 		}
 		if($this->ruta() == 'modulo_proyectos_cronograma')

@@ -48,6 +48,7 @@
 		public function get_customerProyect()
 		{
 			$this->db->select('id, nombreComercial');
+			$this->db->where(array('visibilidad'=>1, 'tipoCliente'=>'cliente' ));
 			return $this->db->get('clientes')->result();
 		}
 	

@@ -140,7 +140,15 @@
 <!-- <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script> -->
 <script type="text/javascript">
   var app = app || {};
-  app.coleccionDeClientes = [];
+  app.coleccionDeClientes       = <?php echo json_encode($clientes)       ?>;
+  app.coleccionDeProyectos      = <?php echo json_encode($proyectos)      ?>;
+  app.coleccionDeRoles          = <?php echo json_encode($roles)          ?>;
+  app.coleccionDeServicios      = <?php echo json_encode($servicios)      ?>;
+  app.coleccionDeEmpleados      = <?php echo json_encode($empleados)      ?>;
+  app.coleccionDeProyectoRoles  = <?php echo json_encode($proyectoRoles)  ?>;
+  app.coleccionServicosProyecto = <?php echo json_encode($servicios_proy) ?>;
+
+  
 </script>
 <!-- Utilerias -->
 <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script> -->
