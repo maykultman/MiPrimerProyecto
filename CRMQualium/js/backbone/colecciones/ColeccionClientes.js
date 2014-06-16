@@ -23,14 +23,15 @@ var ColeccionClientes = Backbone.Collection.extend({
 		return this.last().get('id');
 	},
 
-	// parse	: function (response) {
-	// 	return response.data;
-	// },
+	parse	: function (response) {
+		return response;
+	},
 
 	obtenerUltimo	: function () {
 		return this.last();
 	},
 
+	/*Descomentar antes de subir a git, debe arregarse que se pueda utilizar en cualquier módulo*/
 	sync	: function (method, model, options) {
 		if (method === 'read') {
 			app.busquedaCliente.cliente.buscarPorNombre(options.data.nombreComercial).done(function (data) {
