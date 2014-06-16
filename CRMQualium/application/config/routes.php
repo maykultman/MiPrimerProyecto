@@ -35,7 +35,9 @@ $route['modulo_cotizaciones_nuevo']    = 'escritorio/cotizacion/$1';
 $route['modulo_cotizaciones_consulta'] = 'escritorio/cotizacion/$1';
 
 //Rutas para la facturas...
-$route['modulo_facturas'] = 'escritorio/facturas/$1';
+  $route['prueba_ver_proyecto'] = 'escritorio/facturas/$1';
+  $route['modal_consulta_proyecto'] = 'escritorio/facturas/$1';
+//$route['modulo_facturas'] = 'escritorio/facturas/$1';
 // $route['modulo_facturass'] = 'escritorio/facturas/$1';
 // $route['modulo_facturas'] = 'escritorio/facturas/$1';
 

@@ -34,7 +34,7 @@
 		</li>
 		<li class="">
 			<label class="icono"><a class="icono" href="#"><span class="icon-spreadsheet"></span></a></label>
-			<a class="anclaMenu" href="#">
+			<a class="anclaMenu" href="prueba_ver_proyecto">
 				Facturas
 			</a>
 		</li>
