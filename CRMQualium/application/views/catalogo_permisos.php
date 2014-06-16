@@ -21,7 +21,7 @@
 		    <h3>Lista de permisos</h3>
 			<hr>
 			<input id="buscar_permiso" type="search" class="form-control" placeholder="Busqueda" style="width:100%; ">
-	        <span id="busqueda_rol" class="glyphicon glyphicon-search"></span>  					
+	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>  					
 		  	<div class="panel panel-primary" style="width:100%;">
 		  		<table class="table table-hover">
     				<tbody id="scroll_permisos">																									

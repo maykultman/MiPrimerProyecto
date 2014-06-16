@@ -178,7 +178,7 @@ tbody#scroll_roles{
 	width: 100%!important;
 }
 
-#busqueda_rol{
+#busqueda_icono{
 
 	float: right;	
 	margin-top: -38px;
@@ -210,4 +210,13 @@ td .ocultoR{
 }
 td .visibleR{
 	display: block;
+}
+
+/*------------------catalogos puestos------------*/
+
+tbody#scroll_puestos{ 
+	display: block; 
+	height: 210px; 
+	overflow: auto; 
+	width: 100%;
 }

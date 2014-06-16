@@ -61,16 +61,12 @@ class Escritorio extends Api {
 			$data['roles'] = $this->Roles->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		if($this->ruta() == 'catalogo_telefonos')
+		if($this->ruta() == 'catalogo_puestos')
 		{
 			
 			$this->load->view($this->ruta());	
 		}
-		if($this->ruta() == 'catalogo_planes')
-		{
-			
-			$this->load->view($this->ruta());	
-		}
+		
 
 
 	}

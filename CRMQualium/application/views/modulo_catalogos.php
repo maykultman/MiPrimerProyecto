@@ -35,6 +35,14 @@
 	                   Permisos
 	                </a>
 	            </li>
+	            <li>
+	            	<a href="catalogo_puestos">
+	             	   <div class="icono_menu_modulo">
+	                	 <span class=" icon-avatar2"></span>
+	              	   </div>
+	                   Puestos
+	                </a>
+	            </li>
 	             <li>
 	            	<a href="catalogo_roles">
 	             	   <div class="icono_menu_modulo">
