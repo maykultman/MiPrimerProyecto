@@ -8,7 +8,7 @@
 		<h4>¡Advertencia!</h4>
 		<p id="comentario"></p>
 		<br>
-		<button type="button" id="cancelar" class="btn btn-danger">Cancelar archivos</button>
+		<button type="button" id="cancelar" class="btn btn-danger">Cancelar</button>
 		<button type="button" id="continuar" class="btn btn-default">Continuar</button>
 	</div>
 	<div class="alert alert-danger alert-dismissable oculto" id="error">
@@ -35,6 +35,11 @@
 			/*border: 1px solid gray;*/
 		}
 
+		/*#guardarProyecto {
+			margin-left: 0px;
+			margin-right: 0px;
+		}*/
+
 		.fileinput-button {
 			position: relative;
 			overflow: hidden;
@@ -60,7 +65,7 @@
 			}
 		}
 
-		#divSecciones {
+		/*#divSecciones {
 			position: relative;
 		}
 		#divSecciones section {
@@ -81,7 +86,7 @@
 			text-transform: uppercase;
 			text-align: center;
 			font-size: 9px;
-			width: 33.33%;
+			width: 25%;
 			float: left;
 			position: relative;
 		}
@@ -101,14 +106,15 @@
 		#progressbar li.active:before,  #progressbar li.active:after{
 			background: #27AE60;
 			color: white;
-		}
+		}*/
 	</style>
 	<div id="divSecciones">
-		<ul id="progressbar">
+		<!-- <ul id="progressbar">
 			<li class="active">Datos de proyecto</li>
 			<li>Roles del proyecto</li>
 			<li>Archivos del proyecto</li>
-		</ul>
+			<li>Guardar proyecto</li>
+		</ul> -->
 		<section id="paso1" class="section_Visible"><!-- section_Oculto -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">Datos de proyecto</div>
@@ -116,98 +122,89 @@
 					<form id="formNuevoProyecto">
 						<div class="row">
 							<div class="col-md-3">
-								<div id="nom_proy">
-									<!-- <div id="busquedaClinte"> -->
-										<div class="form-group has-feedback">
-										  <input type="text" id="busqueda" class="form-control" placeholder="Buscar cliente" style="width: 100%;">
-										  <span class="glyphicon glyphicon-search form-control-feedback" style="top:0px"></span>
-										</div>
-										
-										<input type="hidden" id="hidden_idCliente" name="idcliente">
-										<!-- <select id="select_clientes" class="form-control ocu" style="width:100%" name="idcliente">
-										</select> -->
-									<!-- </div> -->
-									<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">
-								</div>
-							</div>
-							<div class="col-md-6">
 								<fieldset>
-									<label for="disabledTextInput">Especifique la fecha de inicio y entrega del proyecto</label>
+									<legend> <h5>Cliente y nombre del proyecto</h5> </legend>
+									<div class="form-group has-feedback">
+									  <input type="text" id="busqueda" class="form-control" placeholder="Buscar cliente" style="width: 100%;">
+									  <span class="glyphicon glyphicon-search form-control-feedback" style="top:0px"></span>
+										<input type="hidden" id="hidden_idCliente" name="idcliente">
+									</div>
+									<input type="text" class="form-control" placeholder="Nombre del proyecto" style="width:100%" name="nombre">
+								</fieldset>
+							</div>
+							<div class="col-md-9">
+								<fieldset>
+									<legend> <h5>Establecer fecha de inicio y fecha de entrega del proyecto</h5> </legend>
 									<div class="row">
-										<div class="col-md-4">
-											<div class="divfech">	    	
-											    <h5><b>Inicio</b></h5>	    
-											    <input id="fechaInicio" class="form-control" type="date" name="fechainicio">
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="divfech">
-												<h5><b>Termino</b></h5>
-												<input id="fechaEntrega" class="form-control" type="date" name="fechafinal">
-										    </div>
+										<div class="col-md-3">
+											<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
+								    		<input id="fechaInicio" class="form-control" type="date" name="fechainicio">
 										</div>
 										<div class="col-md-3">
-											<div class="divfech">
-												<h5><b>Duración en días</b></h5>
-												<input type="number" id="duracion" class="form-control">
-											</div>
+											<div style="margin: 23px 0px 21px 0px;"><b>Termino</b></div>
+											<input id="fechaEntrega" class="form-control" type="date" name="fechafinal">
+										</div>
+										<div class="col-md-3">
+											<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
+											<input type="number" id="duracion" class="form-control">
 										</div>
 									</div>
 								</fieldset>
 							</div>
 						</div>
 						<br>
+						<fieldset>
+							<legend> <h5>Servicios que integrarán el proyecto</h5> </legend>
+							<div class="row">
+								<div class="col-md-3">
+									<table class="table table-hover table-curved"><!--  tbla_apilacion -->
+										<thead class="cabecera_serv2">
+											<tr class="color_th">						
+											  <th>Servicios</th>
+											</tr>
+										</thead>
+										<tbody id="tbody_servicios" class="scrolltbla">
+										</tbody>
+									</table>	
+								</div>
+								<div class="col-md-7">
+									<table id="tbla_roles" class="table table-striped table-curved">
+										<thead>
+											<tr class="color_th">
+												<th>&nbsp;&nbsp;&nbsp;</th>
+												<th>Servicio seleccionado</th>
+												<th>&nbsp;&nbsp;&nbsp;</th>
+											</tr>
+									    </thead>
+									    <tbody id="tbody_servicios_seleccionados">
+									    	<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
+									    </tbody>
+									    <tfoot>
+									    	<tr>
+										    	<td colspan="4">
+										    		<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-default btn-xs">
+															<input type="checkbox" id="checkboxServicios" class="btn_marcarTodos"> Marcar todos
+														</label>
+													</div>
+													<button type="button" class="btn btn-danger btn-xs checkboxServicios btn_eliminarMarcados">Eliminar marcados</button>
+										    	</td>
+										    </tr>
+									    </tfoot>		
+									</table>
+								</div>
+							</div> <!-- Fin class row -->
+						</fieldset>
 
-						<div class="row">
-							<div class="col-md-3">
-								<table class="table table-curved"><!--  tbla_apilacion -->
-									<thead class="cabecera_serv2">
-										<tr class="color_th">						
-										  <th>Servicios</th>
-										</tr>
-									</thead>
-									<tbody id="tbody_servicios" class="scrolltbla">
-									</tbody>
-								</table>	
-							</div>
-							<div class="col-md-6">
-								<table id="tbla_roles" class="table table-striped table-curved">
-									<thead>
-										<tr class="color_th">
-											<th>&nbsp;&nbsp;&nbsp;</th>
-											<th>Servicio seleccionado</th>
-											<th>&nbsp;&nbsp;&nbsp;</th>
-										</tr>
-								    </thead>
-								    <tbody id="tbody_servicios_seleccionados">
-								    	<!-- PLANTILLA SERVICIOS SELECCIONADOS -->
-								    </tbody>
-								    <tfoot>
-								    	<tr>
-									    	<td colspan="4">
-									    		<!-- <button type="button" id="checkboxServicios" class="btn_marcarTodos">Marcar todos</button> -->
-												<div class="btn-group" data-toggle="buttons">
-													<label class="btn btn-default btn-xs">
-														<input type="checkbox" id="checkboxServicios" class="btn_marcarTodos"> Marcar todos
-													</label>
-												</div>
-												<button type="button" class="btn btn-danger btn-xs checkboxServicios btn_eliminarMarcados">Eliminar marcados</button>
-									    	</td>
-									    </tr>
-								    </tfoot>		
-								</table>
-							</div>
-						</div> <!-- Fin class row -->
-
-						<br>
-						
 						<textarea class="form-control" rows="4" placeholder="Descripción del proyecto" name="descripcion"></textarea>
+						
 					</form>
 				</div>
-				<div class="panel-footer">
+				<!-- <div class="panel-footer">
 					<button type="button" id="btn_cancelarProyecto" class="btn btn-default">Cancelar</button>
-					<button type="button" id="btn_guardarProyecto" class="btn btn-primary">Guardar</button>
-				</div>
+					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
+				</div> -->
 			</div>
 		</section>
 
@@ -216,8 +213,13 @@
 				<div class="panel-heading">Roles del proyecto</div>
 				<div class="panel-body">
 					<div class="row">
+						<div class="col-md-12">
+							<fieldset>
+								<legend><h5>Establecer participantes en el proyecto y sus respectivos roles</h5></legend>
+							</fieldset>
+						</div>
 						<div class="col-md-3">
-							<table class="table table-curved"><!--  tbla_apilacion -->
+							<table class="table table-hover table-curved"><!--  tbla_apilacion -->
 								<thead class="cabecera_serv2">
 									<tr class="color_th">						
 									  <th>Empleado</th>
@@ -227,7 +229,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="col-md-7">
+						<div class="col-md-9">
 							<table id="tbla_roles" class="table table-striped table-curved">
 								<thead>
 									<tr class="color_th">
@@ -256,17 +258,17 @@
 							</table>
 						</div>
 					</div> <!-- Fin class row -->
-				<div class="progress">
+				<!-- <div class="progress">
 					<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 						40%
 					</div>
+				</div> -->
 				</div>
-				</div>
-				<div class="panel-footer">
-					<button type="button" class="btn btn-default btn_regresar">Atras</button>
+				<!-- <div class="panel-footer">
+					<button type="button" class="btn btn-default btn_regresar">Atrás</button>
 					<button type="button" id="btn_omitir_paso" class="btn btn-default">Omitir paso</button>
-					<button type="button" id="btn_guardarRoles" class="btn btn-primary">Guardar</button>
-				</div>
+					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
+				</div> -->
 			</div>
 		</section>
 
@@ -274,22 +276,30 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">Archivos del proyecto</div>
 				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<fieldset>
+								<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas. Los archivos deben estár en la misma carpeta</h5></legend>
+							</fieldset>
+						</div>
+					</div>
 					<label class="btn btn-success fileinput-button">
 	                    <span class="icon-paperclip"></span>
 	                    <span>Adjuntar archivos</span>
 	                    <input type="file" id="inputArchivos" multiple name="archivo[]">
 	                </label>
-	                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start">
+	                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start" style="display:none;">
 	                    <i class="glyphicon glyphicon-upload"></i>
 	                    <span>Subir</span>
 	                </button>
 	                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
 	                    <i class="glyphicon glyphicon-ban-circle"></i>
-	                    <span>Cancelar</span>
+	                    <span>Borrar lista</span>
 	                </button>
 					<form id="form_subirArchivos">
 		                <input type="hidden" id="idpropietario" name="idpropietario">
-		                <input type="hidden" id="tabla" name="tabla">
+		                <input type="hidden" id="tabla" name="tabla" value="proyectos">
+		                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
 				    </form>
 				    <br>
 					<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
@@ -305,20 +315,22 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="panel-footer">
-					<button type="button" class="btn btn-default btn_regresar">Atras</button>
-					<button type="button" class="btn btn-default">Finalizar</button>
-				</div>
+				<!-- <div class="panel-footer">
+					<button type="button" class="btn btn-default btn_regresar">Atrás</button>
+					<button type="button" class="btn btn-default btn_siguiente">Siguiente</button>
+				</div> -->
 			</div>
 		</section>
+		<button type="button" id="btn_guardarProyecto" class="btn btn-primary btn-lg">Guardar</button>
+		<button type="button" id="btn_cancelarProyecto" class="btn btn-default btn-lg">Cancelar</button>
 	</div>
 </div> <!-- LA APERTURA DE ESTA ETIQUETA ESTÁ EN OTRO DOCUMENTO. NO BORRAR!! -->
 
 
 <!-- plantillas -->
-	<script type="text/template" id="option_cliente">
+	<!-- <script type="text/template" id="option_cliente">
 		<%- nombreComercial %>
-	</script>
+	</script> SIN USO TEMPORALMENTE, BORRAR SI NO SE LLEGA A UTILIZAR -->
 
 	<script type="text/template" id="tds_servicio">
 		<td style="padding:0px">

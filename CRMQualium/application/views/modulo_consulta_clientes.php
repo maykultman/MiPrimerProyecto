@@ -73,7 +73,7 @@
         <td class="icon-operaciones">
             
             <span class="icon-trash" id="tr_btn_eliminar" data-toggle="tooltip" data-placement="top" title="Eliminar"></span>
-            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#<%- id %>" title="Editar"></span>
+            <span class="icon-edit2" id="tr_btn_editar" data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
             <span class="icon-email" data-toggle="tooltip" data-placement="top" title="Enviar"></span>
             <span class="icon-eye verInfo" data-toggle="modal" data-target="#modal<%- id %>" title="Ver información"></span>
             <!-- {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{ALERTAS}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} -->
@@ -512,7 +512,7 @@
                 <button type="button" class="btn btn-primary" id="btn_editarContacto"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>
             </div>
         </div>
-        <h3 id="etiqueta">No especificado</h3>
+        <h3><%- etiqueta %></h3>
         <form>
             <table class="table table-striped tbla_contacto">
                 <tr class="trContacto">

@@ -45,11 +45,12 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		'change #duracion'					: 'calcularEntrega',
 		'keyup #duracion'					: 'calcularEntrega',
 
-		'click #btn_guardarProyecto'		: 'guadarProyecto',
-		'click #btn_cancelarProyecto'		: '',
-		'click #btn_omitir_paso'			: 'formSiguiente',
-		'click #btn_guardarRoles'			: 'validarRolesEmpleados',
-		'click .btn_regresar'				: 'formAnterior',
+		// 'click .btn_siguiente'				: 'formSiguiente',
+		'click #btn_guardarProyecto'		: 'guardarProyecto',
+		'click #btn_cancelarProyecto'		: 'cancelarProyecto',
+		// 'click #btn_omitir_paso'			: 'formSiguiente',
+		// 'click #btn_guardarRoles'			: 'validarRolesEmpleados',
+		// 'click .btn_regresar'				: 'formAnterior',
 
 		'change .btn_marcarTodos'			: 'marcarTodos',
 		'click .cerrar'						: 'cerrarAlerta',
@@ -85,10 +86,13 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$duracion          = $('#duracion');
 
 		this.$inputArchivos		= $('#inputArchivos');
+		this.$fecha_creacion	= $('#fecha_creacion');
 		this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
 		this.$tbody_archivos	= $('#tbody_archivos');
 		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
 		this.$tablaProyecto = $('#form_subirArchivos #tabla');
+
+		this.cargarEmpleados();
 
 		this.idProyecto;
 
@@ -163,9 +167,18 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$fechaEntrega.val( fechaEntrega );
 	},
 	cerrarAlerta		: function (elem) {
-		$(elem.currentTarget)
-		.parent()
-		.toggleClass('oculto');
+		/*Este condicion evalua si existe la variable global
+		que almacena el html para la alerta de advertencia. de lo
+		contrario no pa a la otra línea. esta variable se crea y 
+		se guarda el html cuando el usuario preciona el botón de 
+		cancelar proyecto en la función cancelarProyecto.
+		DAR MANTENIMIENTO*/
+		if (this.htmlAdvertencia) {
+			this.$advertencia.html(this.htmlAdvertencia);
+			this.$advertencia.toggleClass('oculto');
+			return;	
+		};
+		$(elem.currentTarget).parent().toggleClass('oculto');
 	},
 	eliminarDeTabla		: function (elem) {
 		/*Separamos la clase del elem para acceder a la tabla
@@ -221,15 +234,26 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		// .children('.btn')//Nos hubicamos en el hijo del hijo anterios
 		// .click('toggle');//Conmutamos el botón
 	},
-	guadarProyecto		: function (elem) {
+	guardarProyecto		: function (elem) {
 
 		/*Efecto slide de formulario*/
-		this.formSiguiente(elem);
+		// this.formSiguiente(elem);
 		// elem.preventDefault();
 		// return;
 
 		var esto = this;
 		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
+
+		console.log(modeloProyecto);
+
+		if (modeloProyecto.idcliente == '' || modeloProyecto.nombre == '') {
+			esto.$error
+				.children('#comentario')
+				.html('Estableca un cliente y un nombre para el proyecto<br>Si no desea asociar un cliente a un proyecto escriba <b>qualium</b> como cliente');
+			esto.$error
+				.toggleClass('oculto');
+			return;
+		};
 
 		/******************************/
 		var servicios = modeloProyecto.servicios;
@@ -245,7 +269,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				success	: function (exito) {
 					esto.guadarServiciosProyecto(exito.get('id'),servicios);
 					/*----------------------------------------------*/
-					esto.globalizarIdProyecto(exito);
+					// esto.globalizarIdProyecto(exito);
 					/*----------------------------------------------*/
 					esto.$exito
 						.children('#comentario')
@@ -255,11 +279,16 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					esto.$exito
 						.toggleClass('oculto');
 					/*----------------------------------------------*/
-					esto.cargarEmpleados();
-					/*----------------------------------------------*/
+					/*Establece el id del proyecto como propietario
+					del archivo a guardar*/
 					esto.$propietarioArchivo.val(exito.get('id'));
-					esto.$tablaProyecto.val('proyectos');
-					return;
+					var f = new Date();
+					esto.$fecha_creacion.val(f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate());
+					/*Establece el id del proyecto a todos los roles
+					a guardar*/
+					$(document.getElementsByName('idproyecto')).val(exito.get('id'),servicios);
+					esto.validarRolesEmpleados();
+					esto.subirArchivo();
 				},
 				error	: function (error) {
 					esto.$error
@@ -274,6 +303,19 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		Backbone.emulateJSON = false;
 
 		elem.preventDefault();
+	},
+	cancelarProyecto 	: function () {
+		/*Se respalda todo el html para luego volverlo a reestablecer
+		en caso de que el usuario precione continuar. el html se 
+		restablece en la función cancelarArchivo debido a que la 
+		alerta se utiliza también para archivos. DAR MANTENIMIENTO*/
+		this.htmlAdvertencia = this.$advertencia.html();
+		this.$advertencia
+			.children('#comentario')
+			.html('¿Esta seguro de cancelar la creación de este poyecto?');
+		this.$advertencia.append('<a href="modulo_proyectos_consulta" class="btn btn-danger">Cancelar</a>').children('#cancelar').remove();
+		this.$advertencia
+			.toggleClass('oculto');
 	},
 	guadarServiciosProyecto	: function (idproyecto,servicios) {
 		Backbone.emulateHTTP = true;
@@ -297,11 +339,12 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.idProyecto = modelo.get('id');
 	},
 /*Funciones para la dinamina de roles de empleados sobre el nuevo proyecto*/
-	validarRolesEmpleados			: function (elem) {
-		this.formSiguiente(elem);
+	validarRolesEmpleados			: function () {/*elem*/
+		// this.formSiguiente(elem);
 		// elem.preventDefault();
 		// return;
 
+		// this.count = 0;
 		var forms = $('#paso2 form');
 		for (var i = 0; i < forms.length; i++) {
 			var modelo = this.pasarAJson(this.$(forms[i]).serializeArray());
@@ -311,13 +354,15 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				var nuevosRoles = {};
 				nuevosRoles.nombre = modelo.nombre;
 
-				if (modelo.idrol) {
-					console.log(modelo.idrol.length + nuevosRoles.nombre.length);
+				/* |||||||||||||||||||||||||||||||||||||| */
+				// this.count = 0;
+				// if (modelo.idrol) {
+				// 	this.count += modelo.idrol.length + nuevosRoles.nombre.length;
 
-				} else{
-					console.log(nuevosRoles.nombre.length);
-				};
-				return;
+				// } else{
+				// 	this.count += nuevosRoles.nombre.length;
+				// };
+				/* |||||||||||||||||||||||||||||||||||||| */
 				
 				delete modelo.nombre;
 				this.guadarRolRecursivo(modelo);
@@ -328,12 +373,15 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				});
 			} else {
 
-				console.log( modelo.idrol.length );
-				return;
+				/* |||||||||||||||||||||||||||||||||||||||| */
+				// this.count += modelo.idrol.length;
+				/* |||||||||||||||||||||||||||||||||||||||| */
 				
 				this.guadarRolRecursivo(modelo);
 			};
 		};
+		// console.log(this.count);
+		// this.count = 0;
 	},
 	guadarRolRecursivo	: function (modelo) {
 		if ($.isArray(modelo.idrol)) {
@@ -371,7 +419,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 					});
 				};
 		} else{
-			console.log(nuevosRoles);
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;
 			app.coleccionRoles.create(
@@ -407,8 +454,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	eliminarFileList	: function () {
 		delete this.$inputArchivos.val('');
 	},
-	subirArchivo		: function (elem) {
-		elem.preventDefault();
+	subirArchivo		: function () {/*elem*/
+		// elem.preventDefault();
 		var archivos = this.$inputArchivos.prop('files');
 		
 		var esto = this;
@@ -446,23 +493,23 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			};
 		}			
 	},
-	guardarArchivo		: function (archivo) {
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
-		app.COLECCIONDEARCHIVOSPARAPROYECTOS.create(
-			{
-				idproyecto 	: this.idProyecto,
-				direccion	: 'archivos/'+archivo
-			},
-			{
-				wait 	: true,
-				success : function (exito) {},
-				error 	: function (error) {}
-			}
-		);
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
-	},
+	// guardarArchivo		: function (archivo) {
+	// 	Backbone.emulateHTTP = true;
+	// 	Backbone.emulateJSON = true;
+	// 	app.COLECCIONDEARCHIVOSPARAPROYECTOS.create(
+	// 		{
+	// 			idproyecto 	: this.idProyecto,
+	// 			direccion	: 'archivos/'+archivo
+	// 		},
+	// 		{
+	// 			wait 	: true,
+	// 			success : function (exito) {},
+	// 			error 	: function (error) {}
+	// 		}
+	// 	);
+	// 	Backbone.emulateHTTP = false;
+	// 	Backbone.emulateJSON = false;
+	// },
 	eliminarArchivo		: function (elem) {
 		this.arrArchivos.push( $(elem.currentTarget).attr('id') );
 		$(elem.currentTarget).parents('tr').remove();
@@ -480,81 +527,91 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			this.$tbody_archivos.html('');
 		};
 		if ($(elem.currentTarget).attr('id') == 'continuar') {
+			/*Este condicion evalua si existe la variable global
+			que almacena el html para la alerta de advertencia. de lo
+			contrario no pa a la otra línea. esta variable se crea y 
+			se guarda el html cuando el usuario preciona el botón de 
+			cancelar proyecto en la función cancelarProyecto.
+			DAR MANTENIMIENTO*/
+			if (this.htmlAdvertencia) {
+				this.$advertencia.html(this.htmlAdvertencia);
+				this.$advertencia.toggleClass('oculto');
+			};
 			$(elem.currentTarget).parents('div').children('.cerrar').click();
 		};
 	},
 /*Otros controladores*/
-	formSiguiente		: function (elem) {
-		var next_fs,current_fs,left,opacity,scale,animating;
+	// formSiguiente		: function (elem) {
+	// 	var next_fs,current_fs,left,opacity,scale,animating;
 
-		if(animating) return false;
-		animating = true;
+	// 	if(animating) return false;
+	// 	animating = true;
 		
-		current_fs = $(elem.currentTarget).parent().parent().parent();
-		next_fs = $(elem.currentTarget).parent().parent().parent().next();
+	// 	current_fs = $(elem.currentTarget).parent().parent().parent();
+	// 	next_fs = $(elem.currentTarget).parent().parent().parent().next();
 		
-		//activate next step on progressbar using the index of next_fs
-		$("#progressbar li").eq($("#divSecciones section").index(next_fs)).addClass("active");
+	// 	//activate next step on progressbar using the index of next_fs
+	// 	$("#progressbar li").eq($("#divSecciones section").index(next_fs)).addClass("active");
 		
-		//show the next fieldset
-		next_fs.show(); 
-		//hide the current fieldset with style
-		current_fs.animate({opacity: 0}, {
-			step: function(now, mx) {
-				//as the opacity of current_fs reduces to 0 - stored in "now"
-				//1. scale current_fs down to 80%
-				scale = 1 - (1 - now) * 0.2;
-				//2. bring next_fs from the right(50%)
-				left = (now * 50)+"%";
-				//3. increase opacity of next_fs to 1 as it moves in
-				opacity = 1 - now;
-				current_fs.css({'transform': 'scale('+scale+')'});
-				next_fs.css({'left': left, 'opacity': opacity});
-			}, 
-			duration: 800, 
-			complete: function(){
-				current_fs.hide();
-				animating = false;
-			}, 
-			//this comes from the custom easing plugin
-			easing: 'easeInOutBack'
-		});
-	},
-	formAnterior		: function (elem) {
-		var previous_fs,current_fs,left,opacity,scale,animating;
-		if(animating) return false;
-		animating = true;
+	// 	//show the next fieldset
+	// 	next_fs.show(); 
+	// 	//hide the current fieldset with style
+	// 	current_fs.animate({opacity: 0}, {
+	// 		step: function(now, mx) {
+	// 			//as the opacity of current_fs reduces to 0 - stored in "now"
+	// 			//1. scale current_fs down to 80%
+	// 			scale = 1 - (1 - now) * 0.2;
+	// 			//2. bring next_fs from the right(50%)
+	// 			left = (now * 50)+"%";
+	// 			//3. increase opacity of next_fs to 1 as it moves in
+	// 			opacity = 1 - now;
+	// 			current_fs.css({'transform': 'scale('+scale+')'});
+	// 			next_fs.css({'left': left, 'opacity': opacity});
+	// 		}, 
+	// 		duration: 800, 
+	// 		complete: function(){
+	// 			current_fs.hide();
+	// 			animating = false;
+	// 		}, 
+	// 		//this comes from the custom easing plugin
+	// 		easing: 'easeInOutBack'
+	// 	});
+	// },
+	// formAnterior		: function (elem) {
+	// 	var previous_fs,current_fs,left,opacity,scale,animating;
+	// 	if(animating) return false;
+	// 	animating = true;
 		
-		current_fs = $(elem.currentTarget).parent().parent().parent();
-		previous_fs = $(elem.currentTarget).parent().parent().parent().prev();
+	// 	current_fs = $(elem.currentTarget).parent().parent().parent();
+	// 	previous_fs = $(elem.currentTarget).parent().parent().parent().prev();
 		
-		//de-activate current step on progressbar
-		$("#progressbar li").eq($("#divSecciones section").index(current_fs)).removeClass("active");
+	// 	//de-activate current step on progressbar
+	// 	$("#progressbar li").eq($("#divSecciones section").index(current_fs)).removeClass("active");
 		
-		//show the previous fieldset
-		previous_fs.show(); 
-		//hide the current fieldset with style
-		current_fs.animate({opacity: 0}, {
-			step: function(now, mx) {
-				//as the opacity of current_fs reduces to 0 - stored in "now"
-				//1. scale previous_fs from 80% to 100%
-				scale = 0.8 + (1 - now) * 0.2;
-				//2. take current_fs to the right(50%) - from 0%
-				left = ((1-now) * 50)+"%";
-				//3. increase opacity of previous_fs to 1 as it moves in
-				opacity = 1 - now;
-				current_fs.css({'left': left});
-				previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-			}, 
-			duration: 800, 
-			complete: function(){
-				current_fs.hide();
-				animating = false;
-			}, 
-			//this comes from the custom easing plugin
-			easing: 'easeInOutBack'
-		});
-	},
+	// 	//show the previous fieldset
+	// 	previous_fs.show(); 
+	// 	//hide the current fieldset with style
+	// 	current_fs.animate({opacity: 0}, {
+	// 		step: function(now, mx) {
+	// 			//as the opacity of current_fs reduces to 0 - stored in "now"
+	// 			//1. scale previous_fs from 80% to 100%
+	// 			scale = 0.8 + (1 - now) * 0.2;
+	// 			//2. take current_fs to the right(50%) - from 0%
+	// 			left = ((1-now) * 50)+"%";
+	// 			//3. increase opacity of previous_fs to 1 as it moves in
+	// 			opacity = 1 - now;
+	// 			current_fs.css({'left': left});
+	// 			previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+	// 		}, 
+	// 		duration: 800, 
+	// 		complete: function(){
+	// 			current_fs.hide();
+	// 			animating = false;
+	// 		}, 
+	// 		//this comes from the custom easing plugin
+	// 		easing: 'easeInOutBack'
+	// 	});
+	// },
 	pasarAJson			: function (objSerializado) {
 	    var json = {};
 	    $.each(objSerializado, function () {

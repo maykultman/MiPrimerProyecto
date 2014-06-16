@@ -35,7 +35,7 @@ class  Proyectos extends Api {
 
     private function delete()
     {
-        $query = $this->proy->delete( $this->id()   ); 
+        $query = $this->proy->destroy( $this->id()   ); 
         $this->pre_response($query, 'delete');        
     }   
 

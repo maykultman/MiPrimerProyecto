@@ -83,7 +83,8 @@ app.VistaCliente = Backbone.View.extend({
 		return this;
 	},
 	//---------------------------------------------
-	verInfo	: function () {
+	verInfo	: function () {/*callback*/
+		var esto = this;
 		/*Cuando los clientes se cargan en la tabla, no se carga el
 		modal sino hasta que el usuario quiera verlo. Es en esta
 		función donde se crea el modal*/
@@ -182,7 +183,12 @@ app.VistaCliente = Backbone.View.extend({
 			/*this es la variable modal. removemos el elem DOM
 			de todo el documento (DOM general)*/
 			$(this).remove();
+			esto.render();
 		});
+
+		// if (callback) {
+		// 	callback();
+		// };
 	},
 	nuevoContacto	: function (submit) {
 		var serializado = this.$formNuevoContacto.serializeArray();
@@ -921,6 +927,10 @@ app.VistaCliente = Backbone.View.extend({
 		};
     },
 	editando	: function () {
+		// var esto = this;
+		
+		this.verInfo();
+		// this.verInfo(function () {
 		if (this.$btn_editar
 			.children()
 			.attr('class') == 
@@ -938,6 +948,8 @@ app.VistaCliente = Backbone.View.extend({
 			this.$btn_editar.children().toggleClass('MO icon-back');
 			this.$editarAtributo.toggleClass('editando');
 		};
+		// });
+			
 	},
 	eliminarDelDOM	: function () {
 		this.$el.remove();
@@ -1086,10 +1098,10 @@ app.VistaCliente = Backbone.View.extend({
 		});
 
 	},
-	agregarContacto	: function (tipo, esDe, etiqueta) {
+	agregarContacto	: function (tipo, esDe) {/*, etiqueta*/
 		var vista = new app.VistaContacto({model:tipo});
 		this.$divContactos.prepend(vista.render().el);
-		vista.establecerEtiqueta(etiqueta);
+		// vista.establecerEtiqueta(etiqueta);
 	},
 	agregarContactos	: function () {
 		/*Solo cuando se requiere ver los contactos
@@ -1120,27 +1132,27 @@ app.VistaCliente = Backbone.View.extend({
 		//Activar visibilidad de contenedor de contactos
 		// this.$panelBody.children().toggleClass('oculto');
 	},
-	recursividadContactos	: function (tipo, etiqueta) {
+	recursividadContactos	: function (tipo) {/**/
 		if (tipo.length) {
 			for (var i = 0; i < tipo.length; i++) {
-				this.recursividadContactos(tipo[i], etiqueta);
+				this.recursividadContactos(tipo[i]);/*, etiqueta*/
 			};
 		} else{
 			if (tipo != '') {
 				this.agregarContacto(
 					tipo,
-					tipo.get('idcliente'),
-					etiqueta
+					tipo.get('idcliente')/*,
+					etiqueta*/
 				);
 			};
 		};
 	},
 
 
-	agregarRepresentante	: function (tipo, esDe, etiqueta) {
+	agregarRepresentante	: function (tipo, esDe) {/*, etiqueta*/
 		var vista = new app.VistaRepresentante({model:tipo});
 		this.$divContactos.prepend(vista.render().el);
-		vista.establecerEtiqueta(etiqueta);
+		// vista.establecerEtiqueta(etiqueta);
 	},
 	agregarRepresentantes	: function () {
 
@@ -1170,17 +1182,17 @@ app.VistaCliente = Backbone.View.extend({
 		//Activar visibilidad de contenedor de contactos
 		// this.$panelBody.children().toggleClass('oculto');
 	},
-	recursividadRepresentantes	: function (tipo, etiqueta) {
+	recursividadRepresentantes	: function (tipo) {/**/
 		if (tipo.length) {
 			for (var i = 0; i < tipo.length; i++) {
-				this.recursividadRepresentantes(tipo[i], etiqueta);
+				this.recursividadRepresentantes(tipo[i]);/*, etiqueta*/
 			};
 		} else{
 			if (tipo != '') {
 				this.agregarRepresentante(
 					tipo,
-					tipo.get('idcliente'),
-					etiqueta
+					tipo.get('idcliente')/*,
+					etiqueta*/
 				);
 			};
 		};
@@ -1191,5 +1203,9 @@ app.VistaCliente = Backbone.View.extend({
 
 // app.VistaClienteProyecto = app.VistaCliente.extend({
 // 	tagName	: 'option',
-// 	plantilla : _.template($('#plantilla_td_de_cliente').html()),
+// 	plantilla : _.template($('#option_cliente').html()),
+// 	render	: function () {
+// 		this.$el.html(this.plantilla(this.model.toJSON()));
+// 		return this;
+// 	}
 // });

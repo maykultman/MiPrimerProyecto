@@ -58,6 +58,13 @@ app.VistaParticipante = Backbone.View.extend({
 			text_nuevoRol.val('');
 		});
 
+		text_nuevoRol.on('keypress', function (e) {
+			if (e.keyCode === 13 && $(this).val() !== '') {
+				esto.$form_participante.append(esto.plantillaRol({id:$(this).val(), nombre:$(this).val(), name:'nombre'}));
+				$(this).val('');
+			};
+		});
+
 		this.cargarRoles();
 		return this;
 	},

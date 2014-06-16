@@ -10,8 +10,7 @@ app.VistaProyecto = Backbone.View.extend({
 		this.listenTo(this.model, 'destroy', this.remove);
 	},
 	render	: function () {
-		console.log(this.model);
-		this.$el.html( this.plantillaProyecto(this.model.toJSON()) );
+		this.$el.html( this.plantillaProyecto( this.model.toJSON()) );
 		return this;
 	},
 	eliminar	: function () {

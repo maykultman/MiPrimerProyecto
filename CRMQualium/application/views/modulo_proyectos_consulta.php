@@ -8,7 +8,7 @@
       <thead>
         <tr id="color_titulos">
           <th style="text-align:center;">Todos<!-- <input type="checkbox"> --></th>
-          <th></th>
+          <th>Cliente</th>
           <th>
             <input type="text" class="form-control" placeholder="Proyecto">
             <span class="icon-search busqueda"></span>
@@ -61,10 +61,11 @@
 <!-- plantillas -->
   <script type="text/template" id="plantilla_tr_proyecto">
     <td><input  type="checkbox"></td>
-    <td><img src="img/imgProyectos/holamundo.png" alt="" class="img-thumbnail"></td>
+    <td><%- propietario %></td>
     <td><%- nombre %></td>                     
     <td>Responsable</td>
-    <td ><span  class="badge color_status">45</span></td>
+    <td ><span  class="badge color_status">45</span>
+    </td>
     <td ><%- fechafinal %></td>                   
     <td class="icon-operaciones">
       <div class="eliminar_cliente">
@@ -74,16 +75,17 @@
       <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
     </td>
   </script>
+<!-- <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script> -->
 <script type="text/javascript">
   var app = app || {};
   app.coleccionDeClientes = [];
 </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<!-- Utilerias -->
+<!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script> -->
 <!-- Librerias Backbone -->
   <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
   <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-<!-- Utilerias -->
-  <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
+
 <!-- MV* -->
   <!-- modelos -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>

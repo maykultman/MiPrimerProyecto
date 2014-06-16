@@ -26,6 +26,7 @@
             return $this->db->update('proyectos', $put, array('id' => $id)  );   
         }       
         
+        /*Anterior mente decia delete y le cambie a destroy*/
         public function destroy (  $id  ) 
         {   
             return $this->db->delete('proyectos', array('id' => $id)  ); 

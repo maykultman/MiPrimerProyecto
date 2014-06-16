@@ -35,6 +35,7 @@ app.VistaContacto = Backbone.View.extend({
 		    toggleClass('oculto');
 	},
 	initialize	: function () {
+		this.model.set({etiqueta:'Contacto'});
 		this.listenTo(this.model, 'destroy', this.remove);
 	},
 	render	: function () {
@@ -119,9 +120,9 @@ app.VistaContacto = Backbone.View.extend({
 			elemento.preventDefault();
 		};
 	},
-	establecerEtiqueta	: function (etiqueta) {
-		this.$('#etiqueta').html(etiqueta);
-	},
+	// establecerEtiqueta	: function (etiqueta) {
+	// 	this.$('#etiqueta').html(etiqueta);
+	// },
 	eliminar	: function (elemento) {
 		var esto = this;
 		this.model.destroy({
@@ -297,6 +298,7 @@ app.VistaContacto = Backbone.View.extend({
 
 app.VistaRepresentante = app.VistaContacto.extend({
 	render	: function () {
+		this.model.set({etiqueta:'Representante'});
 		this.$el.html(this.plantilla( this.model.toJSON() ));
 
 		this.$telefonos = this.$('#telefonos');
