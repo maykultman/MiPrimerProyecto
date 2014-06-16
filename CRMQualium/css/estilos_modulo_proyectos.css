@@ -263,22 +263,22 @@ tbody.scrolltbla {
   color: #333;
 }
 
-.color_status{
+.color_success{
  
- color: #000000;
- background-color: #d9534f;
+ color: #FFF;
+ background-color: #468847;
  }
 
-.color_status1{
+.color_warning{
  
- color: black;
- background-color: #5cb85c;
+ color: #FFF;
+ background-color: #f89406;
  
 }
-.color_status2{
+.color_error{
  
- color: black;
- background-color: #f0ad4e;
+ color: #FFF;
+ background-color: #d9534f;
  
 }
 

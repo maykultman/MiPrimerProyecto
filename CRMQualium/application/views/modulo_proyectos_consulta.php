@@ -8,17 +8,21 @@
       <thead>
         <tr id="color_titulos">
           <th style="text-align:center;">Todos<!-- <input type="checkbox"> --></th>
-          <th>Cliente</th>
+          <th>
+            <input type="text" class="form-control" placeholder="Clientes">
+            <!-- Cliente -->
+         </th>
           <th>
             <input type="text" class="form-control" placeholder="Proyecto">
             <span class="icon-search busqueda"></span>
             <!-- Proyecto -->
           </th>  
-          <th><input type="text" class="form-control" placeholder="Rsponsable">
+          <!-- <th><input type="text" class="form-control" placeholder="Rsponsable">
             <span class="icon-search busqueda"></span>
-          </th>
-          <th>Status</th>
-          <th>Entrega</th>           
+          </th> -->
+          <th>Inicio</th>
+          <th>Entrega</th>     
+          <th>Status</th>         
           <th>Operaciones</th>
         </tr>
       </thead>      
@@ -58,22 +62,80 @@
   </div>
 </div>
 
+<script type="text/javascript">
+    var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+</script>
 <!-- plantillas -->
   <script type="text/template" id="plantilla_tr_proyecto">
-    <td><input  type="checkbox"></td>
-    <td><%- propietario %></td>
-    <td><%- nombre %></td>                     
-    <td>Responsable</td>
-    <td ><span  class="badge color_status">45</span>
-    </td>
-    <td ><%- fechafinal %></td>                   
-    <td class="icon-operaciones">
-      <div class="eliminar_cliente">
-        <span class="icon-trash eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-      </div>
-      <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
-      <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
-    </td>
+      <td><input  type="checkbox"></td>
+      <td><%- propietario %></td>
+      <td><%- nombre %></td>                     
+      <!-- <td>Responsable</td> -->
+      <td >
+         <% var Anio_Mes_dia = fechainicio.split('-'); %>
+         <%- Anio_Mes_dia[2] %>
+         <% for (var i = 0; i < meses.length; i++) { %>
+             <% if (i == Anio_Mes_dia[1]) { %>
+                 <%- meses[i-1] %>
+                 <% break; %>
+             <% }; %>
+         <% }; %>
+         <%- Anio_Mes_dia[0] %>
+      </td> 
+      <td >
+         <% Anio_Mes_dia = fechafinal.split('-'); %>
+         <%- Anio_Mes_dia[2] %>
+         <% for (var i = 0; i < meses.length; i++) { %>
+             <% if (i == Anio_Mes_dia[1]) { %>
+                 <%- meses[i-1] %>
+                 <% break; %>
+             <% }; %>
+         <% }; %>
+         <%- Anio_Mes_dia[0] %>
+      </td> 
+      <td >
+         <%
+            var valorFechaInicio = new Date(fechainicio).valueOf();
+            var valorFechaEntrega = new Date(fechafinal).valueOf();
+            var valorFechaActual = new Date().valueOf();
+            var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed();
+            var conteo = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed();
+            var porcentaje = ( (100 * conteo)/plazo ).toFixed();
+            console.log('plazo: '+plazo,', quedan: '+conteo,', procentaje: '+porcentaje+'%');
+         %>
+         <% if (porcentaje > 100) { %>
+            <span class="badge">
+               Comienza en <%- conteo - plazo %> días
+            </span>
+         <% }; %>
+         <% if (porcentaje >= 51 && porcentaje <= 100) { %>
+            <span class="badge color_success">
+               <%- conteo %> días
+            </span>
+         <% }; %>
+         <% if ( porcentaje >= 15 && porcentaje <= 50) { %>
+            <span class="badge color_warning">
+               <%- conteo %> días
+            </span>
+         <% }; %>
+         <% if (porcentaje >= 0 && porcentaje <= 14) { %>
+            <span class="badge color_error">
+               <%- conteo %> días
+            </span>
+         <% }; %>
+         <% if (porcentaje < 0) { %>
+            <span class="badge color_error">
+               <%- -(conteo) %> días de atraso
+            </span>
+         <% }; %>
+      </td>                  
+      <td class="icon-operaciones">
+         <div class="eliminar_cliente">
+            <span class="icon-trash eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
+         </div>
+         <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>
+         <span class="icon-eye"  data-toggle="modal" data-target="#myModal" title="Ver proyecto"></span>
+      </td>
   </script>
 <!-- <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script> -->
 <script type="text/javascript">

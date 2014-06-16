@@ -22,6 +22,9 @@ app.VistaConsultaProyectos = Backbone.View.extend({
 	// cargarProyectos	: function () {
 	// 	app.coleccionProyectos.each( this.cargarProyecto, this );
 	// },
+	// porcentaje 	: function (plazo, conteo) {
+	// 	return (100 * conteo)/plazo;
+	// }
 });
 
 app.vistaConsultaProyectos = new app.VistaConsultaProyectos();

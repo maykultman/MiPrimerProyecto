@@ -244,8 +244,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		var esto = this;
 		var modeloProyecto = this.pasarAJson(this.$formNuevoProyecto.serializeArray());
 
-		console.log(modeloProyecto);
-
 		if (modeloProyecto.idcliente == '' || modeloProyecto.nombre == '') {
 			esto.$error
 				.children('#comentario')
