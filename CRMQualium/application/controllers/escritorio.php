@@ -21,6 +21,7 @@ class Escritorio extends Api {
         $this->load->model('Model_budget',           'budget');
         $this->load->model('Modelo_permisos',        'permisos');
         $this->load->model('Modelo_servicioCotizado','SC');
+        $this->load->model('modelo_archivos',        'archivo');
     }  
 
 	//Vista inicial
@@ -106,15 +107,19 @@ class Escritorio extends Api {
 	{
 		$this->area_Estatica('modulo_proyectos');
 		$data['clientes']    = $this->customer->get_customerProyect();	# Lista de clientes
-		$data['empleados'] 	 = $this->empleado->get();  	# Proyectos
+		$data['empleados'] 	 = $this->empleado->get();  				# Proyectos
 		$data['servicios'] 	 = $this->serv->get_Servicios_Proyecto();   # Servicios Relacionados con los proyectos
-		$data['roles']		 = $this->Roles->get();  				# Lista de Roles.
+		$data['roles']		 = $this->Roles->get();  					# Lista de Roles.
 
 		if($this->ruta() == 'modulo_proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
 		if($this->ruta() == 'modulo_proyectos_consulta')
 		{
+			$this->load->model->('modelo_servicioProyecto', 'serProy');
+
 			$data['proyectoRoles'] = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
+			$data['proyectos'] = $this->proyecto->get();
+			$data['servicios_proy'] = $this->serProy->get('','proyectos');
 			$this->load->view($this->ruta(), $data);			
 		}
 		if($this->ruta() == 'modulo_proyectos_cronograma')

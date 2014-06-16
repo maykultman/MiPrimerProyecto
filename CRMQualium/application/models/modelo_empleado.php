@@ -8,7 +8,7 @@
 		#	$post ['nombre']........$post ['descripcion']
 		
 	  public function create($post) 
-      {   //var_dump($post); die();
+      {   
         $this->db->insert('empleados', $post);
         return $this->get($this->db->insert_id());  
       }

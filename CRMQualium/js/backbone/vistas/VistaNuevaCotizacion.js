@@ -182,7 +182,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 	            idrepresentante :  this.$idrepresentante.val().trim(),
 	            idempleado      :  '',
 	            fecha           : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate(),
-	            detalles 	  	:  this.$detalles.val().trim()
+	            detalles 	  	  :  this.$detalles.val().trim()
         	};
         },
 

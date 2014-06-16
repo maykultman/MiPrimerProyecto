@@ -53,3 +53,58 @@ function pasarAJson (objSerializado) {
     });
     return json;
 }
+
+//Para la Busqueda de Roles en el modulo catalogo Roles
+app.busquedaRol.rol = (function () {
+    buscarPorNombre = function (searchKey) {
+        var deferred = $.Deferred();
+        var results = roles.filter(function (element) {
+            var nombre = element.nombre;
+            return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+        deferred.resolve(results);
+        return deferred.promise();
+    },
+    roles = app.coleccionDeRoles;
+
+    // The public API
+    return {
+        buscarPorNombre: buscarPorNombre
+    };
+}()); 
+
+//Para la Busqueda de Roles en el modulo catalogo Roles
+app.busquedaPermiso.permiso = (function () {
+    buscarPorNombre = function (searchKey) {
+        var deferred = $.Deferred();
+        var results = permisos.filter(function (element) {
+            var nombre = element.nombre;
+           return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+        deferred.resolve(results);
+        return deferred.promise();
+    },
+    permisos = app.coleccionDePermisos;
+
+    // The public API
+    return {
+        buscarPorNombre: buscarPorNombre
+    };
+}()); 
+
+// -----limpiarJSON------------------------------- 
+   function  limpiarJSON (objeto) {
+     /*La variable valorJson y el ciclo for eliminan los
+     valores nulos o vacios de la variable objetoCliente*/
+     var valorJson;
+     for (var x in objeto) {
+         if ( Object.prototype.hasOwnProperty.call(objeto,x)) {
+             valorJson = objeto[x];
+             if (valorJson==="null" || valorJson===null || valorJson==="" || typeof valorJson === "undefined") {
+                 delete objeto[x];
+             }
+
+         }
+     }
+     return objeto;
+    }

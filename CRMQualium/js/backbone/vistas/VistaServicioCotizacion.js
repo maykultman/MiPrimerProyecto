@@ -75,7 +75,7 @@ app.VistaTablaCotizaciones = Backbone.View.extend({
 
 	establecerImporte2 : function(){
 
-        var total = Number($('#total').text());
+        var total 	  = Number($('#total').text());
 		var cantidad  = this.$('#cantidad').val();			
 		var precio    = this.$('#precio').val();
 		var descuento = this.$('#descuento').val();

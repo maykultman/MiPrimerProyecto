@@ -29,13 +29,13 @@ class  Roles extends Api {
 
     private function update()
     {
-        $query = $this->rol->update(  $this->id(), $this->put()  );
+        $query = $this->rol->save(  $this->id(), $this->put()  );
         $this->pre_response($query, 'update');                 
     }
 
     private function delete()
     {
-        $query = $this->rol->delete(  $this->id()  ); 
+        $query = $this->rol->destroy(  $this->id()  ); 
         $this->pre_response($query, 'delete');        
     }   
 } # Fin de la Clase Api_cliente

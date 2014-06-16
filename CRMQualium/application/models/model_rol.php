@@ -20,7 +20,7 @@
         }
 
         public function save (  $id,  $put ) 
-        {   
+        {   #var_dump($put); die();
             return $this->db->update('roles', $put, array('id' => $id)  );   
         }       
         

@@ -3,6 +3,8 @@ var app = app || {
     //resetea cada vez que se hace una búsqueda
     busquedaServicio:{},
     busquedaCliente:{},
+    busquedaRol:{},
+    busquedaPermiso:{},
     // funciones:{}
 };
 

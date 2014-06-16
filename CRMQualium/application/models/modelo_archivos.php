@@ -52,9 +52,10 @@
            return false;
         } # Fin del metodo insert_mult()...
 
-        public function get($id)
+        public function get($id=FALSE, $tabla=FALSE)
         {
-          $result = $this->where($id);
+          // $result = $this->where();
+          $this->db->where('tabla', $tabla);
           return $this->db->get( 'multimedia' )->$result();
                    	
         } # Fin del metodo get_mult()...

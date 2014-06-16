@@ -31,14 +31,14 @@ var ColeccionRoles = Backbone.Collection.extend({
 		return this.last();
 	},
 
-	// sync	: function (method, model, options) {
-	// 	if (method === 'read') {
-	// 		app.busquedaCliente.cliente.buscarPorNombre(options.data.nombreComercial).done(function (data) {
-	// 			// console.log(data); //Debuelbe el objeto [Object]
-	// 			options.success(data);
-	// 		});
-	// 	};
-	// }
+	sync	: function (method, model, options) {
+		if (method === 'read') {
+			app.busquedaRol.rol.buscarPorNombre(options.data.nombre).done(function (data) {
+				// console.log(data); //Debuelbe el objeto [Object]
+				options.success(data);
+			});
+		};
+	}
 });
 
 app.coleccionRoles = new ColeccionRoles(app.coleccionDeRoles);
