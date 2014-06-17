@@ -16,7 +16,7 @@
 			return $query; 
 		}
 
-		public function get_act($id)
+		public function get_act($id=NULL)
 		{
 			$this->db->select('*');
 			($id==NULL) ? $query = $this->db->get('actividades') :

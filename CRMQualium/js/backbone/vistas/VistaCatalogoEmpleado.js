@@ -16,8 +16,7 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	{	
 		
 		var self = this;
-		if(info.filtrado != null){
-			console.log(info.filtrado)
+		if(info.filtrado != null){			
 			self.$el.html(self.plantilla(info.filtrado));
 		}else{
 			self.$el.html(self.plantilla(info.model.toJSON()));

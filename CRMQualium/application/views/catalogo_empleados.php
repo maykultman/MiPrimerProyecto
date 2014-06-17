@@ -98,7 +98,12 @@
 
 		<div id="col-<%- id %>" class="panel-collapse collapse">
 		  	<div class="panel-body">
+		  	<div class="eliminar_permiso">
+		    		<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
+		    	</div>
 		    	<h4>Datos personales</h4>
+		    	
+		    	
 		    	<form>
 		        	<div class="campos_edicion">
 		     		    <input type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
@@ -115,9 +120,12 @@
 						</select>
 					</div>
 					<div class="campos_edicion">	
-						<input type="text"  class="form-control ancho_campos2" placeholder="Dirección" value="<%- direccion%>">
-						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil" value="">
-						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Casa" value="">
+						<input type="text"  class="form-control ancho_campos2" placeholder="Dirección"      value="<%- direccion  %>">
+
+						<%	if(typeof movil!='undefined')	%>
+						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil" value="<%- movil %>">
+						<%	if(typeof casa!='undefined')	%>
+						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Casa"  value="<%- casa %>">
 					</div>
 					<div class="campos_edicion">	
 						<input type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
@@ -125,8 +133,9 @@
 					</div>
 				</form>	      
 			</div>
-		</div>
-	</div> 	
+		</div>		
+	</div>
+	 	
 </script>
 
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
@@ -137,6 +146,7 @@
 <script type="text/javascript">
 	var app = app || {};
 	app.coleccionDeEmpleados  = <?php echo json_encode($empleados) ?>;
+	app.coleccionDeTelefonos  = <?php echo json_encode($telefonos) ?>;
 </script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">          </script>

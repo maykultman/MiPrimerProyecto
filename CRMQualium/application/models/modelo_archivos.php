@@ -56,7 +56,7 @@
         {
           // $result = $this->where();
           $this->db->where('tabla', $tabla);
-          return $this->db->get( 'multimedia' )->$result();
+          return $this->db->get( 'multimedia' )->result();
                    	
         } # Fin del metodo get_mult()...
         

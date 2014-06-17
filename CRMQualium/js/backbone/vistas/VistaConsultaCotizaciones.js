@@ -59,7 +59,7 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	 	total 	  += cantidad * precio - descuento;
 	 	}
 	 	/*...Añadimos campos a la colección de modelocotización...*/ 	 	
-	 	modelocotizacion.set({'empleado': empleado[0].get('nombre')})
+	 	modelocotizacion.set({'empleado': empleado[0].get('nombre')});
 	 	modelocotizacion.set({'cliente' : cliente[0].get('nombreComercial')});
 	 	modelocotizacion.set({'total' : total });
 

@@ -8,14 +8,10 @@
 		<section id="catalogoPuestos">	   
 		  	<h3>Nuevo Puesto</h3>
 			<hr>
-			<form id="registroPuesto">
-        		
-					<input id="puesto" type="text"  name="nombre" class="form-control" placeholder="Nombre del puesto" style="width:85%; display: inline-block;">
-					<!-- <textarea id="comentario" name="comentario" class="form-control" rows="4" placeholder="Comentarios"></textarea> -->
-				
+			<form id="registroPuesto">        		
+				<input id="puesto" type="text"  name="nombre" class="form-control" placeholder="Nombre del puesto" style="width:85%; display: inline-block;">
 				<div style="display: inline-block;">
-					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
-		       	    <!-- <button type="button" class="btn btn-default">Cancelar</button> -->
+					<button id="guardar" type="button" class="btn btn-primary">Guardar</button>		       	    
 	            </div>
 		    </form>
 		    <h3>Lista de puestos</h3>
@@ -36,7 +32,6 @@
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
-
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- MVC -->
 
