@@ -6,9 +6,7 @@ app.VistaConsultaProyectos = Backbone.View.extend({
 	initialize	: function () {
 		this.$tbody_proyectos = this.$('#tbody_proyectos');
 		this.listenTo( app.coleccionProyectos, 'add', this.cargarProyecto );
-		app.coleccionClientes.fetch();
-		app.coleccionProyectos.fetch();
-		// this.cargarProyectos();
+		this.cargarProyectos();
 	},
 	render	: function () {},
 	cargarProyecto	: function (modeloProyecto) {
@@ -19,12 +17,9 @@ app.VistaConsultaProyectos = Backbone.View.extend({
 			this.$tbody_proyectos.append( vistaProyecto.render().el );
 		};
 	},
-	// cargarProyectos	: function () {
-	// 	app.coleccionProyectos.each( this.cargarProyecto, this );
-	// },
-	// porcentaje 	: function (plazo, conteo) {
-	// 	return (100 * conteo)/plazo;
-	// }
+	cargarProyectos	: function () {
+		app.coleccionProyectos.each( this.cargarProyecto, this );
+	}
 });
 
 app.vistaConsultaProyectos = new app.VistaConsultaProyectos();

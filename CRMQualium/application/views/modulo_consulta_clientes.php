@@ -139,7 +139,7 @@
                                 <label>
                                     <% var Año_Mes_dia = fechaCreacion.split('-'); %>
                                     <%- Año_Mes_dia[2] %>
-                                    <% for (var i = 0; i < meses.length; i++) { %>
+                                    <% for (var i = 0; i < meses.length+1; i++) { %>
                                         <% if (i == Año_Mes_dia[1]) { %>
                                             <%- meses[i-1] %>
                                             <% break; %>

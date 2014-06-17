@@ -1,20 +1,15 @@
 var app = app || {};
 
-app.VistaRol = Backbone.View.extend({
-	tagName	: 'option',
-	className	: 'optionRol',
+app.VistaRolPrincipal = Backbone.View.extend({
 
 	events	: {
 	},
 
-	plantilla : _.template($('#option_rol').html()),
-
 	initialize		: function () {
-		this.idRol;
 	},
 
 	render			: function () {
-		this.$el.html( this.plantilla( this.model.toJSON() ) );
+		this.$el.html( this.plantillaDefault( this.model.toJSON() ) );
 		this.$el.attr('id',this.model.get('id'));
 		this.$el.attr('value', this.model.get('id')+'_'+this.model.get('nombre'));
 		return this;
@@ -39,4 +34,10 @@ app.VistaRol = Backbone.View.extend({
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
 	}
+});
+
+app.VistaRol = app.VistaRolPrincipal.extend({
+	tagName	: 'option',
+	className	: 'optionRol',
+	plantillaDefault : _.template($('#option_rol').html()),
 });

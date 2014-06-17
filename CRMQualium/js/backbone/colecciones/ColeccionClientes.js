@@ -23,9 +23,9 @@ var ColeccionClientes = Backbone.Collection.extend({
 		return this.last().get('id');
 	},
 
-	parse	: function (response) {
-		return response;
-	},
+	// parse	: function (response) {
+	// 	return response;
+	// },
 
 	obtenerUltimo	: function () {
 		return this.last();

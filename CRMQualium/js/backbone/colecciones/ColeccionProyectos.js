@@ -26,4 +26,4 @@ var ColeccionProyectos = Backbone.Collection.extend({
 	// },
 });
 
-app.coleccionProyectos = new ColeccionProyectos();
+app.coleccionProyectos = new ColeccionProyectos(app.coleccionDeProyectos);

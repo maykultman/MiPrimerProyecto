@@ -1,9 +1,5 @@
 var app = app || {};
 
-app.ModeloServicioProyecto = Backbone.Model.extend({
-	urlRoot	:'http://crmqualium.com/api_serviciosProyecto'
-});
-
 var ColeccionServiciosProyecto = Backbone.Collection.extend({
 	model	: app.ModeloServicioProyecto,
 
@@ -45,4 +41,4 @@ var ColeccionServiciosProyecto = Backbone.Collection.extend({
 	// }
 });
 
-app.coleccionServiciosProyecto = new ColeccionServiciosProyecto();
+app.coleccionServiciosProyecto = new ColeccionServiciosProyecto(app.coleccionServicosProyecto);
