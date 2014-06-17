@@ -2,6 +2,39 @@
 	#color_titulos hr {
 		line-height: 10px;
 	}
+	.trProyecto{
+		height: 51px;
+		width: 100%;
+	}
+
+	#info_proyecto{
+		margin-top: -20px;
+	}
+
+	#icon_operaciones_proy{
+		display: inline-block;
+		right: 15px;
+		position: absolute;
+		margin-top: -45px;
+	}
+
+	.panel-body span{
+		padding: 5px;
+	}
+	.icon_eliminar_archivo .icon-circledelete:hover{ 
+		background: red;
+		border-radius: 3px;
+		cursor: pointer;
+		color: white;
+	}
+	.icon-circledelete{
+		vertical-align: center;
+	}
+
+
+	#cerrar_modal{
+		margin-top: -25px;
+	}
 </style>
 	<div id="posicion_infotd">
 		<table id="tbla_cliente" class="table table-striped">
@@ -123,31 +156,119 @@
 
 	<script type="text/template" id="plantillaModalProyecto">
 		<div class="modal fade" id="modal<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
+			<div class="modal-dialog">    
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<p class="panel-title"><h4>Información</h4></p>
-						<span id="cerrar_consulta" class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-hidden="true"></span>
+						<p class="panel-title"><h4><b>Información</b></h4></p>
+						<span id="cerrar_modal" class="glyphicon glyphicon-remove" style="float:right" data-dismiss="modal" aria-hidden="true"></span>
 					</div>
-					<div id="contenido_cliente" class="panel-body">
-						<div>
-							<h1>Datos proyecto</h1>
-							<p>	<b>id 			:</b>	<%- id 			%>	</p>
-							<p>	<b>idcliente 	:</b>	<%- idcliente 	%>	</p>
-							<p>	<b>nombre 		:</b>	<%- nombre 		%>	</p>
-							<p>	<b>propietario	:</b>	<%- propietario %>	</p>
-							<p>	<b>fechainicio	:</b>	<%- fechainicio %>	</p>
-							<p>	<b>fechafinal 	:</b>	<%- fechafinal 	%>	</p>
+					<div class="panel-body">
+						<p class="panel-title"><h3 style="text-align: center;"><b><%- nombre %></b></h3></p>
+						<div id="icon_operaciones_proy">
+							<div class="btn-group-vertical" style="margin-top: 0px;">
+								<button type="button" class="btn btn-primary" id="btn_eliminar_modal"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
+								<button type="button" class="btn btn-primary" id="btn_editar_modal"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>         
+							</div>
 						</div>
-						<div id="serviciosProyecto">
-							<h1>Servicios proyecto</h1>
-						</div>
-						<div id="rolesProyecto">
-							<h1>Roles de proyecto</h1>
-						</div>
-						<hr>
-						<div>
-							<p>	<b>descripcion	:</b>	<%- descripcion %>	</p>
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#home" data-toggle="tab">Datos</a></li>
+							<li><a href="#profile" data-toggle="tab">Archivos</a></li>  
+						</ul>
+						<div class="tab-content">          
+							<div class="tab-pane active" id="home"><br>
+								<small class="editar">Presione la tecla enter para actualizar el campo</small>
+								<!-- -------INFORMACION DEL PROYECTO------- -->
+								<div class="visible" id="">
+								<form class="" method="post">
+									<table id="info_proyecto" class="table table-striped" >
+										<tr class="trProyecto"> 
+											<td class="atributo"><b>Cliente</b></td>
+
+											<td class="respuesta">
+												<%- propietario %>
+											</td>
+										</tr>
+										<tr class="trProyecto"> 
+											<td class="atributo"><b>Representante:</b></td>
+
+											<td class="respuesta">
+												<!--RESPUESTA-->
+											</td>
+											</tr>
+											<tr class="trProyecto"> 
+											<td class="atributo"><b>Fecha de Inicio:</b></td>
+
+											<td class="respuesta">
+												<%- fechainicio %>
+											</td>
+										</tr>
+										<tr class="trProyecto"> 
+											<td class="atributo"><b>Fecha Final:</b></td>
+
+											<td class="respuesta">
+												<%- fechafinal %>
+											</td>
+										</tr>
+										<tr class="trProyecto">
+											<td class="atributo"><b>Duracion:</b></td>
+											<td class="respuesta">
+											    Calcular la duración
+											</td>
+										</tr>
+										<tr class="trProyecto"> 
+											<td class="atributo"><b>Servicios incluidos:</b></td>
+
+											<td class="respuesta">
+												<ul id="serviciosProyecto">
+													<!--SERVICIOS DEL PROYECTO-->
+												</ul>
+											</td>
+										</tr>                             
+										<tr class="trProyecto">
+											<td class="atributo"><b>Empleados involucrados:</b></td>                    
+											<td id="rolesProyecto" class="respuesta">
+												<!--RESPUESTA-->
+											</td>
+										</tr>              
+										<tr>
+											<td class="atributo">Descripción</td>                    
+											<td class="respuesta">
+												<%- descripcion %>
+											</td>
+										</tr>
+									</table>
+								</form>
+								</div>
+								<!-- ------- Archivos del proyecto------- -->
+							</div>
+							<div class="tab-pane" id="profile">
+								<table id="archivos_proy" class="table table-striped">
+									<tr class="trProyecto"> 
+										<td class="" style="width: 550px"><b>Imagen.png</b></td>
+										<td class="icon_eliminar_archivo">
+											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
+										</td>
+									</tr>
+									<tr class="trProyecto">
+										<td class=""><b>Imagen.jpg</b></td>
+										<td class="icon_eliminar_archivo">
+											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
+										</td>
+									</tr>
+									<tr class="trProyecto">
+										<td class=""><b>Logo</b></td>
+										<td class="icon_eliminar_archivo">
+											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
+										</td>
+									</tr>
+									<tr class="trProyecto">
+										<td class=""><b>banner</b></td>
+										<td class="icon_eliminar_archivo">
+											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
+										</td>
+									</tr>                        
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -176,6 +297,8 @@
 	app.coleccionDeEmpleados      = <?php echo json_encode($empleados)      ?>;
 	app.coleccionDeProyectoRoles  = <?php echo json_encode($proyectoRoles)  ?>;
 	app.coleccionServicosProyecto = <?php echo json_encode($servicios_proy) ?>;
+	app.coleccionServicosProyecto = <?php echo json_encode($archivos) 		?>;
+	app.coleccionServicosProyecto = <?php echo json_encode($representantes) ?>;
 </script>
 <!-- Utilerias -->
 <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script> -->
