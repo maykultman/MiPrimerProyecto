@@ -1,6 +1,6 @@
-app.VistaCatalogoRol = Backbone.View.extend({
+app.VistaCatalogoPuesto = Backbone.View.extend({
 	tagName : 'tr',
-	plantilla : _.template($('#listaRoles').html()),
+	plantilla : _.template($('#listaPuestos').html()),
 
 	events : {	
 		'click     .icon-edit' : 'habilitarEdicion', //..Habilita el input para la edición del rol...
@@ -28,12 +28,12 @@ app.VistaCatalogoRol = Backbone.View.extend({
 	{		
 		if (elemento.keyCode === 13) 
 		{			
-			var rol = $(elemento.currentTarget).val();
-			if(rol) // La variable rol tiene valor
+			var puesto = $(elemento.currentTarget).val();
+			if(puesto) // La variable puesto tiene valor
 			{
 				this.model.save
 				(
-					{ nombre : rol }, 
+					{ nombre : puesto }, 
 					{
 						wait:true,
 						patch:true,
@@ -45,9 +45,9 @@ app.VistaCatalogoRol = Backbone.View.extend({
 						}
 					}
 				);
-			}//If de validación de la variable rol
+			}//If de validación de la variable puesto
 			
-			this.$el.children().children().toggleClass('visibleR'); //..Mostramos la etiqueta que contiene el rol modificado..
+			this.$el.children().children().toggleClass('visibleR'); //..Mostramos la etiqueta que contiene el puesto modificado..
 			elemento.preventDefault();
 		};//..if elemento.keyCode
 	},
@@ -60,27 +60,27 @@ app.VistaCatalogoRol = Backbone.View.extend({
 });
 
 
-app.VistaNuevoRol = Backbone.View.extend({
-	el : '#catalogo_roles',
+app.VistaNuevoPuesto = Backbone.View.extend({
+	el : '#catalogoPuestos',
 
 	events : {
-		'click     #guardar'    : 'guardar',   //...Guardamos el Nuevo rol....
-		'keypress  #buscar_rol' : 'buscarRol', //...Para hacer una busqueda en la lista roles...
-		'keyup     #buscar_rol' : 'buscarRol', //...Al soltar una tecla llamamos a la función buscarRol...		
-		'keypress  #rol '		: 'validarCampo',
-		'keypress  #buscar_rol' : 'validarCampo'
+		'click     #guardar'       : 'guardar',   //...Guardamos el Nuevo rol....
+		'keypress  #buscar_puesto' : 'buscarPuesto', //...Para hacer una busqueda en la lista roles...
+		'keyup     #buscar_puesto' : 'buscarPuesto', //...Al soltar una tecla llamamos a la función buscarRol...		
+		'keypress  #puesto'		   : 'validarCampo',
+		'keypress  #buscar_puesto' : 'validarCampo'
 	},
 
 	initialize : function ()
 	{
 		/* Inicializamos la tabla donde se listaran los roles*/
-        this.$scroll_roles = this.$('#scroll_roles');
+        this.$scroll_puestos = this.$('#scroll_puestos');
         /*...Una vez lista la tabla le cargamos la lista de roles...*/
-        this.cargarRoles();
-        this.listenTo( app.coleccionRoles, 'add',   this.cargarRol );
-        this.listenTo( app.coleccionRoles, 'reset', this.cargarRol );  
+        this.cargarPuestos();
+        this.listenTo( app.coleccionRoles, 'add',   this.cargarPuesto );
+        this.listenTo( app.coleccionRoles, 'reset', this.cargarPuesto );  
 
-        $('#rol').keydown(function(event) /*...eventos del teclado...*/
+        $('#puesto').keydown(function(event) /*...eventos del teclado...*/
         {   
     		if(event.keyCode===13) /*...Si la tecla fue enter...*/
     		{
@@ -113,29 +113,28 @@ app.VistaNuevoRol = Backbone.View.extend({
         }
     },
 
-	buscarRol : function (elemento)
+	buscarPuesto : function (elemento)
 	{
 		var buscando = $(elemento.currentTarget).val();
 		if(elemento.keyCode===8)
-		{
-			
-			app.coleccionRoles.fetch({
+		{			
+			app.coleccionPuestos.fetch({
 				reset:true, data:{nombre: buscando}
 			});
 		}
-		app.coleccionRoles.fetch({
+		app.coleccionPuestos.fetch({
 			reset:true, data:{nombre: buscando}
 		});
 
 		this.sinCoincidencias();
 
-		this.$scroll_roles.html('');
-		this.cargarRoles();	
+		this.$scroll_puestos.html('');
+		this.cargarPuestos();	
 	},
 
 	sinCoincidencias	: function () {
-		if (app.coleccionRoles.length == 0) {
-			app.coleccionRoles.fetch({
+		if (app.coleccionPuestos.length == 0) {
+			app.coleccionPuestos.fetch({
 				reset:true, data:{nombre: ''}
 			});
 		};
@@ -143,15 +142,15 @@ app.VistaNuevoRol = Backbone.View.extend({
 	
 	guardar : function(evento)
 	{
-		var modeloRol = pasarAJson($('#registro_rol').serializeArray());
-		 $('#registro_rol')[0].reset();
-		if(modeloRol.nombre)
+		var modeloRol = pasarAJson($('#registroPuesto').serializeArray());
+		 $('#registroPuesto')[0].reset();
+		if(modeloPuesto.nombre)
 		{
 			Backbone.emulateHTTP = true;
 			Backbone.emulateJSON = true;		
-			app.coleccionRoles.create
+			app.coleccionPuestos.create
 			(
-				modeloRol,
+				modeloPuesto,
 				{
 					wait: true,
 					success: function (data){},
@@ -164,17 +163,17 @@ app.VistaNuevoRol = Backbone.View.extend({
 		evento.preventDefault();
 	},
 
-	cargarRol : function (rol)
+	cargarPuesto : function (rol)
 	{
-		var vistaRol = new app.VistaCatalogoRol({model : rol});		
-		this.$scroll_roles.append(vistaRol.render().el);
+		var vistaPuesto = new app.VistaCatalogoPuesto({model : rol});		
+		this.$scroll_puestos.append(vistaPuesto.render().el);
 	},
-	cargarRoles : function ()
+	cargarPuestos : function ()
 	{	
-		app.coleccionRoles.each(this.cargarRol, this);
+		app.coleccionPuestos.each(this.cargarRol, this);
 	}
 });
 
-app.vistaNuevoRol = new app.VistaNuevoRol();
+app.vistaNuevoPuesto = new app.VistaNuevoPuesto();
 
 

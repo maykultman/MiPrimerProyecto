@@ -168,3 +168,6 @@ $route['api_roles/(:num)'] = 'roles/api/$1';
 
 $route['api_facturas'] = 'facturas/api';
 $route['api_facturas/(:num)'] = 'facturas/api/$1';
+
+$route['api_puestos'] = 'puesto/api';
+$route['api_puestos/(:num)'] = 'puesto/api/$1';

@@ -29,9 +29,28 @@
 </div>
 
 
-<!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
+<script type="text/javascript">
+	var app = app || {};
+	app.coleccionDePuestos = <?php echo json_encode($puestos)  ?>;
+</script>
 <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
-<!-- MVC -->
+<script type = "text/plantilla" id="listaPuestos">
+	
+	<td style="width: 1% !important; " class="icon-operaciones">			
+		<label name="<%- nombre %>"  class="ocultoR visibleR"><%- nombre %></label>
+		<input id="epuesto" type="text" class="valor ocultoR" value="<%- nombre %>">		
+		<div class="eliminar_permiso">
+			<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
+		   	<span class="icon-edit"  data-toggle="tooltip" title="Editar">  </span>
+	    </div>			
+	</td>
 
+</script>
+<!-- Librerias -->
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
+
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPuesto.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPuestos.js'?>"></script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoPuesto.js'?>"></script>

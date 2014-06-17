@@ -53,8 +53,10 @@ class Escritorio extends Api {
 		}
 		if($this->ruta() == 'catalogo_empleados')
 		{
+			$this->load->model('model_puesto', 'puesto');
 			$data['empleados'] = $this->empleado->get();
 			$data['telefonos'] = $this->telefono->get();
+			$data['puestos']   = $this->puesto->get();
 			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_roles')
@@ -64,8 +66,9 @@ class Escritorio extends Api {
 		}
 		if($this->ruta() == 'catalogo_puestos')
 		{
-			
-			$this->load->view($this->ruta());	
+			$this->load->model('model_puesto', 'puesto');
+			$data['puestos']   = $this->puesto->get();
+			$this->load->view($this->ruta(), $data);	
 		}
 		
 
@@ -106,14 +109,15 @@ class Escritorio extends Api {
 		$this->load->model('modelo_servicioProyecto', 'serProy');
 		$this->load->model('modelo_archivos', 'archivos');
 
-		$data['clientes']    = $this->customer->get_customerProyect();	# Lista de clientes
-		$data['empleados'] 	 = $this->empleado->get();  				# Proyectos
-		$data['servicios'] 	 = $this->serv->get_Servicios_Proyecto();   # Servicios Relacionados con los proyectos
-		$data['roles']		 = $this->Roles->get();  					# Lista de Roles.
-		$data['proyectoRoles'] = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
-		$data['proyectos'] = $this->proyecto->get();					# Proyectos 
+		$data['clientes']    	= $this->customer->get_customerProyect();	# Lista de clientes
+		$data['empleados'] 	 	= $this->empleado->get();  				# Proyectos
+		$data['servicios'] 	 	= $this->serv->get_Servicios_Proyecto();   # Servicios Relacionados con los proyectos
+		$data['roles']			= $this->Roles->get();  					# Lista de Roles.
+		$data['proyectoRoles']  = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
+		$data['proyectos']		= $this->proyecto->get();					# Proyectos 
 		$data['servicios_proy'] = $this->serProy->get('','proyectos');	# Servicios relacionados con el proyecto
-		$data['archivos'] = $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
+		$data['archivos'] 		= $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
+		$data['representantes'] = $this->representa->get();
 		
 		if($this->ruta() == 'modulo_proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
