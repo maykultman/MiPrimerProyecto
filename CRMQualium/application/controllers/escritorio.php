@@ -54,6 +54,7 @@ class Escritorio extends Api {
 		if($this->ruta() == 'catalogo_empleados')
 		{
 			$data['empleados'] = $this->empleado->get();
+			$data['telefonos'] = $this->telefono->get();
 			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_roles')
@@ -103,14 +104,16 @@ class Escritorio extends Api {
 	{
 		$this->area_Estatica('modulo_proyectos');
 		$this->load->model('modelo_servicioProyecto', 'serProy');
+		$this->load->model('modelo_archivos', 'archivos');
 
 		$data['clientes']    = $this->customer->get_customerProyect();	# Lista de clientes
 		$data['empleados'] 	 = $this->empleado->get();  				# Proyectos
 		$data['servicios'] 	 = $this->serv->get_Servicios_Proyecto();   # Servicios Relacionados con los proyectos
 		$data['roles']		 = $this->Roles->get();  					# Lista de Roles.
 		$data['proyectoRoles'] = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
-		$data['proyectos'] = $this->proyecto->get();
-		$data['servicios_proy'] = $this->serProy->get('','proyectos');
+		$data['proyectos'] = $this->proyecto->get();					# Proyectos 
+		$data['servicios_proy'] = $this->serProy->get('','proyectos');	# Servicios relacionados con el proyecto
+		$data['archivos'] = $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
 		
 		if($this->ruta() == 'modulo_proyectos_nuevo'){	$this->load->view($this->ruta(), $data);  }
 		
@@ -157,11 +160,6 @@ class Escritorio extends Api {
 		{
 			$this->load->view($this->ruta());
 		}
-	}
-
-	public function post()
-	{
-		return $this->input->post();
 	}
 
 	public function facturas (){
