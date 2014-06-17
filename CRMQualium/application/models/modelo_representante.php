@@ -9,7 +9,7 @@
   { 
       public function __construct(){}
       
-      protected function create($args)
+      public function create($args)
       {   
             $this->db->insert('representantes', $args);
             return $this->get($this->db->insert_id());     
