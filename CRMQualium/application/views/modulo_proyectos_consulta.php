@@ -130,7 +130,7 @@
 						<span id="cerrar_consulta" class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-hidden="true"></span>
 					</div>
 					<div id="contenido_cliente" class="panel-body">
-						<div class="jumbotron">
+						<div>
 							<h1>Datos proyecto</h1>
 							<p>	<b>id 			:</b>	<%- id 			%>	</p>
 							<p>	<b>idcliente 	:</b>	<%- idcliente 	%>	</p>
@@ -138,13 +138,16 @@
 							<p>	<b>propietario	:</b>	<%- propietario %>	</p>
 							<p>	<b>fechainicio	:</b>	<%- fechainicio %>	</p>
 							<p>	<b>fechafinal 	:</b>	<%- fechafinal 	%>	</p>
-							<p>	<b>descripcion	:</b>	<%- descripcion %>	</p>
 						</div>
-						<div id="serviciosProyecto" class="jumbotron">
+						<div id="serviciosProyecto">
 							<h1>Servicios proyecto</h1>
 						</div>
-						<div id="rolesProyecto" class="jumbotron">
+						<div id="rolesProyecto">
 							<h1>Roles de proyecto</h1>
+						</div>
+						<hr>
+						<div>
+							<p>	<b>descripcion	:</b>	<%- descripcion %>	</p>
 						</div>
 					</div>
 				</div>
@@ -155,7 +158,11 @@
 		<%- nombre %>
 	</script>
 	<script type="text/template" id="plantillaRolProyecto">
-		<p><b><%- nombreRol %></b> <%- nombrePersonal %></p>
+		<% if (idrol == 1) { %>
+			<p><span class="badge color_warning"><%- nombreRol %></span> <%- nombrePersonal %></p>
+		<% }else { %>
+			<p><b><%- nombreRol %></b> <%- nombrePersonal %></p>
+		<% }; %>
 	</script>
 
 
