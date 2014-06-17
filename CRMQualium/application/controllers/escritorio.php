@@ -167,6 +167,7 @@ class Escritorio extends Api {
 	public function facturas (){
 		//$this->area_Estatica('modulo_facturas');
 		  $this->area_Estatica('prueba_ver_proyecto');
+		  
 		  if($this->ruta() == 'modal_consulta_proyecto')
 		{
 			$this->load->view($this->ruta());

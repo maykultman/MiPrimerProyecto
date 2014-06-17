@@ -47,13 +47,13 @@ $route['modulo_actividades'] = 'escritorio/actividades/$1';
 // $route['modulo_actividades'] = 'escritorio/actividades/$1';
 
 //Rutas para la catalogos...
-$route['modulo_catalogos']    = 'escritorio/catalogos';
-$route['catalogo_Servicios']  = 'escritorio/catalogos';
-$route['catalogo_perfiles']  = 'escritorio/catalogos';
-$route['catalogo_permisos']  = 'escritorio/catalogos';
-$route['catalogo_empleados']  = 'escritorio/catalogos';
-$route['catalogo_roles']  = 'escritorio/catalogos';
-$route['catalogo_puestos']  = 'escritorio/catalogos';
+$route['modulo_catalogos']    = 'escritorio/catalogos/$1';
+$route['catalogo_Servicios']  = 'escritorio/catalogos/$1';
+$route['catalogo_perfiles']  = 'escritorio/catalogos/$1';
+$route['catalogo_permisos']  = 'escritorio/catalogos/$1';
+$route['catalogo_empleados']  = 'escritorio/catalogos/$1';
+$route['catalogo_roles']  = 'escritorio/catalogos/$1';
+$route['catalogo_puestos']  = 'escritorio/catalogos/$1';
 
 // $route['catalogo_telefonos']  = 'escritorio/catalogos';
 // $route['catalogo_planes']  = 'escritorio/catalogos';
