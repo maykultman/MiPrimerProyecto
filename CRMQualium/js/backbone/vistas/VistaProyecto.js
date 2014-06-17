@@ -9,9 +9,11 @@ app.VistaRolProyecto = app.VistaRolPrincipal.extend({
 	tagName	: 'p',
 	plantillaDefault	: _.template($('#plantillaRolProyecto').html()),
 	render	: function () {
+		// console.log(  );
 		this.model.set( {nombreRol:app.coleccionRoles.get(this.model.get('idrol')).get('nombre')} );
 		this.model.set( {nombrePersonal:app.coleccionEmpleados.get(this.model.get('idpersonal')).get('nombre')} );
-
+		this.model.set( {representante:app.coleccionEmpleados.get(this.model.get('idcliente')).get('nombre')} );
+		console.log(this.model);
 		this.$el.html( this.plantillaDefault( this.model.toJSON() ) );
 		return this;
 	}
@@ -30,17 +32,11 @@ app.VistaProyecto = Backbone.View.extend({
 		this.listenTo(this.model, 'destroy', this.remove);
 	},
 	render					: function () {
-
 		this.$el.html( this.plantillaProyecto(this.model.toJSON()) );
 		return this;
 	},
 	verInfo					: function () {
 		var esto = this;
-		var representantes = app.coleccionRepresentantes.where({idcliente:this.model.get('idcliente')});
-		for (var i = 0; i < representantes.length; i++) {
-			// this.model.set({representante:representantes[i].toJSON()});
-			console.log(this.model.toJSON());
-		};
 		this.$el.append( this.plantillaModalProyecto(this.model.toJSON()) );
 		/*La variable modal guarda el elem DOM del modal junto
 		después de creado en el DOM general*/

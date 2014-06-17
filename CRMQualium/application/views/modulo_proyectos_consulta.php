@@ -192,11 +192,7 @@
 											<td class="atributo"><b>Representante:</b></td>
 
 											<td class="respuesta">
-												<% if (typeof representante != 'undefined') { %>
-													<%- representante %>
-												<% } else{ %>
-													No especificado
-												<% }; %>
+												<!--RESPUESTA-->
 											</td>
 											</tr>
 											<tr class="trProyecto"> 
@@ -294,15 +290,15 @@
 <!-- <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script> -->
 <script type="text/javascript">
 	var app = app || {};
-	app.coleccionDeClientes       		= <?php echo json_encode($clientes)			?>;
-	app.coleccionDeProyectos      		= <?php echo json_encode($proyectos)		?>;
-	app.coleccionDeRoles          		= <?php echo json_encode($roles)			?>;
-	app.coleccionDeServicios      		= <?php echo json_encode($servicios)		?>;
-	app.coleccionDeEmpleados      		= <?php echo json_encode($empleados)		?>;
-	app.coleccionDeProyectoRoles  		= <?php echo json_encode($proyectoRoles)	?>;
-	app.coleccionDeServicosProyecto 	= <?php echo json_encode($servicios_proy)	?>;
-	app.coleccionArchivosCodeIgniter 	= <?php echo json_encode($archivos)			?>;
-	app.coleccionDeRepresentantes 		= <?php echo json_encode($representantes)	?>;
+	app.coleccionDeClientes       = <?php echo json_encode($clientes)       ?>;
+	app.coleccionDeProyectos      = <?php echo json_encode($proyectos)      ?>;
+	app.coleccionDeRoles          = <?php echo json_encode($roles)          ?>;
+	app.coleccionDeServicios      = <?php echo json_encode($servicios)      ?>;
+	app.coleccionDeEmpleados      = <?php echo json_encode($empleados)      ?>;
+	app.coleccionDeProyectoRoles  = <?php echo json_encode($proyectoRoles)  ?>;
+	app.coleccionServicosProyecto = <?php echo json_encode($servicios_proy) ?>;
+	app.coleccionServicosProyecto = <?php echo json_encode($archivos) 		?>;
+	app.coleccionServicosProyecto = <?php echo json_encode($representantes) ?>;
 </script>
 <!-- Utilerias -->
 <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script> -->
@@ -312,7 +308,6 @@
 <!-- MV* -->
 	<!-- modelos -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
@@ -321,7 +316,6 @@
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioProyecto.js'?>"></script>
 	<!-- colecciones -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
-		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
