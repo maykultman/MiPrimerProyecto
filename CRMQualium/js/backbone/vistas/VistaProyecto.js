@@ -12,8 +12,8 @@ app.VistaRolProyecto = app.VistaRolPrincipal.extend({
 		// console.log(  );
 		this.model.set( {nombreRol:app.coleccionRoles.get(this.model.get('idrol')).get('nombre')} );
 		this.model.set( {nombrePersonal:app.coleccionEmpleados.get(this.model.get('idpersonal')).get('nombre')} );
-		this.model.set( {representante:app.coleccionEmpleados.get(this.model.get('idcliente')).get('nombre')} );
-		console.log(this.model);
+		// this.model.set( {representante:app.coleccionEmpleados.get(this.model.get('idcliente')).get('nombre')} );
+		// console.log(this.model);
 		this.$el.html( this.plantillaDefault( this.model.toJSON() ) );
 		return this;
 	}
