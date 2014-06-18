@@ -1,3 +1,4 @@
+	<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
 	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> -->
 	<!-- // <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
 	<link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css">

@@ -1,3 +1,4 @@
+		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
 		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
 		<script>
