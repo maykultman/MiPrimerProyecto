@@ -47,6 +47,16 @@
 		margin-top: -25px;
 	}
 </style>
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange : "1970 : 2000" ,
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+</script>
 	<div id="posicion_infotd">
 		<table id="tbla_cliente" class="table table-striped">
 			<thead>
@@ -78,15 +88,6 @@
 	</div>
 </div>
 
-<script>
-	$(function() {
-		$( ".datepicker" ).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'yy-mm-dd'
-		});
-	});
-</script> 
 
 <script type="text/javascript">
 	var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
