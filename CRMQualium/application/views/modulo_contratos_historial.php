@@ -1,3 +1,4 @@
+ <link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
  <div id="posicion_infotd">
     <table id="tbla_cliente" class="table table-striped">      
       <tr>
