@@ -1,4 +1,4 @@
-    <link rel="stylesheet/less" href="<?=base_url().'css/estilos_modulo_clientes.less'?>">
+
     <link rel="stylesheet" type="text/css" href="css/estilos_modulo_clientes_nuevo.less">
 
     <!-- BOTON PARA PRUEBAS -->

@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
 <style type="text/css">
 	#color_titulos hr {
 		line-height: 10px;

@@ -1,4 +1,3 @@
-		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
 		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
 		<script>
@@ -16,7 +15,7 @@
 		});
 		</script>
 		<section>	
-			<h3>Datos basicos</h3>
+			<h3>Nuevo Contrato</h3>
 			<hr><br>
 			<div class="datos_primarios">				  
 				<input type="text" class="form-control " placeholder="Buscar cliente">
@@ -37,20 +36,8 @@
 				<input class="form-control datepicker" disabled type="text" placeholder="Vencimiento">
 			</div>	 
 			<div class="desborde"></div><br>
-			<h3>Planes & Servicios </h3>
-			<hr>
-			<div style="display: inline-block">
-			<h4><b>Tipo de Plan:&nbsp;</b></h4>
-		    </div>
-			<div class="btn-group" data-toggle="buttons">
-			  <label class="btn btn-primary">
-			    <input type="radio" name="options" id="option1"> Option 1
-			  </label>
-			  <label class="btn btn-primary">
-			    <input type="radio" name="options" id="option2"> Option 2
-			  </label>		  
-			</div><br><br><br>
-			<h5><b>Seleccionar servicios</b></h5>
+			<h3>Inversión & Tiempo</h3>
+			<hr><br>
 			<div id="panel_contrato" class="panel panel-primary">
 		      <!-- Default panel contents -->
 		      <div class="panel-heading">Servicios</div>
@@ -58,12 +45,12 @@
 		      <table class="table">
 		        <tbody class="scrollContent2">
 					<tr>
-						<td style="width: 380px ">
+						<td style="width: 580px ">
 							<span id="infoSC" class="icon-info" data-toggle="tooltip" title="Información"></span>
 							<label for="" name="">Tarjeta de presentación frente</label>
 							<div id="info_servicio">
 								<ul>	
-									<li>Concepto:&nbsp;<h7>Diseño Gráfico</h7><li>
+									<li>Concepto:&nbsp;<h7>Diseño Gráfivo</h7><li>
 									<li>P/Unitario:&nbsp;<h7>$300</h7><li>
 									<li>+IVA:&nbsp;<h7>$380</h7><li>
 									<li>Realización:&nbsp;<h7>1 día</h7><li>

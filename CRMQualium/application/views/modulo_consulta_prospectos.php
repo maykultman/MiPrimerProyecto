@@ -1,4 +1,3 @@
-    <link rel="stylesheet/less" href="<?=base_url().'css/estilos_modulo_clientes.less'?>">
     <div id="posicion_infotd">
         <form id="clientes">
             <table id="tbla_cliente" class="table table-striped table-curved">

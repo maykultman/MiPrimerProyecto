@@ -1,4 +1,3 @@
-	<link rel="stylesheet/less" href="<?=base_url().'css/estilos_modulo_cotizaciones.less'?>">
 	<section class="contenedor_principal_modulos">
     <table id="tabla_cotizaciones" class="table table-striped table-curved">
 		<thead>

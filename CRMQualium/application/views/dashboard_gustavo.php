@@ -1,4 +1,4 @@
-	<link rel="stylesheet/less" href="<?=base_url().'css/estilo_dashboard_gustavo.less'?>">
+
 	<div id="contenedor_dashboard">
 		<h1 id="titulo_del_modulo"><label>Escritorio</label></h1>
 		<div class="div_dashboard">

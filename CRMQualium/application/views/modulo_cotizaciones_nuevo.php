@@ -1,9 +1,9 @@
-<link rel="stylesheet/less" href="<?=base_url().'css/estilos_modulo_cotizaciones.less'?>">
 <script type="text/javascript" src="<?=base_url() ?>js/jquery-ui-1.10.4.custom.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url().'css/cotizacion/jquery-ui-1.10.4.custom.css'?>">
-	<section class="contenedor_principal_modulos"> 
-		<h3>Información Básica</h3>
-		<hr>
+
+<section class="contenedor_principal_modulos"> 
+	<h3>Información Básica</h3>
+	<hr>
 		<div class="datos_cotizacion">
 			<input id="cliente" 	  type="search" value="" class="form-control" placeholder="Buscar cliente"><span id="buscar" class="icon-search"></span>
 			<input type="hidden" id="idcliente" value="">
@@ -16,34 +16,36 @@
 		</div>
 		<div class="desborde"></div>			
 		<h3>Inversión & Tiempo</h3>
-		<hr>		
-		<div id="txt_aliniado" >
-		    <table     id="tablaServicios" class="table table-striped">
-		    	<thead id="cabecera_serv"><tr><th>Servicios</th></tr>	</thead>
-				<tbody class="scrollContent">							</tbody>
-			</table> <!-- Tabla de Servicios -->
-            <table id="mostrarTabla" class="table table-striped">
-				<thead style="background : #F9F9F9;">
-					<tr>
-						<th>Todos<input id="todos" type="checkbox" name="todos"></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
-						<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody id="trServicio"> </tbody>		
-				<tr class="info"> <td></td> <td colspan="5">Total</td> <td><p id="total">0.00</p></td><td></td></tr>			
-				<tfoot>
+	<hr>		
+	<div id="txt_aliniado" >
+	    <table     id="tablaServicios" class="table table-striped">
+	    	<thead id="cabecera_serv"><tr><th>Servicios</th></tr>	</thead>
+			<tbody class="scrollContent">							</tbody>
+		</table> <!-- Tabla de Servicios -->
+
+		<table id="mostrarTabla" class="table table-striped">
+			<thead style="background : #F9F9F9;">
 				<tr>
-				    <td><button id="delete_varios"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
-					    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
+					<th>Todos<input id="todos" type="checkbox" name="todos"></th> <th>Servicio </th> <th>Duración</th> <th>Cantidad</th>
+					<th>P/Unitario					</th> <th>Descuento</th> <th>Importe </th> <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</tr>
-				</tfoot>
-			</table>
-			<div class="desborde"></div><br><br> 
-			<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>  
-			<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>
+			</thead>
+			<tbody id="trServicio"> </tbody>		
+			<tr class="info"> <td></td> <td colspan="5">Total</td> <td><p id="total">0.00</p></td><td></td></tr>			
+			<tfoot>
+			<tr>
+			    <td><button id="delete_varios"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
+				    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
+			</tr>
+			</tfoot>
+		</table>
+
+		<div class="desborde"></div><br><br> 
+			<button id="guardar"   type="button" class="btn btn-default"> Guardar  </button>		    
+			<button id="cancelar"  type="button" class="btn btn-default"> Cancelar </button>				
 		</div>		
 		<!-- <table id="con"></table>	 -->
-	</section>    
+    </section>    
 </div>
 
 <script type = "text/plantilla" id="plantilla_Cotizacion">
