@@ -61,14 +61,15 @@ float: left !important;
 
 #panel_contrato{
 
-	width: 580px;
+	float: left;
+	display: inline-block;
+	width: 400px;
 }
 
 #serv_obtenidos {
-
+    margin-left: 20px;
 	display: inline-block;
-    
-	width: 100%;
+	width: 65%;
 
 }
 
@@ -76,7 +77,7 @@ tbody.scrollContent2 {
 	display: block; /*obligado*/ 
 	height: 165px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/
-	width: 578px;
+	width: 398px;
 	
 	}
 
