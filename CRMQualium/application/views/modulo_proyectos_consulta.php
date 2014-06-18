@@ -19,10 +19,20 @@
 		margin-top: -45px;
 	}
 
+	.editar2 {
+		display: none;
+	}
+	.editando2 {
+		display: inline-block;
+	}
+
 	.panel-body span{
 		padding: 5px;
 	}
-	.icon_eliminar_archivo .icon-circledelete:hover{ 
+	.btn_eliminar_archivo {
+		display: inline-block;
+	}
+	.btn_eliminar_archivo .icon-circledelete:hover{ 
 		background: red;
 		border-radius: 3px;
 		cursor: pointer;
@@ -66,20 +76,17 @@
 	    <button type="button" class="btn btn-default">Eliminar varios</button>
 	    <button type="button" class="btn btn-default">Entregar</button>  
 	</div>
-
-	<!-- ---------------------------Modal consulta informacion del cliente---------- -->
-	<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<p class="panel-title"><h4>Información</h4></p>
-					<span id="cerrar_consulta" class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-hidden="true"></span>
-				</div>
-				<div id="contenido_cliente" class="panel-body"></div>
-			</div>
-		</div>
-	</div> -->
 </div>
+
+<script>
+	$(function() {
+		$( ".datepicker" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
+	});
+</script> 
 
 <script type="text/javascript">
 	var meses = new Array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
@@ -111,38 +118,29 @@
 			<%- Anio_Mes_dia[0] %>
 		</td> 
 		<td >
-			<%
-		        var valorFechaInicio = new Date(fechainicio).valueOf();
-		        var valorFechaEntrega = new Date(fechafinal).valueOf();
-		        var valorFechaActual = new Date().valueOf();
-		        var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed();
-		        var conteo = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed();
-		        var porcentaje = ( (100 * conteo)/plazo ).toFixed();
-		        // console.log('plazo: '+plazo, 'conteo: '+conteo, 'porcentaje: '+porcentaje+'%');
-			%>
-			<% if (porcentaje >= 100) { %>
+			<% if (duracion.porcentaje >= 100) { %>
 				<span class="badge">
-					Comienza en <%- (conteo - plazo) + 1 %> <%= ((conteo - plazo) + 1) === 1 ? 'día' : 'días' %>
+					Comienza en <%- (duracion.conteo - duracion.plazo) + 1 %> <%= ((duracion.conteo - duracion.plazo) + 1) === 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if (porcentaje >= 51 && porcentaje < 100) { %>
+			<% if (duracion.porcentaje >= 51 && duracion.porcentaje < 100) { %>
 				<span class="badge color_success">
-					<%- conteo %> <%= conteo === 1 ? 'día' : 'días' %>
+					Quedan <%- duracion.conteo %> <%= duracion.conteo == 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if ( porcentaje >= 15 && porcentaje <= 50) { %>
+			<% if ( duracion.porcentaje >= 15 && duracion.porcentaje <= 50) { %>
 				<span class="badge color_warning">
-					<%- conteo %> <%= conteo === 1 ? 'día' : 'días' %>
+					Quedan <%- duracion.conteo %> <%= duracion.conteo == 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if (porcentaje >= 0 && porcentaje <= 14) { %>
+			<% if (duracion.porcentaje >= 0 && duracion.porcentaje <= 14) { %>
 				<span class="badge color_error">
-					<%- conteo %> <%= conteo === 1 ? 'día' : 'días' %>
+					Quedan <%- duracion.conteo %> <%= duracion.conteo == 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if (porcentaje < 0) { %>
+			<% if (duracion.porcentaje < 0) { %>
 				<span class="badge color_error">
-					<%- -(conteo) %> <%= -(conteo) === 1 ? 'día' : 'días' %> de atraso
+					<%- -(duracion.conteo) %> <%= -(duracion.conteo) == 1 ? 'día' : 'días' %> de atraso
 				</span>
 			<% }; %>
 		</td>                  
@@ -161,14 +159,14 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<p class="panel-title"><h4><b>Información</b></h4></p>
-						<span id="cerrar_modal" class="glyphicon glyphicon-remove" style="float:right" data-dismiss="modal" aria-hidden="true"></span>
+						<span id="cerrar_consulta" class="glyphicon glyphicon-remove" style="float:right" data-dismiss="modal" aria-hidden="true"></span>
 					</div>
 					<div class="panel-body">
 						<p class="panel-title"><h3 style="text-align: center;"><b><%- nombre %></b></h3></p>
 						<div id="icon_operaciones_proy">
 							<div class="btn-group-vertical" style="margin-top: 0px;">
-								<button type="button" class="btn btn-primary" id="btn_eliminar_modal"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
-								<button type="button" class="btn btn-primary" id="btn_editar_modal"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>         
+								<button type="button" class="btn btn-primary" id="btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
+								<button type="button" class="btn btn-primary" id="btn_editar"><label class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></label></button>         
 							</div>
 						</div>
 						<ul class="nav nav-tabs">
@@ -180,94 +178,141 @@
 								<small class="editar">Presione la tecla enter para actualizar el campo</small>
 								<!-- -------INFORMACION DEL PROYECTO------- -->
 								<div class="visible" id="">
-								<form class="" method="post">
 									<table id="info_proyecto" class="table table-striped" >
-										<tr class="trProyecto"> 
+										<tr class="trProyecto"><!-- Cliente -->
 											<td class="atributo"><b>Cliente</b></td>
-
 											<td class="respuesta">
 												<%- propietario %>
 											</td>
 										</tr>
-										<tr class="trProyecto"> 
-											<td class="atributo"><b>Representante:</b></td>
-
+										<tr class="trProyecto"><!-- Representante -->
+											<td class="atributo"><b>Representante</b></td>
 											<td class="respuesta">
-												<!--RESPUESTA-->
-											</td>
-											</tr>
-											<tr class="trProyecto"> 
-											<td class="atributo"><b>Fecha de Inicio:</b></td>
-
-											<td class="respuesta">
-												<%- fechainicio %>
+												<% if ( typeof representante != 'undefined' ) { %>
+													<%- representante %>
+												<% } else { %>
+													Sin representante.
+												<% }; %>
 											</td>
 										</tr>
-										<tr class="trProyecto"> 
-											<td class="atributo"><b>Fecha Final:</b></td>
-
+										<tr class="trProyecto"><!-- Fecha de Inicio -->
+											<td class="atributo"><b>Fecha de Inicio</b></td>
 											<td class="respuesta">
-												<%- fechafinal %>
+												<!-- -----------------DATOS------------------ -->
+													<div class="editar2 editando2">
+														<% Anio_Mes_dia = fechainicio.split('-'); %>
+														<%- Anio_Mes_dia[2] %>
+														<% for (var i = 0; i < meses.length+1; i++) { %>
+												         <% if (i == Anio_Mes_dia[1]) { %>
+												             <%- meses[i-1] %>
+												         <% }; %>
+														<% }; %>
+														<%- Anio_Mes_dia[0] %>
+													</div>
+												<!-- ----------------EDICION----------------- -->
+													<div class="editar2">
+														<input type="text" class="datepicker">
+													</div>
 											</td>
 										</tr>
-										<tr class="trProyecto">
-											<td class="atributo"><b>Duracion:</b></td>
+										<tr class="trProyecto"><!-- Fecha Final -->
+											<td class="atributo"><b>Fecha Final</b></td>
 											<td class="respuesta">
-											    Calcular la duración
+												<!-- -----------------DATOS------------------ -->
+													<div class="editar2 editando2">
+														<% Anio_Mes_dia = fechafinal.split('-'); %>
+														<%- Anio_Mes_dia[2] %>
+														<% for (var i = 0; i < meses.length+1; i++) { %>
+												         <% if (i == Anio_Mes_dia[1]) { %>
+												             <%- meses[i-1] %>
+												         <% }; %>
+														<% }; %>
+														<%- Anio_Mes_dia[0] %>
+													</div>
+												<!-- ----------------EDICION----------------- -->
+													<div class="editar2">
+														Editando
+													</div>
 											</td>
 										</tr>
-										<tr class="trProyecto"> 
-											<td class="atributo"><b>Servicios incluidos:</b></td>
-
+										<tr class="trProyecto"><!-- Duración -->
+											<td class="atributo"><b>Duración</b></td>
 											<td class="respuesta">
+											    <% if (duracion.porcentaje >= 100) { %>
+											    	<%- duracion.plazo %> días. 
+											    	<span class="badge">
+														Comienza en <%- (duracion.conteo - duracion.plazo) + 1 %> <%= ((duracion.conteo - duracion.plazo) + 1) === 1 ? 'día' : 'días' %>
+													</span>
+												<% }; %>
+												<% if (duracion.porcentaje >= 51 && duracion.porcentaje < 100) { %>
+													<span class="badge color_success">
+														Quedan <%- duracion.conteo %> <%= duracion.conteo === 1 ? 'día' : 'días' %>
+													</span>
+													 de <%- duracion.plazo %>
+												<% }; %>
+												<% if ( duracion.porcentaje >= 15 && duracion.porcentaje <= 50) { %>
+													<span class="badge color_warning">
+														Quedan <%- duracion.conteo %> <%= duracion.conteo === 1 ? 'día' : 'días' %>
+													</span>
+													 de <%- duracion.plazo %>
+												<% }; %>
+												<% if (duracion.porcentaje >= 0 && duracion.porcentaje <= 14) { %>
+													<span class="badge color_error">
+														Quedan <%- duracion.conteo %> <%= duracion.conteo === 1 ? 'día' : 'días' %>
+													</span>
+													 de <%- duracion.plazo %>
+												<% }; %>
+												<% if (duracion.porcentaje < 0) { %>
+													<span class="badge color_error">
+														<%- -(duracion.conteo) %> <%= -(duracion.conteo) === 1 ? 'día' : 'días' %> de atraso
+													</span>
+												<% }; %>
+											</td>
+										</tr>
+										<tr class="trProyecto"><!-- Servicios incluidos -->
+											<td class="atributo"><b>Servicios incluidos</b></td>
+											<td class="respuesta">
+												<!-- ----------------EDICION----------------- -->
+													<div class="editar2">
+														Editando
+													</div>
 												<ul id="serviciosProyecto">
-													<!--SERVICIOS DEL PROYECTO-->
+													<!--PLANTILLAS DE SERVICIOS DEL PROYECTO-->
 												</ul>
 											</td>
-										</tr>                             
-										<tr class="trProyecto">
-											<td class="atributo"><b>Empleados involucrados:</b></td>                    
-											<td id="rolesProyecto" class="respuesta">
-												<!--RESPUESTA-->
+										</tr>
+										<tr class="trProyecto"><!-- Empleados involucrados -->
+											<td class="atributo"><b>Empleados involucrados</b></td>                    
+											<td class="respuesta">
+												<!-- ----------------EDICION----------------- -->
+													<div class="editar2">
+														Editando
+													</div>
+												<ul id="rolesProyecto">
+													<!--PLANTILLAS DE EMPLEADOS INVOLUCRADOS-->
+												</ul>
 											</td>
 										</tr>              
 										<tr>
 											<td class="atributo">Descripción</td>                    
 											<td class="respuesta">
-												<%- descripcion %>
+												<!-- -----------------DATOS------------------ -->
+													<div class="editar2 editando2">
+														<%- descripcion %>
+													</div>
+												<!-- ----------------EDICION----------------- -->
+													<div class="editar2">
+														Editando
+													</div>
 											</td>
 										</tr>
 									</table>
-								</form>
 								</div>
 								<!-- ------- Archivos del proyecto------- -->
 							</div>
 							<div class="tab-pane" id="profile">
 								<table id="archivos_proy" class="table table-striped">
-									<tr class="trProyecto"> 
-										<td class="" style="width: 550px"><b>Imagen.png</b></td>
-										<td class="icon_eliminar_archivo">
-											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
-										</td>
-									</tr>
-									<tr class="trProyecto">
-										<td class=""><b>Imagen.jpg</b></td>
-										<td class="icon_eliminar_archivo">
-											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
-										</td>
-									</tr>
-									<tr class="trProyecto">
-										<td class=""><b>Logo</b></td>
-										<td class="icon_eliminar_archivo">
-											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
-										</td>
-									</tr>
-									<tr class="trProyecto">
-										<td class=""><b>banner</b></td>
-										<td class="icon_eliminar_archivo">
-											<span class="icon-circledelete" id="" data-toggle="tooltip" title="Eliminar"></span>
-										</td>
-									</tr>                        
+									<!-- PLANTILLAS TR DE ARCHIVOS -->
 								</table>
 							</div>
 						</div>
@@ -277,14 +322,35 @@
 		</div>
 	</script>
 	<script type="text/template" id="plantillaServicioProyecto">
-		<%- nombre %>
+		<!-- -----------------DATOS------------------ -->
+			<div class="editar2"><span class="icon-uniF478"></span></div> <!--botón eliminar-->
+			<%- nombre %>
 	</script>
 	<script type="text/template" id="plantillaRolProyecto">
-		<% if (idrol == 1) { %>
-			<p><span class="badge color_warning"><%- nombreRol %></span> <%- nombrePersonal %></p>
-		<% }else { %>
-			<p><b><%- nombreRol %></b> <%- nombrePersonal %></p>
-		<% }; %>
+		<!-- -----------------DATOS------------------ -->
+			<% if (idrol == 1) { %>
+
+				<div class="editar2"><span class="icon-uniF478"></span></div> <!--botón eliminar-->
+				<span class="label label-info"><%- nombreRol %></span> <%- nombrePersonal %></div>
+			<% }else { %>
+				<div class="editar2"><span class="icon-uniF478"></span></div> <!--botón eliminar-->
+				<b><%- nombreRol %></b> <%- nombrePersonal %>
+			<% }; %>
+	</script>
+	<script type="text/template" id="tr_archivo">
+		<td>
+			<% if (nombre.split('.')[1] == 'jpg') { %>
+				<a href="<%- ruta %>" download><img src="<%- ruta %>" style="width:50px; height:50px;"></a>
+			<% } else { %>
+				<a href="<%- ruta %>" download><%- nombre %></a>
+			<% }; %>
+		</td>
+		<td class="icon-operaciones">
+			<div class="btn_eliminar_archivo">
+				<span class="icon-circledelete eliminarArchivo" id="<%- id %>" data-toggle="tooltip" title="Eliminar"></span>
+			</div>
+			<span class="icon-uniF7D5" data-toggle="tooltip" data-placement="top" title="Descargar">
+	    </td>
 	</script>
 
 
@@ -298,8 +364,8 @@
 	app.coleccionDeEmpleados      = <?php echo json_encode($empleados)      ?>;
 	app.coleccionDeProyectoRoles  = <?php echo json_encode($proyectoRoles)  ?>;
 	app.coleccionServicosProyecto = <?php echo json_encode($servicios_proy) ?>;
-	app.coleccionServicosProyecto = <?php echo json_encode($archivos) 		?>;
-	app.coleccionServicosProyecto = <?php echo json_encode($representantes) ?>;
+	app.coleccionArchivosCodeIgniter = <?php echo json_encode($archivos) 	?>;
+	app.coleccionDeRepresentantes = <?php echo json_encode($representantes) ?>;
 </script>
 <!-- Utilerias -->
 <!-- <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script> -->
@@ -309,22 +375,27 @@
 <!-- MV* -->
 	<!-- modelos -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRolProyecto.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloArchivo.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioProyecto.js'?>"></script>
 	<!-- colecciones -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionProyectos.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRoles.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRolesProyectos.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionArchivos.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosProyecto.js'?>"></script>
 	<!-- vistas -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Solo heredamos la clase -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRol.js'?>"></script> <!-- Solo heredamos la clase -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaArchivo.js'?>"></script> <!-- Utilizamos app.V_A_ConsultaProyecto -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaProyectos.js'?>"></script>

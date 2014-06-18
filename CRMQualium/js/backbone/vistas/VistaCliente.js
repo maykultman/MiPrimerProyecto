@@ -929,7 +929,7 @@ app.VistaCliente = Backbone.View.extend({
 	editando	: function () {
 		// var esto = this;
 		
-		this.verInfo();
+		this.verInfo(); //Lamar esta función duplica el modal (ANOMALIA)
 		// this.verInfo(function () {
 		if (this.$btn_editar
 			.children()
