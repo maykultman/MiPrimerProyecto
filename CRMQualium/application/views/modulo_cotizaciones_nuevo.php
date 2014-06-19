@@ -1,4 +1,3 @@
-<link rel="stylesheet/less" href="<?=base_url().'css/estilos_modulo_cotizaciones.less'?>">
 <script type="text/javascript" src="<?=base_url() ?>js/jquery-ui-1.10.4.custom.js"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url().'css/cotizacion/jquery-ui-1.10.4.custom.css'?>">
 

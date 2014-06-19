@@ -134,8 +134,8 @@
 				</tbody>
 		      </table>
 		    </div><br>		   
-			<div id="serv_obtenidos">
-			    <form>
+			
+			    
 				    <table class="table table-striped table-curved" >
 						<thead  style="background-color: #f9f9f9!important;">
 							<tr>
@@ -258,12 +258,12 @@
 						    </tr>						
 						</tbody>
 				    </table>
-				</form>    
-			</div>
+				
+			
 		   	<div class="desborde"></div> 
 		   	<button type="button" class="btn btn-default">Eliminar varios</button>	
 		   	<br><br><br>
-		   	<button type="button" class="btn btn-primary">Aceptar</button>
+		   	<button type="button" class="btn btn-primary">Guardar</button>
 		   	<button type="button" class="btn btn-default"><span class="icon-preview"></span> Vista previa</button>
 		   	<button type="button" class="btn btn-danger">Cancelar</button>
 		</section>   	 

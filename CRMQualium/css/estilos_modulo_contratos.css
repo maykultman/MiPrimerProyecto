@@ -23,7 +23,7 @@
 
 	display:inline-block;
 	float: left;
-	margin-right: 100px !important;
+	margin-right: 90px !important;
 	width: 400px;
 
 }
@@ -61,15 +61,15 @@ float: left !important;
 
 #panel_contrato{
 
-	float: left;
 	display: inline-block;
+	float: left;	
 	width: 400px;
 }
 
-#serv_obtenidos {
-    margin-left: 20px;
-	display: inline-block;
-	width: 65%;
+#servicios_elegidos {
+    /*margin-left: 20px;
+	display: inline-block;*/
+	width: 70%;
 
 }
 
