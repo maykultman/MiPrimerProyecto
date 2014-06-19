@@ -44,6 +44,7 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 
 	render : function(info) 
 	{			
+		// console.log(info.filtrado);
 		// var self = this;
 		// if(info.filtrado != null){			
 			this.$el.html(this.plantilla(info.filtrado));

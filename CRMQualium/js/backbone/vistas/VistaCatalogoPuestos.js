@@ -178,5 +178,3 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 });
 
 app.vistaNuevoPuesto = new app.VistaNuevoPuesto();
-
-

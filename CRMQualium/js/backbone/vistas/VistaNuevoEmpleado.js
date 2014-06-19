@@ -22,7 +22,6 @@ app.VistaPuestoEmpleado = Backbone.View.extend({
 });
 //*****************************************************//
 
-
 //*****************************************************//
 app.VistaSelectPuesto = app.VistaPuestoEmpleado.extend({
 	tagName : 'option',
@@ -37,6 +36,7 @@ app.VistaSelectPuesto = app.VistaPuestoEmpleado.extend({
 	}
 });
 //*****************************************************//
+
 
 app.VistaNuevoEmpleado = Backbone.View.extend({
 	el : '.contenedor_modulo',
