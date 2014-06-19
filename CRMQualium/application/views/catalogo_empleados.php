@@ -35,19 +35,9 @@
 				        <form id="registro">
 				        	<div style="margin-left:85px; ">
 								<input  id="nombre"  name="nombre" type="text"  class="form-control" placeholder="Nombre" >
-								<select id="puesto"  name="puesto"              class="form-control"                      >
-								  
-								  <option> Community Manager		</option>
-								  <option> Director General			</option>
-								  <option> Diseñador Gráfico Sr		</option>
-								  <option> Diseñador Gráfico		</option>
-								  <option> Diseñador Comercial		</option>
-								  <option> Director Administrativo	</option>	  
-								  <option> Programador				</option>
-								  <option selected disabled>Cargo   </option>
-
+								<select id="lpuesto"  name="puesto"              class="form-control"                      >
+								  <option selected disabled> Cargo   </option>
 								</select>
-
 								<input name="direccion" 		  type="text"   class="form-control" 			 placeholder="Dirección"		   >
 								<input name="movil"     		  type="text"   class="form-control"             placeholder="Telefono Móvil"	   >
 								<input name="casa"      		  type="text"   class="form-control"             placeholder="Telefono casa"	   >									
@@ -65,13 +55,8 @@
 			</div><!-- /.modal --><br>
 
 			<div class="tabbable tabs-right">
-		        <ul class="nav nav-tabs">
-		          <li id="director"    class="active opciones"> <a href="#rA" data-toggle="tab">  Directores		    </a> </li>
-		          <li id="gerente"      class=" opciones">		  <a href="#rB" data-toggle="tab">  Gerentes			</a> </li>
-		          <li id="programador" class=" opciones">		  <a href="#rC" data-toggle="tab">  Programadores		</a> </li>
-		          <li id="disenador"   class=" opciones">		  <a href="#rD" data-toggle="tab">  Diseñadores		    </a> </li>
-		          <li id="community"     class=" opciones">		  <a href="#rE" data-toggle="tab">  Community Managers  </a> </li>
-		          <li id="otros"         class=" opciones">		  <a href="#rF" data-toggle="tab">  Otros				</a> </li>
+		        <ul id="listaPuesto" class="nav nav-tabs">
+		          
 		        </ul>
 		        <div class="tab-content">
 		            <div  class="tab-pane active" id="rA">		            	
@@ -83,9 +68,16 @@
 		</section>
 	</section>
 </div>
+<script type="text/plantilla" id="ppuestos">
+	<a href="#rA" data-toggle="tab">  <%- nombre %>	</a>
+</script>
+
+<script type="text/plantilla" id="selectpuesto">
+	<%- nombre %> 
+</script>
+
 
 <script type = "text/plantilla" id="datosEmpleado">
-
 	<div  class="panel panel-default contenedor_empleado">
 		<div class="panel-heading">
 		    <h4 class="panel-title">
@@ -99,38 +91,35 @@
 		<div id="col-<%- id %>" class="panel-collapse collapse">
 		  	<div class="panel-body">
 		  	<div class="eliminar_permiso">
-		    		<span class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
-		    	</div>
-		    	<h4>Datos personales</h4>
-		    	
-		    	
+		    		<span id="<%- id %>" class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
+		    </div>
+		    	<h4><b>Datos personales</b></h4></br>
 		    	<form>
-		        	<div class="campos_edicion">
-		     		    <input type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
+		    	<div class="row">
+				  <div class="col-md-4">
+				  		Nombre
+				  		<input id="nombreE" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
 						<label class="icon-uniF479 exito"></label>
-						<select class="form-control ancho_campos2">
-						    <option>Community Manager</option>
-							<option>Director General</option>
-							<option>Diseñador Gráfico Sr</option>
-							<option>Diseñador Gráfico</option>
-							<option>Diseñador Comercial</option>
-							<option>Director Administrativo</option>	  
-							<option>Programador</option>
-							<option selected disabled>Cargo</option>
+						Puesto
+						<select id="lpuesto"  name="puesto"              class="form-control" style="width : 350px;">
+								  <option selected disabled> Cargo   </option>
 						</select>
-					</div>
-					<div class="campos_edicion">	
-						<input type="text"  class="form-control ancho_campos2" placeholder="Dirección"      value="<%- direccion  %>">
-
-						<%	if(typeof movil!='undefined')	%>
-						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil" value="<%- movil %>">
-						<%	if(typeof casa!='undefined')	%>
-						<input type="text"  class="form-control ancho_campos2" placeholder="Telefono Casa"  value="<%- casa %>">
-					</div>
-					<div class="campos_edicion">	
-						<input type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
-						<input class="form-control ancho_campos2 datepicker" type="text" id="" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
-					</div>
+						Dirección
+						<input id="direccion" type="text"  class="form-control ancho_campos2" placeholder="Dirección"      value="<%- direccion  %>">	
+				  </div>
+				  <div class="col-md-4">
+				  	<%	if(typeof movil!='undefined')	%> Telefono Movil
+						<input id="tmovil"type="text"  class="form-control ancho_campos2" placeholder="Telefono Móvil" value="<%- movil %>">
+						<%	if(typeof casa!='undefined')	%> Telefono de Casa
+						<input id="tcasa" type="text"  class="form-control ancho_campos2" placeholder="Telefono Casa"  value="<%- casa %>">
+				  						
+				  </div>
+				  <div class="col-md-4">Correo
+				  		<input id="correo" type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
+				  		Fecha de Nacimiento
+						<input class="form-control ancho_campos2 datepicker" type="text" id="fechan" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
+				  </div>
+				</div>
 				</form>	      
 			</div>
 		</div>		
@@ -145,13 +134,19 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
 <script type="text/javascript">
 	var app = app || {};
-	app.coleccionDeEmpleados  = <?php echo json_encode($empleados) ?>;
-	app.coleccionDeTelefonos  = <?php echo json_encode($telefonos) ?>;
+	app.coleccionDeEmpleados = <?php echo json_encode($empleados) ?>;
+	app.coleccionDeTelefonos = <?php echo json_encode($telefonos) ?>;
+	app.coleccionDePuestos   = <?php echo json_encode($puestos)   ?>;
 </script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">          </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloTelefono.js'?>">          </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPuesto.js'?>">			   </script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">  </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionTelefonos.js'?>">  </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPuestos.js'?>">	   </script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoEmpleado.js'?>">    </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoEmpleado.js'?>">       </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCatalogoPuestos.js'?>">	   </script>

@@ -70,9 +70,6 @@ class Escritorio extends Api {
 			$data['puestos']   = $this->puesto->get();
 			$this->load->view($this->ruta(), $data);	
 		}
-		
-
-
 	}
 
 	public function clientes()

@@ -1,10 +1,17 @@
 var app = app || {};
 
 var ColeccionPuestos = Backbone.Collection.extend({
+	url: 'http://crmqualium.com/api_puestos',
 	model	: app.ModeloPuesto,
 
-	// localStorage	: new Backbone.LocalStorage('clientes-backbone'),
-	url: 'http://crmqualium.com/api_puesto',
+	sync	: function (method, model, options) {
+		if (method === 'read') {
+			app.busquedaPuesto.puesto.buscarPorNombre(options.data.nombre).done(function (data) {
+				// console.log(data); //Debuelbe el objeto [Object]
+				options.success(data);
+			});
+		};
+	}
 
 	// obtenerTodos : function () {
 	// 	return this.filter( function (rol){
@@ -30,15 +37,6 @@ var ColeccionPuestos = Backbone.Collection.extend({
 	// obtenerUltimo	: function () {
 	// 	return this.last();
 	// },
-
-	sync	: function (method, model, options) {
-		if (method === 'read') {
-			app.busquedaRol.rol.buscarPorNombre(options.data.nombre).done(function (data) {
-				// console.log(data); //Debuelbe el objeto [Object]
-				options.success(data);
-			});
-		};
-	}
 });
 
 app.coleccionPuestos = new ColeccionPuestos(app.coleccionDePuestos);

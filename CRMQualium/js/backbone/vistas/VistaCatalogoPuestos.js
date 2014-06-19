@@ -1,10 +1,12 @@
+var app = app || {};
+
 app.VistaCatalogoPuesto = Backbone.View.extend({
 	tagName : 'tr',
 	plantilla : _.template($('#listaPuestos').html()),
 
 	events : {	
-		'click     .icon-edit' : 'habilitarEdicion', //..Habilita el input para la edición del rol...
-		'keypress  #erol'      : 'guardarEdicion',	 //..Guarda la edición del campo...
+		'click     .icon-edit'  : 'habilitarEdicion', //..Habilita el input para la edición del rol...
+		'keypress   #epuesto'   : 'guardarEdicion',	 //..Guarda la edición del campo...
 		'click     .icon-trash' : 'eliminar'		 //..Elimina un miembro de la lista de roles..
    },
 
@@ -54,11 +56,11 @@ app.VistaCatalogoPuesto = Backbone.View.extend({
 
 	eliminar : function()
 	{
-		this.model.destroy(); //...Destruye un modelo de la lista de roles...
+		console.log(this.model);
+		// this.model.destroy(); //...Destruye un modelo de la lista de roles...
 	}
 
 });
-
 
 app.VistaNuevoPuesto = Backbone.View.extend({
 	el : '#catalogoPuestos',
@@ -77,8 +79,8 @@ app.VistaNuevoPuesto = Backbone.View.extend({
         this.$scroll_puestos = this.$('#scroll_puestos');
         /*...Una vez lista la tabla le cargamos la lista de roles...*/
         this.cargarPuestos();
-        this.listenTo( app.coleccionRoles, 'add',   this.cargarPuesto );
-        this.listenTo( app.coleccionRoles, 'reset', this.cargarPuesto );  
+        this.listenTo( app.coleccionPuestos, 'add',   this.cargarPuesto );
+        this.listenTo( app.coleccionPuestos, 'reset', this.cargarPuesto );  
 
         $('#puesto').keydown(function(event) /*...eventos del teclado...*/
         {   
@@ -141,8 +143,9 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 	},
 	
 	guardar : function(evento)
-	{
-		var modeloRol = pasarAJson($('#registroPuesto').serializeArray());
+	{		
+		var modeloPuesto = pasarAJson($('#registroPuesto').serializeArray());
+			 
 		 $('#registroPuesto')[0].reset();
 		if(modeloPuesto.nombre)
 		{
@@ -163,14 +166,14 @@ app.VistaNuevoPuesto = Backbone.View.extend({
 		evento.preventDefault();
 	},
 
-	cargarPuesto : function (rol)
+	cargarPuesto : function (puesto)
 	{
-		var vistaPuesto = new app.VistaCatalogoPuesto({model : rol});		
+		var vistaPuesto = new app.VistaCatalogoPuesto({model : puesto});		
 		this.$scroll_puestos.append(vistaPuesto.render().el);
 	},
 	cargarPuestos : function ()
 	{	
-		app.coleccionPuestos.each(this.cargarRol, this);
+		app.coleccionPuestos.each(this.cargarPuesto, this);
 	}
 });
 

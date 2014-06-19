@@ -92,6 +92,26 @@ app.busquedaPermiso.permiso = (function () {
     };
 }()); 
 
+
+//Puestos
+app.busquedaPuesto.puesto = (function () {
+    buscarPorNombre = function (searchKey) {
+        var deferred = $.Deferred();
+        var results = puestos.filter(function (element) {
+            var nombre = element.nombre;
+           return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+        deferred.resolve(results);
+        return deferred.promise();
+    },
+    puestos = app.coleccionDePuestos;
+
+    // The public API
+    return {
+        buscarPorNombre: buscarPorNombre
+    };
+}()); 
+
 // -----limpiarJSON------------------------------- 
    function  limpiarJSON (objeto) {
      /*La variable valorJson y el ciclo for eliminan los

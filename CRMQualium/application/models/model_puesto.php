@@ -8,15 +8,16 @@
 		#				 $post ['nombre']........$post ['descripcion']
 		
 		public function create($args)
-        {   
+        {  
             $this->db->insert('puestos', $args);
             return $this->get($this->db->insert_id());     
         }
         
-        public function get () 
+        public function get ($id=FALSE) 
         {  
-           // $reply = $this->where( $id );  # Ejecutamos el metodo where...      
-           return $this->db->get  ( 'puestos' )->result();  # Este metodo ejecuta get con y sin ID...
+           $reply = $this->where( $id );  # Ejecutamos el metodo where... 
+           $this->db->order_by('nombre', 'asc');    
+           return $this->db->get  ( 'puestos' )->$reply();  # Este metodo ejecuta get con y sin ID...
         }
 
         public function save (  $id,  $put ) 

@@ -5,6 +5,7 @@ var app = app || {
     busquedaCliente:{},
     busquedaRol:{},
     busquedaPermiso:{},
+    busquedaPuesto:{},
     // funciones:{}
 };
 
