@@ -98,7 +98,7 @@
 		    	<div class="row">
 				  <div class="col-md-4">
 				  		Nombre
-				  		<input name="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
+				  		<input id="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
 						<label class="icon-uniF479 exito"></label>
 						Puesto
 						<select id="lpuesto"  name="puesto"              class="form-control" style="width : 350px;">
