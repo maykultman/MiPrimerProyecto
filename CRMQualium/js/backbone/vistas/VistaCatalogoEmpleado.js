@@ -7,8 +7,15 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	plantilla : _.template($('#datosEmpleado').html()),
 
 	events : {
-		'click .icon-trash'   : 'destroyModel',
-		'keypress #nombreE'   : 'editar'
+		'click .icon-trash'   		 : 'destroyModel',
+		'keypress #nombre'   		 : 'editar',
+		'keypress #puesto'   		 : 'editar',
+		'keypress #direccion'   	 : 'editar',
+		'keypress #tmovil'   		 : 'editar',
+		'keypress #tcasa'   		 : 'editar',
+		'keypress #correo'   		 : 'editar',
+		'keypress #fecha_nacimiento' : 'editar'
+		
 	},
 
 	initialize : function()	{ 

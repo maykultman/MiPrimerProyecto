@@ -31,7 +31,7 @@
 
 		    $this->db->select( $args );			
 			$this->db->from('servicios');
-			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');
+			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');			
 			return $this->db->get()->$reply();
 		}
 

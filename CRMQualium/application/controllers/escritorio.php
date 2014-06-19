@@ -112,7 +112,7 @@ class Escritorio extends Api {
 		$data['roles']			= $this->Roles->get();  					# Lista de Roles.
 		$data['proyectoRoles']  = $this->proyectoRoles->getProyRol();	# Roles del personal en algún proyecto
 		$data['proyectos']		= $this->proyecto->get();					# Proyectos 
-		$data['servicios_proy'] = $this->serProy->get('','proyectos');	# Servicios relacionados con el proyecto
+		$data['servicios_proy'] = $this->serProy->get();	# Servicios relacionados con el proyecto
 		$data['archivos'] 		= $this->archivos->get('','proyectos');		# Archivos Relacionados con el proyecto
 		$data['representantes'] = $this->representa->get();
 		

@@ -94,14 +94,14 @@
 		    		<span id="<%- id %>" class="icon-trash" data-toggle="tooltip" title="Eliminar"></span>
 		    </div>
 		    	<h4><b>Datos personales</b></h4></br>
-		    	<form>
+		    	
 		    	<div class="row">
 				  <div class="col-md-4">
 				  		Nombre
 				  		<input id="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
 						<label class="icon-uniF479 exito"></label>
 						Puesto
-						<select id="lpuesto"  name="puesto"              class="form-control" style="width : 350px;">
+						<select id="puesto"  name="puesto"              class="form-control" style="width : 350px;">
 								  <option selected disabled> Cargo   </option>
 						</select>
 						Dirección
@@ -115,12 +115,12 @@
 				  						
 				  </div>
 				  <div class="col-md-4">Correo
-				  		<input id="correo" type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
+				  		<input id="correo" name="correo" type="text"  class="form-control ancho_campos2" placeholder="Email" value="<%- correo %>">
 				  		Fecha de Nacimiento
-						<input class="form-control ancho_campos2 datepicker" type="text" id="fechan" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
+						<input class="form-control ancho_campos2 datepicker" type="text" id="fecha_nacimiento" placeholder="Fecha de nacimiento" value="<%- fecha_nacimiento%>">
 				  </div>
 				</div>
-				</form>	      
+				      
 			</div>
 		</div>		
 	</div>
