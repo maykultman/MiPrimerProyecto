@@ -116,7 +116,7 @@
 					Comienza <%= (duracion.queda - duracion.plazo) == 1 ? 'mañana' : 'en ' + (duracion.queda - duracion.plazo) + ' días' %>
 				</span>
 			<% }; %>
-			<% if (duracion.queda <= duracion.plazo && (duracion.porcentaje >= 51 && duracion.porcentaje <= 100)) { %>
+			<% if (duracion.porcentaje >= 51 && duracion.porcentaje <= 100) { %>
 				<span class="badge color_success">
 					Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 				</span>

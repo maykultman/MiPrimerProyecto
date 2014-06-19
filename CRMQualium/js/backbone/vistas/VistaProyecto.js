@@ -1,5 +1,5 @@
 var app = app || {};
-/* {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} */
+/* ---------------------------------------------------------------- */
 app.VistaServicioProyecto = app.VistaServicio.extend({
 	tagName	: 'li',
 	plantillaDefault	: _.template($('#plantillaServicioProyecto').html()),
@@ -10,7 +10,7 @@ app.VistaServicioProyecto = app.VistaServicio.extend({
 		alert('hola');
 	}
 });
-/* {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} */
+/* ---------------------------------------------------------------- */
 app.VistaRolProyecto = app.VistaRolPrincipal.extend({
 	tagName	: 'li',
 	plantillaDefault	: _.template($('#plantillaRolProyecto').html()),
@@ -21,7 +21,7 @@ app.VistaRolProyecto = app.VistaRolPrincipal.extend({
 		return this;
 	}
 });
-/* {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} */
+/* ---------------------------------------------------------------- */
 
 app.VistaProyecto = Backbone.View.extend({
 	tagName	: 'tr',
@@ -116,7 +116,7 @@ app.VistaProyecto = Backbone.View.extend({
 		});
 
 		// if (callback) {
-			callback();
+			// callback();
 		// };
 	},
 	actualizarAtributo	: function (dato) {
@@ -137,7 +137,7 @@ app.VistaProyecto = Backbone.View.extend({
 			console.log('dato no valido');
 		};
 	},
-	guadarServicio	: function (dato) {
+	guadarServicio		: function (dato) {
 		dato.idproyecto = this.model.get('id');
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
@@ -157,9 +157,12 @@ app.VistaProyecto = Backbone.View.extend({
 	eliminar			: function () {
 		this.model.destroy();
 	},
-	editando	: function () {
+	editando			: function () {
 		var esto = this;
-		this.verInfo(function () {
+		// this.verInfo(function () {});
+		this.verInfo();
+
+
 			if (esto.$btn_editar
 				.children()
 				.attr('class') == 
@@ -181,7 +184,7 @@ app.VistaProyecto = Backbone.View.extend({
 					.toggleClass('MO icon-back');
 				esto.$('.editar2').toggleClass('editando2');
 			};
-		});
+		
 	},
 	cargarServicio		: function (servicio) {
 		var vista = new app.VistaServicioProyecto({ model:servicio });
@@ -220,9 +223,9 @@ app.VistaProyecto = Backbone.View.extend({
 		var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed();
 		var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed();
 		if (queda == -0) queda = 0;
-		var porcentaje = ( (100 * queda)/plazo ).toFixed();
+		var porcentaje = (100 * queda)/plazo;
 
-		// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
+		console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
 		return {
 			plazo		:plazo,
 			queda		:queda,
