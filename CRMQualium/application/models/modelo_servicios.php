@@ -20,12 +20,8 @@
 
 		public function get_s($id=FALSE)
 		{
-			if($id===FALSE){
-				return $this->db->get('servicios')->result();	
-			}
-
-			return $this->db->get_where('servicios', array('id'=> $id))->result(); 
-			return (array_key_exists(0, $query)) ? $query[0] : $query = false;
+			$reply = $this->where( $id );     
+            return $this->db->get  ( 'servicios' )->$reply();   			
 		}
 		# Esta funcion le sirve a la interfaz de modulo cliente_nuevo y consulta_cliente...
 

@@ -16,11 +16,14 @@
 				$data[$i] = array(  'idproyecto'=>$post['idproyecto'], 'idservicio'=>$post['idservicio'][$i], 'status'=>0);
 				return $this->db->insert_batch('servicios_proy', $data);
 			}
-			return $this->db->insert('servicios_proy', $post);						 	
+			 $this->db->insert('servicios_proy', $post);
+			 return $this->get($this->db->insert_id());						 	
 		}	
 		
 		public function get($id=FALSE) 
 		{
+			if($id===FALSE){ $reply = 'result';}else{ $reply = 'row';}
+			
 		    $args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
 		    		  'servicios_proy.idservicio', 'servicios.nombre',
 		    		  'servicios_proy.status'
@@ -29,7 +32,7 @@
 		    $this->db->select( $args );			
 			$this->db->from('servicios');
 			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');
-			return $this->db->get()->result();
+			return $this->db->get()->$reply();
 		}
 
 		public function save (  $id,  $put ) 

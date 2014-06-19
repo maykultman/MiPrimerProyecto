@@ -34,8 +34,8 @@
 			        <div class="modal-body">
 				        <form id="registro">
 				        	<div style="margin-left:85px; ">
-								<input  id="nombre"  name="nombre" type="text"  class="form-control" placeholder="Nombre" >
-								<select id="lpuesto"  name="puesto"              class="form-control"                      >
+								<input  name="nombre" type="text"  class="form-control" placeholder="Nombre" >
+								<select id="puesto"  name="puesto"              class="form-control"                      >
 								  <option selected disabled> Cargo   </option>
 								</select>
 								<input name="direccion" 		  type="text"   class="form-control" 			 placeholder="Dirección"		   >
@@ -98,7 +98,7 @@
 		    	<div class="row">
 				  <div class="col-md-4">
 				  		Nombre
-				  		<input id="nombreE" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
+				  		<input name="nombre" type="text" class="form-control ancho_campos2" placeholder="Nombre" value="<%- nombre %>">
 						<label class="icon-uniF479 exito"></label>
 						Puesto
 						<select id="lpuesto"  name="puesto"              class="form-control" style="width : 350px;">

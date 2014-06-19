@@ -20,24 +20,26 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	{
 		if(events.keyCode === 13)
 		{
-			var rol = $(events.currentTarget).val();
-			if(rol) // La variable rol tiene valor
-			{
-				this.model[0].save
-				(
-					{ nombre : rol }, 
-					{
-						wait:true,
-						patch:true,
-						success: function (exito){
-							console.log(exito);
-						}, 
-						error: function (error){
-							console.log(error);
-						}
-					}
-				);
-			}//If de validación de la variable rol
+			var nombre = $(events.currentTarget).attr('name');
+			// var valor = $(events.currentTarget).val();
+			console.log(nombre);
+			// if(rol) // La variable rol tiene valor
+			// {
+			// 	this.model[0].save
+			// 	(
+			// 		{ nombre : rol }, 
+			// 		{
+			// 			wait:true,
+			// 			patch:true,
+			// 			success: function (exito){
+			// 				console.log(exito);
+			// 			}, 
+			// 			error: function (error){
+			// 				console.log(error);
+			// 			}
+			// 		}
+			// 	);
+			// }//If de validación de la variable rol
 			events.preventDefault();
 		};//..if elemento.keyCode
 	},
