@@ -1,6 +1,6 @@
 <?php
-
-	class Modelo_servicioProyecto extends CI_Model
+	require_once 'Modelo_crud.php';
+	class Modelo_servicioProyecto extends Modelo_crud
 	{
 		# ............DATOS MODELO SERVICIO PROYECTO...........
 		# $post['idproyecto'], $post['idservicio'], $post['status']
@@ -17,12 +17,18 @@
 				return $this->db->insert_batch('servicios_proy', $data);
 			}
 			 $this->db->insert('servicios_proy', $post);
-			 return $this->get($this->db->insert_id());						 	
+			 return $this->db->insert_id();						 	
 		}	
+
+		// public function get ( $id = FALSE ) 
+  //       {  
+  //          $reply = $this->where( $id );  # Ejecutamos el metodo where...      
+  //          return $this->db->get  ( 'servicios_proy' )->$reply();  # Este metodo ejecuta get con y sin ID...
+  //       }
 		
 		public function get($id=FALSE) 
 		{
-			if($id===FALSE){ $reply = 'result';}else{ $reply = 'row';}
+			// if($id===FALSE){ $reply = 'result';}else{ $reply = 'row';}
 			
 		    $args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
 		    		  'servicios_proy.idservicio', 'servicios.nombre',
@@ -31,8 +37,8 @@
 
 		    $this->db->select( $args );			
 			$this->db->from('servicios');
-			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');			
-			return $this->db->get()->$reply();
+			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');
+			return $this->db->get()->result();
 		}
 
 		public function save (  $id,  $put ) 

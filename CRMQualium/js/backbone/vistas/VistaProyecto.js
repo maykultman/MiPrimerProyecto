@@ -6,8 +6,11 @@ app.VistaServicioProyecto = app.VistaServicio.extend({
 	events	: {
 		'click .btn_eliminar'	: 'conmutarStatus'
 	},
+	initialize		: function () {
+		this.listenTo(this.model, 'destroy', this.remove);
+	},
 	conmutarStatus	: function () {
-		alert('hola');
+		this.model.destroy();
 	}
 });
 /* ---------------------------------------------------------------- */
@@ -98,12 +101,11 @@ app.VistaProyecto = Backbone.View.extend({
 			/* En la edición se podran agregar servicios al proyecto */
 				var list = '<% _.each(servicios, function(servicio) { %> <option value="<%- servicio.id %>"><%- servicio.nombre %></option> <% }); %>';
 				$('#select_servicios').
-				append(_.template(list, {
-					servicios: app.coleccionDeServicios 
-				}));
+				append(_.template(list, 
+					{ servicios : app.coleccionDeServicios }
+				));
 				$('#select_servicios').on('change', function (){
-					// console.log(pasarAJson( $(this).serializeArray() )); return;
-					esto.guadarServicio( pasarAJson( $(this).serializeArray() ) );
+					esto.guadarServicio( pasarAJson( $(this).serializeArray() ), $(this).children('option:selected').text() );
 				});
 		});
 		/*Escuchamos el evento que hace que se esconda el modal
@@ -137,13 +139,18 @@ app.VistaProyecto = Backbone.View.extend({
 			console.log('dato no valido');
 		};
 	},
-	guadarServicio		: function (dato) {
+	guadarServicio		: function (dato, nombreServicio) {
+		var esto = this;
 		dato.idproyecto = this.model.get('id');
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		app.coleccionServiciosProyecto.create( dato, {
 			wait 	:true,
 			success : function (exito) {
+				dato.nombre = nombreServicio;
+				dato.status = '1';
+				app.coleccionServiciosProyecto.last().set(dato);
+				esto.cargarServicios();
 				console.log('Se guardo el nuevo servicio del proyecto');
 			},
 			error 	: function (error) {
@@ -152,7 +159,6 @@ app.VistaProyecto = Backbone.View.extend({
 		});
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
-		console.log(app.coleccionServiciosProyecto.toJSON());
 	},
 	eliminar			: function () {
 		this.model.destroy();
@@ -187,10 +193,12 @@ app.VistaProyecto = Backbone.View.extend({
 		
 	},
 	cargarServicio		: function (servicio) {
+		console.log(servicio);
 		var vista = new app.VistaServicioProyecto({ model:servicio });
 		this.$div_serviciosProyecto.append(vista.render().el);
 	},
 	cargarServicios		: function () {
+		this.$div_serviciosProyecto.html('');
 		var servicios = app.coleccionServiciosProyecto.where({idproyecto:this.model.get('id')});
 		for (var i = 0; i < servicios.length; i++) {
 			this.cargarServicio(servicios[i]);
@@ -225,7 +233,7 @@ app.VistaProyecto = Backbone.View.extend({
 		if (queda == -0) queda = 0;
 		var porcentaje = (100 * queda)/plazo;
 
-		console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
+		// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
 		return {
 			plazo		:plazo,
 			queda		:queda,
