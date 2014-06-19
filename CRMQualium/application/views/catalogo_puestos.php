@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
+		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_usuarios.css'?>" 
           type="text/css">
 
         <script type="text/javascript" src="<?=base_url().'css/bootstrap-3.1.1-dist/js/collapse.js'?>">
