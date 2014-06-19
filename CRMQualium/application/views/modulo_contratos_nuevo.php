@@ -50,11 +50,12 @@
 			    <input type="radio" name="options" id="option2">Iguala Mensual
 			  </label>			
 			</div><br><br><br>
-			<div id="panel_contrato" class="panel panel-primary">
+			<div id="panel_contrato">
 		      <!-- Default panel contents -->
-		      <div class="panel-heading">Seleccionar Servicios</div>
+		      <div id="tbl_de_servicios" class="panel panel-primary">
+		      <div class="panel-heading">Planes & Servicios</div>
 		      <!-- Table -->
-		      <table class="table">
+		      <table id="" class="table">
 		        <tbody class="scrollContent2">
 					<tr>
 						<td style="width: 380px ">
@@ -133,10 +134,7 @@
 					</tr>
 				</tbody>
 		      </table>
-		    </div><br>		   
-			
-			    
-				    <table class="table table-striped table-curved" >
+		      <table id="servicios_elegidos" class="table table-striped" >
 						<thead  style="background-color: #f9f9f9!important;">
 							<tr>
 								<td></td>
@@ -258,6 +256,10 @@
 						    </tr>						
 						</tbody>
 				    </table>
+		    </div><br>		   
+			
+			    
+				    
 				
 			
 		   	<div class="desborde"></div> 
