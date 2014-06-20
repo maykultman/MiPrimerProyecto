@@ -19,12 +19,17 @@
 		margin-top: -45px;
 	}
 
-	.editar2 {
-		display: none;
-	}
-	.editando2 {
-		display: inline-block;
-	}
+	/*CSS contruido en el desarrollo frontend */
+		.editar2 {
+			display: none;
+		}
+		.editando2 {
+			display: inline-block;
+		}
+		option:disabled { /*Color de fondo para los option desactivados*/
+			background: #F1F1f1;
+		}
+	/*CSS contruido en el desarrollo frontend */
 
 	.panel-body span{
 		padding: 5px;
@@ -142,7 +147,7 @@
 	     		<span class="icon-trash eliminar"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
 			</div>
 			<span id="tr_btn_editar" class="icon-edit2"  data-toggle="modal" data-target="#modal<%- id %>" title="Editar"></span>
-			<span id="verInfo" class="icon-eye"  data-toggle="modal" data-target="#modal<%- id %>" title="Ver proyecto"></span>
+			<span id="tr_btn_verInfo" class="icon-eye"  data-toggle="modal" data-target="#modal<%- id %>" title="Ver proyecto"></span>
 		</td>
 	</script>
 	<script type="text/template" id="plantillaModalProyecto">
@@ -165,7 +170,7 @@
 							<li class="active"><a href="#home" data-toggle="tab">Datos</a></li>
 							<li><a href="#profile" data-toggle="tab">Archivos</a></li>  
 						</ul>
-						<div class="tab-content">          
+						<div class="tab-content">
 							<div class="tab-pane active" id="home"><br>
 								<small class="editar">Presione la tecla enter para actualizar el campo</small>
 								<!-- -------INFORMACION DEL PROYECTO------- -->
@@ -275,12 +280,21 @@
 											<td class="atributo"><b>Servicios incluidos</b></td>
 											<td>
 												<!-- ----------------EDICION----------------- -->
-													<select id="select_servicios" class="form-control" name="idservicio">
-														<option disabled>Seleccione servicio...</option>
-													</select>
-												<ul id="serviciosProyecto">
-													<!--PLANTILLAS DE SERVICIOS DEL PROYECTO-->
-												</ul>
+													<div class="editar2">
+														<div class="input-group">
+															<select id="select_servicios" class="form-control" name="idservicio">
+																<option disabled>Seleccione servicio...</option>
+															</select>
+															<span class="input-group-btn" style="padding:0px">
+																<button id="btn_agregarServicio" class="btn btn-default" type="button" padding="auto">Agregar</button>
+															</span>
+														</div><!-- /input-group -->
+													</div>
+												<!-- -----------------DATOS------------------ -->
+													<br>
+													<ul id="serviciosProyecto" class="list-group">
+														<!--PLANTILLAS DE SERVICIOS DEL PROYECTO-->
+													</ul>
 											</td>
 											<td class="respuesta">
 												<span class="icon-uniF55C" style="visibility: hidden;"></span>
@@ -291,11 +305,39 @@
 											<td>
 												<!-- ----------------EDICION----------------- -->
 													<div class="editar2">
-														Editando
+														<div class="panel panel-default">
+															<div class="panel-heading">
+																<select id="select_empleados" class="form-control input-sm" style="width: 100%;">
+																	<option selected disabled>Seleccione nuevo participante o uno existente...</option>
+																<select>
+																<div class="row">
+																	<div class="col-md-6">
+																		<div class="input-group input-group-sm" style="width:auto;">
+																			<select id="select_rol" class="form-control">
+																				<option selected disabled>Seleccione un rol...</option>
+																	  	   		<!-- PLANTILLA DE ROL -->
+																			</select>
+																		</div><!-- /input-group -->
+																	</div>
+																	<div class="col-md-6">
+																		<div class="input-group input-group-sm" style="width:auto;">
+																			<input type="text" id="" class="form-control text_nuevoRol" placeholder="Nuevo Rol">
+																			<span class="input-group-btn" style="padding:0px">
+																				<button type="button" id="" class="btn btn-default btn_nuevoRol">Agregar</button>
+																			</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="panel-body">
+																<!-- PLANTILLAS DE ROLES -->
+																<form id="form_roles"></form>
+															</div>
+														</div>
 													</div>
-												<ul id="rolesProyecto">
-													<!--PLANTILLAS DE EMPLEADOS INVOLUCRADOS-->
-												</ul>
+													<ul id="rolesProyecto" class="list-group">
+														<!--PLANTILLAS DE EMPLEADOS INVOLUCRADOS-->
+													</ul>
 											</td>
 											<td class="respuesta">
 												<span class="icon-uniF55C" style="visibility: hidden;"></span>
@@ -334,18 +376,36 @@
 	</script>
 	<script type="text/template" id="plantillaServicioProyecto">
 		<!-- -----------------DATOS------------------ -->
-			<div class="editar2"><span class="icon-uniF478 btn_eliminar"></span></div> <!--botón eliminar-->
+			<!-- La plantilla es puesta en el DOM con el botón de eliminar
+			     visible. En el código de VistaProyecto.js ocultamos el botón,
+			     el usuario no ve este efecto, esto se realiza para facilitar
+			     la visualización del botón eliminar cuando se agreguen más 
+			     servicios y poderlos eliminar en ese momento si se requiere -->
+			<div class="editar2 editando2"><span class="icon-uniF478 btn_eliminar"></span></div> <!--botón eliminar-->
 			<%- nombre %>
 	</script>
 	<script type="text/template" id="plantillaRolProyecto">
 		<!-- -----------------DATOS------------------ -->
 			<% if (idrol == 1) { %>
-				<div class="editar2"><span class="icon-uniF478"></span></div> <!--botón eliminar-->
+				<div class="editar2"><span class="icon-uniF478 btn_eliminar"></span></div> <!--botón eliminar-->
 				<span class="badge"><%- nombreRol %></span> <%- nombrePersonal %></div>
 			<% }else { %>
-				<div class="editar2"><span class="icon-uniF478"></span></div> <!--botón eliminar-->
+				<div class="editar2"><span class="icon-uniF478 btn_eliminar"></span></div> <!--botón eliminar-->
 				<b><%- nombreRol %></b> <%- nombrePersonal %>
 			<% }; %>
+	</script>
+	<script type="text/template" id="input_rol">
+		<div class="tag_rol">
+			<div class="btn-group btn-group-xs">
+				<button class="btn btn-default btn_eliminarRol" value="<%- id %>">
+					<span class="icon-circledelete"></span>
+				</button>
+				<button type="button" class="btn btn-default" disabled="disabled">
+					<%- nombre %>
+				</button>
+			</div>
+			<input type="hidden" class="rol" name="<%- name %>" value="<%- id %>">
+		</div>
 	</script>
 	<script type="text/template" id="tr_archivo">
 		<td>
