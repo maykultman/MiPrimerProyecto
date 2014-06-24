@@ -28,24 +28,15 @@
 		
 		public function get($id=FALSE) 
 		{
-<<<<<<< HEAD
-			$args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
-=======
-			// if($id===FALSE){ $reply = 'result';}else{ $reply = 'row';}
-			
 		    $args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
->>>>>>> a77948a4f11c1a3692b67bb71b7e38e1f132cfd5
+
 		    		  'servicios_proy.idservicio', 'servicios.nombre',
 		    		  'servicios_proy.status'
 		    		];
 
 		    $this->db->select( $args );			
 			$this->db->from('servicios');
-<<<<<<< HEAD
-			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');			
-=======
 			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');
->>>>>>> a77948a4f11c1a3692b67bb71b7e38e1f132cfd5
 			return $this->db->get()->result();
 		}
 
