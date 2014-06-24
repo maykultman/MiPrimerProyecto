@@ -70,7 +70,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 
 		this.$tbody_empleados 	= $('#tbody_empleados');
 		this.$tbody_servicios 	= $('#tbody_servicios');
-		this.cargarClientes();
 		this.$fechaInicio       = $('#fechaInicio');
 		this.cargarServicios();
 
@@ -91,6 +90,8 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$tbody_archivos	= $('#tbody_archivos');
 		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
 		this.$tablaProyecto = $('#form_subirArchivos #tabla');
+		
+		this.cargarClientes();
 
 		this.cargarEmpleados();
 
@@ -103,15 +104,13 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 	cargarClientes		: function () {
 		var esto = this;
-		this.$busqueda.autocomplete(
-			{
-				source : app.coleccionClientes.pluck('nombreComercial'),
-				select : function( event, ui ) {
-					var cliente = app.coleccionClientes.findWhere({nombreComercial:ui.item.value});
-					esto.$hidden_idCliente.val(cliente.get('id'));
-				}
+		this.$busqueda.autocomplete({
+			source : app.coleccionClientes.pluck('nombreComercial'),
+			select : function( event, ui ) {
+				var cliente = app.coleccionClientes.findWhere({nombreComercial:ui.item.value});
+				esto.$hidden_idCliente.val(cliente.get('id'));
 			}
-		);
+		});
 	},
 	cargarServicio		: function (servicio) {
 		var vistaServicio = new app.VistaServicioProyecto({ 
@@ -316,6 +315,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			.toggleClass('oculto');
 	},
 	guadarServiciosProyecto	: function (idproyecto,servicios) {
+		console.log('guadarServiciosProyecto ',idproyecto,servicios);
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		app.coleccionServiciosProyecto.create(
@@ -338,6 +338,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 	},
 /*Funciones para la dinamina de roles de empleados sobre el nuevo proyecto*/
 	validarRolesEmpleados			: function () {/*elem*/
+		console.log('validarRolesEmpleados');
 		// this.formSiguiente(elem);
 		// elem.preventDefault();
 		// return;
@@ -363,10 +364,10 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				/* |||||||||||||||||||||||||||||||||||||| */
 				
 				delete modelo.nombre;
-				/*if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+				if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
 					this.guadarRolRecursivo(modelo);
-				};*/
-				this.guadarRolRecursivo(modelo);
+				};
+				// this.guadarRolRecursivo(modelo);
 				this.guardarRolesNuevos({
 					idproyecto 	: modelo.idproyecto, 
 					idpersonal 	: modelo.idpersonal,
@@ -378,10 +379,10 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				// this.count += modelo.idrol.length;
 				/* |||||||||||||||||||||||||||||||||||||||| */
 				
-				/*if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+				if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
 					this.guadarRolRecursivo(modelo);
-				};*/
-				this.guadarRolRecursivo(modelo);
+				};
+				// this.guadarRolRecursivo(modelo);
 
 			};
 		};
@@ -460,6 +461,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		delete this.$inputArchivos.val('');
 	},
 	subirArchivo		: function () {/*elem*/
+		console.log('subirArchivo');
 		// elem.preventDefault();
 		var archivos = this.$inputArchivos.prop('files');
 		

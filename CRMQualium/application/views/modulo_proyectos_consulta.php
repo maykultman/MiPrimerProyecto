@@ -325,7 +325,7 @@
 											<td>
 												<!-- ----------------EDICION----------------- -->
 													<div class="editar2">
-							<form id="form_roles">
+									<form id="form_roles">
 														<div class="panel panel-default">
 															<div class="panel-heading">
 																<select id="select_empleados" class="form-control input-sm" name="idpersonal" style="width: 100%;">
@@ -356,7 +356,7 @@
 															</div>
 														</div>
 													</div>
-							</form>
+									</form>
 													<ul id="rolesProyecto" class="list-group">
 														<!--PLANTILLAS DE EMPLEADOS INVOLUCRADOS-->
 													</ul>
@@ -388,6 +388,47 @@
 								<!-- ------- Archivos del proyecto------- -->
 							</div>
 							<div class="tab-pane" id="profile">
+								<!-- Adjuntar archivos nuevos -->
+									<div>
+										<div class="row">
+											<div class="col-md-12">
+												<fieldset>
+													<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas. Los archivos deben estár en la misma carpeta</h5></legend>
+												</fieldset>
+											</div>
+										</div>
+										<label class="btn btn-success fileinput-button">
+						                    <span class="icon-paperclip"></span>
+						                    <span>Adjuntar archivos</span>
+						                    <input type="file" id="inputArchivos" multiple name="archivo[]">
+						                </label>
+						                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start" style="display:none;">
+						                    <i class="glyphicon glyphicon-upload"></i>
+						                    <span>Subir</span>
+						                </button>
+						                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
+						                    <i class="glyphicon glyphicon-ban-circle"></i>
+						                    <span>Borrar lista</span>
+						                </button>
+										<form id="form_subirArchivos">
+							                <input type="hidden" id="idpropietario" name="idpropietario">
+							                <input type="hidden" id="tabla" name="tabla" value="proyectos">
+							                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
+									    </form>
+									    <br>
+										<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
+											<thead>
+												<tr>
+													<th>Archivos a subir</th>
+													<th>Tipo</th>
+													<th>Tanaño</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody id="tbody_archivos">
+											</tbody>
+										</table>
+									</div>
 								<table id="archivos_proy" class="table table-striped">
 									<!-- PLANTILLAS TR DE ARCHIVOS -->
 								</table>
@@ -447,7 +488,7 @@
 		</td>
 		<td class="icon-operaciones">
 			<div class="btn_eliminar_archivo">
-				<span class="icon-circledelete eliminarArchivo" id="<%- id %>" data-toggle="tooltip" title="Eliminar"></span>
+				<span class="icon-circledelete eliminar" id="<%- id %>" data-toggle="tooltip" title="Eliminar"></span>
 			</div>
 			<span class="icon-uniF7D5" data-toggle="tooltip" data-placement="top" title="Descargar">
 	    </td>
@@ -493,6 +534,11 @@
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRolesProyectos.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionArchivos.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosProyecto.js'?>"></script>
+		<script type="text/javascript">
+			app.coleccionProyectos = new ColeccionProyectos(app.coleccionDeProyectos);
+			app.coleccionRolesProyectos = new ColeccionRolesProyectos(app.coleccionDeProyectoRoles);
+			app.coleccionServiciosProyecto = new ColeccionServiciosProyecto(app.coleccionDeServicosProyecto);
+		</script>
 	<!-- vistas -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Solo heredamos la clase -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaRol.js'?>"></script> <!-- Solo heredamos la clase -->

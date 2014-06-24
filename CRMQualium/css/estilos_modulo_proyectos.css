@@ -326,3 +326,44 @@ tbody.scrolltbla {
 			50%   {opacity:1;}
 			100% {opacity:.4;}
 		}
+
+	/* estilos realizados para la seccion de nuevo proyecto */
+		.section_Visible {
+			display: block;
+			/*border: 1px solid gray;*/
+		}
+
+		.section_Oculto {
+			display: none;
+			/*border: 1px solid gray;*/
+		}
+
+		/*#guardarProyecto {
+			margin-left: 0px;
+			margin-right: 0px;
+		}*/
+
+		.fileinput-button {	/*Funciona en el modulo de consulta*/
+			position: relative;
+			overflow: hidden;
+		}
+		.fileinput-button input {	/*Funciona en el modulo de consulta*/
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			opacity: 0;
+			-ms-filter: 'alpha(opacity=0)';
+			font-size: 200px;
+			direction: ltr;
+			cursor: pointer;
+		}
+
+		/* Fixes for IE < 8 */
+		@media screen\9 {	/*Funciona en el modulo de consulta*/
+			.fileinput-button input {
+				filter: alpha(opacity=0);
+				font-size: 100%;
+				height: 100%;
+			}
+		}
