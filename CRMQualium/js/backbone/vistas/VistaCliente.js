@@ -9,7 +9,7 @@ app.VistaCliente = Backbone.View.extend({
 		//Es el boton de eliminar del tr del CLIENTE
 			'click #tr_btn_eliminar'		: 'advertenciaEliminar',
 		//Boton para accesar rapidamente a la edición del cliente
-					'click #tr_btn_editar'	: 'editando',
+					'click #tr_btn_editar'	: 'verInfo',
 						'click .verInfo'	: 'verInfo',
 
 		//Es el boton de eliminar la ficha información del CLIENTE
@@ -83,7 +83,7 @@ app.VistaCliente = Backbone.View.extend({
 		return this;
 	},
 	//---------------------------------------------
-	verInfo	: function () {/*callback*/
+	verInfo	: function (elem) {/*callback*/
 		var esto = this;
 		/*Cuando los clientes se cargan en la tabla, no se carga el
 		modal sino hasta que el usuario quiera verlo. Es en esta
@@ -186,9 +186,9 @@ app.VistaCliente = Backbone.View.extend({
 			esto.render();
 		});
 
-		// if (callback) {
-		// 	callback();
-		// };
+		if ($(elem.currentTarget).attr('id') == 'tr_btn_editar') {
+			this.editando();
+		};
 	},
 	nuevoContacto	: function (submit) {
 		var serializado = this.$formNuevoContacto.serializeArray();
@@ -929,7 +929,7 @@ app.VistaCliente = Backbone.View.extend({
 	editando	: function () {
 		// var esto = this;
 		
-		this.verInfo(); //Lamar esta función duplica el modal (ANOMALIA)
+		// this.verInfo(); //Lamar esta función duplica el modal (ANOMALIA)
 		// this.verInfo(function () {
 		if (this.$btn_editar
 			.children()

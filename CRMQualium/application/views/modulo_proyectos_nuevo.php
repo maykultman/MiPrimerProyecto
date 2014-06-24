@@ -377,6 +377,7 @@
 		    		<div class="row">
 						<div class="col-md-6">
 							<select class="form-control input-sm select_rol" style="width:auto;margin:0;">
+								<option selected disabled>Seleccione un rol...</option>
 					  	   		<!-- PLANTILLA DE ROL -->
 							</select>
 						</div>
