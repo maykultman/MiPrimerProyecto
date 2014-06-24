@@ -285,24 +285,44 @@ tbody.scrolltbla {
 
 /*------------------------------MODULO PROYECTO CONSULTA--------------*/
 
-/*--------Estilos nuevo proyecto--------*/
-	.label_servicio, .label_empleado {
-		padding: 8px;
-		margin-bottom: 0px;
-		width:260px;
-		/*height:100%;*/
-	}
-	.tag_rol {
-		margin: 3px;
-		display: inline;
-	}
+	/*--------Estilos nuevo proyecto--------*/
+		.label_servicio, .label_empleado {
+			padding: 8px;
+			margin-bottom: 0px;
+			width:260px;
+			/*height:100%;*/
+		}
+		.tag_rol {
+			margin: 3px;
+			display: inline;
+		}
 
-	.icon-eliminar .icon-circledelete {
-		padding: 5px;
-	}
-	.icon-eliminar .icon-circledelete:hover{
-		background: red;
-		border-radius: 3px;
-		cursor: pointer;
-		color: white;
-	}
+		.icon-eliminar .icon-circledelete {
+			padding: 5px;
+		}
+		.icon-eliminar .icon-circledelete:hover{
+			background: red;
+			border-radius: 3px;
+			cursor: pointer;
+			color: white;
+		}
+	/*estilos de la ficha de información del proyecto*/
+		.exito2{
+			-webkit-animation:efectoOpacidad 3s;
+			color: green;
+			opacity:.4;
+
+		}
+		.error2{
+			-webkit-animation:efectoOpacidad 3s;
+			color: red;
+			opacity:.4;
+
+		}
+
+		@-webkit-keyframes efectoOpacidad
+		{
+			0%   {opacity:1;}
+			50%   {opacity:1;}
+			100% {opacity:.4;}
+		}

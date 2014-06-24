@@ -8,8 +8,8 @@
 		width: 100%;
 	}
 
-	#info_proyecto{
-		margin-top: -20px;
+	#info_proyecto, #archivos_proy{
+		margin-top: -21px;
 	}
 
 	#icon_operaciones_proy{
@@ -24,10 +24,16 @@
 			display: none;
 		}
 		.editando2 {
-			display: inline-block;
+			display: inline;
 		}
 		option:disabled { /*Color de fondo para los option desactivados*/
 			background: #F1F1f1;
+		}
+
+		span.icon-uniF478:hover {
+			background: red;
+			color: white;
+			border-radius: 3px;
 		}
 	/*CSS contruido en el desarrollo frontend */
 
@@ -159,7 +165,21 @@
 						<span id="cerrar_consulta" class="glyphicon glyphicon-remove" style="float:right" data-dismiss="modal" aria-hidden="true"></span>
 					</div>
 					<div class="panel-body">
-						<p class="panel-title"><h3 style="text-align: center;"><b><%- nombre %></b></h3></p>
+						<!-- -->
+						<div class=" editar2 editando2">
+							<p class="panel-title"><h3 style="text-align: center;"><b><%- nombre %></b></h3></p>
+						</div>
+						<div class="editar2">
+							<div class="filaInformacion">
+								<div style="display: table-cell;">
+									<input type="text" id="nombreProyecto" class="form-control input-lg" placeholder="Nombre de proyecto" name="nombre" value="<%- nombre %>">
+								</div>
+								<div class="respuesta" style="display: table-cell; padding: 8px;">
+									<span class="icon-uniF55C"  style="visibility: hidden;">
+								</div>
+							</div>
+						</div>
+						<!-- -->
 						<div id="icon_operaciones_proy">
 							<div class="btn-group-vertical" style="margin-top: 0px;">
 								<button type="button" class="btn btn-primary" id="btn_eliminar"><label class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></label></button>
@@ -176,14 +196,14 @@
 								<!-- -------INFORMACION DEL PROYECTO------- -->
 								<div class="visible" id="">
 									<table id="info_proyecto" class="table table-striped" >
-										<tr class="trProyecto"><!-- Cliente -->
+										<tr class="filaInformacion"><!-- Cliente -->
 											<td class="atributo"><b>Cliente</b></td>
 											<td>
 												<%- propietario %>
 											</td>
 											<td><!--td SIN UTILIZAR--></td>
 										</tr>
-										<tr class="trProyecto"><!-- Representante -->
+										<tr class="filaInformacion"><!-- Representante -->
 											<td class="atributo"><b>Representante</b></td>
 											<td>
 												<% if ( typeof representante != 'undefined' ) { %>
@@ -194,7 +214,7 @@
 											</td>
 											<td><!--td SIN UTILIZAR--></td>
 										</tr>
-										<tr class="trProyecto"><!-- Fecha de Inicio -->
+										<tr class="filaInformacion"><!-- Fecha de Inicio -->
 											<td class="atributo"><b>Fecha de Inicio</b></td>
 											<td>
 												<!-- -----------------DATOS------------------ -->
@@ -217,7 +237,7 @@
 												<span class="icon-uniF55C" style="visibility: hidden;"></span>
 											</td>
 										</tr>
-										<tr class="trProyecto"><!-- Fecha Final -->
+										<tr class="filaInformacion"><!-- Fecha Final -->
 											<td class="atributo"><b>Fecha Final</b></td>
 											<td>
 												<!-- -----------------DATOS------------------ -->
@@ -240,7 +260,7 @@
 												<span class="icon-uniF55C" style="visibility: hidden;"></span>
 											</td>
 										</tr>
-										<tr class="trProyecto"><!-- Duración -->
+										<tr class="filaInformacion"><!-- Duración -->
 											<td class="atributo"><b>Duración</b></td>
 											<td>
 											    <% if (duracion.queda > duracion.plazo) { %>
@@ -276,7 +296,7 @@
 											</td>
 											<td><!--td SIN UTILIZAR--></td>
 										</tr>
-										<tr class="trProyecto"><!-- Servicios incluidos -->
+										<tr class="filaInformacion"><!-- Servicios incluidos -->
 											<td class="atributo"><b>Servicios incluidos</b></td>
 											<td>
 												<!-- ----------------EDICION----------------- -->
@@ -289,9 +309,9 @@
 																<button id="btn_agregarServicio" class="btn btn-default" type="button" padding="auto">Agregar</button>
 															</span>
 														</div><!-- /input-group -->
+														<br>
 													</div>
 												<!-- -----------------DATOS------------------ -->
-													<br>
 													<ul id="serviciosProyecto" class="list-group">
 														<!--PLANTILLAS DE SERVICIOS DEL PROYECTO-->
 													</ul>
@@ -300,24 +320,22 @@
 												<span class="icon-uniF55C" style="visibility: hidden;"></span>
 											</td>
 										</tr>
-										<tr class="trProyecto"><!-- Empleados involucrados -->
+										<tr class="filaInformacion"><!-- Empleados involucrados -->
 											<td class="atributo"><b>Empleados involucrados</b></td>                    
 											<td>
 												<!-- ----------------EDICION----------------- -->
 													<div class="editar2">
+							<form id="form_roles">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<select id="select_empleados" class="form-control input-sm" style="width: 100%;">
+																<select id="select_empleados" class="form-control input-sm" name="idpersonal" style="width: 100%;">
 																	<option selected disabled>Seleccione nuevo participante o uno existente...</option>
 																<select>
 																<div class="row">
 																	<div class="col-md-6">
-																		<div class="input-group input-group-sm" style="width:auto;">
-																			<select id="select_rol" class="form-control">
-																				<option selected disabled>Seleccione un rol...</option>
-																	  	   		<!-- PLANTILLA DE ROL -->
-																			</select>
-																		</div><!-- /input-group -->
+																		<select id="select_rol" class="form-control input-sm">
+																  	   		<!-- PLANTILLA DE ROL -->
+																		</select>
 																	</div>
 																	<div class="col-md-6">
 																		<div class="input-group input-group-sm" style="width:auto;">
@@ -329,12 +347,16 @@
 																	</div>
 																</div>
 															</div>
-															<div class="panel-body">
+															<div id="rolesNuevosProy" class="panel-body">
 																<!-- PLANTILLAS DE ROLES -->
-																<form id="form_roles"></form>
+																	<input type="hidden" name="idproyecto" value="<%- id %>">
+															</div>
+															<div class="panel-footer">
+																<button type="submit" id="btn_enviarRolesProy" class="btn btn-default btn-sm">Agregar al proyecto</button>
 															</div>
 														</div>
 													</div>
+							</form>
 													<ul id="rolesProyecto" class="list-group">
 														<!--PLANTILLAS DE EMPLEADOS INVOLUCRADOS-->
 													</ul>
@@ -348,11 +370,13 @@
 											<td>
 												<!-- -----------------DATOS------------------ -->
 													<div class="editar2 editando2">
-														<%- descripcion %>
+														<div class="well"><p><%- descripcion %></p></div>
 													</div>
 												<!-- ----------------EDICION----------------- -->
 													<div class="editar2">
-														Editando
+														<textarea id="descripcion" class="form-control" rows="4" placeholder="Descripción del proyecto" name="descripcion">
+															<%- descripcion %>
+														</textarea>
 													</div>
 											</td>
 											<td class="respuesta">
@@ -392,6 +416,12 @@
 			<% }else { %>
 				<div class="editar2"><span class="icon-uniF478 btn_eliminar"></span></div> <!--botón eliminar-->
 				<b><%- nombreRol %></b> <%- nombrePersonal %>
+			<% }; %>
+			<% if ( typeof exito != 'undefined' ) { %>
+				<label class="icon-uniF479 exito"></label>
+			<% }; %>
+			<% if ( typeof error != 'undefined' ) { %>
+				<label class="icon-uniF479 exito"></label>
 			<% }; %>
 	</script>
 	<script type="text/template" id="input_rol">

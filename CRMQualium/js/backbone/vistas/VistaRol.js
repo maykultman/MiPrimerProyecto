@@ -6,6 +6,7 @@ app.VistaRolPrincipal = Backbone.View.extend({
 	},
 
 	initialize		: function () {
+		this.listenTo(this.model, 'destroy', this.remove);
 	},
 
 	render			: function () {

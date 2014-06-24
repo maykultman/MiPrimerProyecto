@@ -4,16 +4,22 @@ app.ModeloServicioProyecto = Backbone.Model.extend({
 	defaults	: {
 		status	: true
 	},
-	conmutarStatus	: function (callback) {
+	conmutarStatus	: function (callbackExito,callbackError) {
+		var st;
+		if (this.get('status') == true)
+			st = '0';
+		else
+			st = '1';
 		this.save(
-			{ status: !this.get('status') },
+			{ status: st },
 			{
 				wait:true, 
 				patch:true,
 				success:function () {
-					callback();
+					callbackExito();
 				},
 				error:function () {
+					callbackError();
 				}
 			}
 		);

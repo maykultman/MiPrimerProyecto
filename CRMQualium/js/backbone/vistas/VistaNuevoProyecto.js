@@ -363,6 +363,9 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				/* |||||||||||||||||||||||||||||||||||||| */
 				
 				delete modelo.nombre;
+				/*if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+					this.guadarRolRecursivo(modelo);
+				};*/
 				this.guadarRolRecursivo(modelo);
 				this.guardarRolesNuevos({
 					idproyecto 	: modelo.idproyecto, 
@@ -375,7 +378,11 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				// this.count += modelo.idrol.length;
 				/* |||||||||||||||||||||||||||||||||||||||| */
 				
+				/*if ( typeof modelo.idrol !== 'undefined' ) { //Si causa errores descomentar esta condicion
+					this.guadarRolRecursivo(modelo);
+				};*/
 				this.guadarRolRecursivo(modelo);
+
 			};
 		};
 		// console.log(this.count);
