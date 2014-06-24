@@ -22,9 +22,7 @@
 		
 		public function get($id=FALSE) 
 		{
-			if($id===FALSE){ $reply = 'result';}else{ $reply = 'row';}
-			
-		    $args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
+			$args = [ 'servicios_proy.id'        , 'servicios_proy.idproyecto', 
 		    		  'servicios_proy.idservicio', 'servicios.nombre',
 		    		  'servicios_proy.status'
 		    		];
@@ -32,7 +30,7 @@
 		    $this->db->select( $args );			
 			$this->db->from('servicios');
 			$this->db->join('servicios_proy', 'servicios_proy.idservicio = servicios.id');			
-			return $this->db->get()->$reply();
+			return $this->db->get()->result();
 		}
 
 		public function save (  $id,  $put ) 

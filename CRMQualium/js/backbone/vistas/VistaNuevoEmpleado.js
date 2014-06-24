@@ -30,85 +30,48 @@ app.VistaSelectPuesto = app.VistaPuestoEmpleado.extend({
 
 	events : {},
 
-	initialize : function () {
-		this.$lpuesto = this.$('#lpuesto');	
-		this.$el.attr('value', this.model.get('id'));	
+	initialize : function () 
+	{
+		this.$puesto = this.$('#puesto');	
+		this.$el.attr('value', this.model.get('id'));
+		this.$el.attr('id', this.model.get('id'));			
 	}
 });
 //*****************************************************//
 
-
 app.VistaNuevoEmpleado = Backbone.View.extend({
-	el : '.contenedor_modulo',
+	el : '#modal_nuevo_empleado',
 
 	events : {
-		'click #guardar'      : 'guardar',
-		'click .opciones'	  : 'opciones'
-		// 'click .icon-trash'   : 'destroyModel'
+		'click #guardar'  : 'guardar',
+		'keypress #cel'   : 'validarTelefono',
+		'keypress #casa'  : 'validarTelefono'
 	},
 
-	initialize : function (){
-		
-		this.$divEmpleado = this.$('#divEmpleado');	
-		this.$selectpuesto = this.$('#lpuesto');
-		this.cargarSelectPuestos();
-		
-		this.$listaPuesto = this.$('#listaPuesto');
-		this.cargarPuestos();
-		this.opciones('puesto_1'); //Carga empleados
+	initialize : function ()
+	{
+		this.$selectpuesto = this.$('#puesto');
+		this.cargarSelectPuestos();		
 	},
 
 	render : function()	{	return this; },
 
-	opciones : function(evento)
-	{	
-		var id;
-		if(evento==='puesto_1')
-		{
-			 id = evento.split('_');			 
-		}
-		else
-		{
-			id = ($(evento.currentTarget).attr('id')).split('_');			
-		}
-
-		this.$divEmpleado.html('');		
-		var evens = _.filter(app.coleccionEmpleados.toJSON(), 
-			function(empleado)
-			{ 
-				var validate = false; 
-				if(empleado.puesto == id[1])
-				{
-					validate = true;
-				}
-				return validate;
-
-			});
-
-		for(x in evens)
-		{
-					
-			/*****************************************************************************************************/
-			var casa  = app.coleccionTelefonos.where ({ idpropietario : evens[x].id, tabla : 'empleados' });
-				for(i in casa)
-				{
-					if(casa[i].get('tipo')==='movil')
-					{
-						evens[x].movil = casa[i].get('numero');
-					}
-					if(casa[i].get('tipo')==='casa')
-					{
-						evens[x].casa = casa[i].get('numero');
-					}
-				}	
-			/*****************************************************************************************************/
-			var employ = app.coleccionEmpleados.where({ id : evens[x].id });
-
-			var viewEmpleado = new app.VistaCatalogoEmpleado({ model : employ });
-			
-			this.$divEmpleado.append(viewEmpleado.render({ filtrado : evens[x]}).el);			
-		}
-
+	validarTelefono	: function (e) 
+	{			
+		key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key);
+        letras = "1234567890";
+        especiales = "8-37-39-46";
+        tecla_especial = false
+        for(var i in especiales){
+            if(key == especiales[i]){
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial){
+                return false;
+        }		
 	},
 
 	guardar : function (evento)
@@ -190,6 +153,70 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 		}		
 		evento.preventDefault();
 	}, /*... Fin de la función guardar ...*/
+	
+	cargarSelectPuesto : function (puesto)
+	{
+		var vistaPuesto = new app.VistaSelectPuesto({ model : puesto});		
+	    this.$selectpuesto.append(vistaPuesto.render().el);
+	},
+
+	cargarSelectPuestos : function ()
+	{	
+		app.coleccionPuestos.each(this.cargarSelectPuesto, this);
+	}
+});
+
+app.vistaNuevoEmpleado = new app.VistaNuevoEmpleado();
+
+app.VistaConsultaEmpleado = Backbone.View.extend({
+	el : '#consultaEmpleado',
+
+	events : {
+		'click .opciones'	  : 'opciones'
+	},
+
+	initialize : function ()
+	{		
+		this.$divEmpleado = this.$('#accordion'); // Div donde se visualiza los datos del empleado			
+		this.$listaPuesto = this.$('#listaPuesto'); // Lista de opciones de puestos
+		this.cargarPuestos();
+		this.opciones('puesto_1'); //Carga empleados		
+	},
+
+	opciones : function(evento)
+	{	
+		var id;
+		if(evento==='puesto_1')
+		{
+			 id = evento.split('_');			 
+		}
+		else
+		{
+			id = ($(evento.currentTarget).attr('id')).split('_');			
+		}
+
+		this.$divEmpleado.html('');		
+		var evens = _.filter(app.coleccionEmpleados.toJSON(), 
+			function(empleado)
+			{ 
+				var validate = false; 
+				if(empleado.puesto == id[1])
+				{
+					validate = true;
+				}
+				return validate;
+
+			});
+
+		for(x in evens)
+		{
+			var employ = app.coleccionEmpleados.where({ id : evens[x].id });
+			var viewEmpleado = new app.VistaCatalogoEmpleado({ model : employ });
+
+			this.$divEmpleado.append(viewEmpleado.render({ empleado : evens[x]}).el);						
+		}
+
+	},	
 
 	cargarPuesto : function (puesto)
 	{
@@ -201,21 +228,8 @@ app.VistaNuevoEmpleado = Backbone.View.extend({
 	{	
 		app.coleccionPuestos.each(this.cargarPuesto, this);
 		$('#listaPuesto').children(':first-child').addClass('active');
-	},
-
-	cargarSelectPuesto : function (puesto)
-	{
-		var vistaPuesto = new app.VistaSelectPuesto({ model : puesto});		
-	    this.$selectpuesto.append(vistaPuesto.render().el);
-	},
-
-	cargarSelectPuestos : function ()
-	{	
-		app.coleccionPuestos.each(this.cargarSelectPuesto, this);
-	}
-
-	
+	}	
 
 });
 
-app.vistaNuevoEmpleado = new app.VistaNuevoEmpleado();
+app.vistaConsultaEmpleado = new app.VistaConsultaEmpleado();
