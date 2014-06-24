@@ -1,13 +1,38 @@
-.fecha{
+/*.fecha{
 
 	width: 150px !important;
 	
+}*/
+.planes{
+
+	display: none;
 }
 
+
+
+.largo{
+
+	width: 100%!important;
+}
+.input_renta{
+
+	width: 35%!important;
+}
+
+
+.detalles{
+
+	float: right;
+	margin-top: 5px;
+}
+.input_fecha{
+
+	width: 350px !important;
+}
 #buscar{
-	float:left;
+	float:right;
 	margin-top: -38px;
-	margin-left:375px; 
+	margin-right:10px; 
 	
 }
 
@@ -28,7 +53,7 @@
 
 }
 
-#radio1{
+/*#radio1{
 
 float: left !important;
 
@@ -43,7 +68,7 @@ float: left !important;
 	margin-left: 70px; 
 
 
-}
+}*/
 
 #tipo_plan{
 
@@ -57,27 +82,30 @@ float: left !important;
     display: none;
 	height: 125px;
 }
+/*#panel_tablas{
 
-
-#panel_contrato{
-
-	/*display: inline-block;
-	float: left;*/	
+	
 	width: 100%!important;
 }
-#tbl_de_servicios{
+*/
+
+#tbla_de_servicios{
    
-     display: inline-block;
-     float:left;
-     width: 30%!important;
+    /* display: inline-block;*/
+     /*float:left;*/
+     /*margin-right: 10px;*/
+     width: 100%!important;
 
 
 
 }
 #servicios_elegidos {
-    /*margin-left: 20px;
-	display: inline-block;*/
-	width: 70%;
+   
+	
+	
+	/*margin-top: -20px;*/
+	width: 100%;
+
 
 }
 
@@ -85,17 +113,17 @@ tbody.scrollContent2 {
 	display: block; /*obligado*/ 
 	height: 165px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/
-	/*width: 30%!important;*/
+	width: 100%!important;
 	
 	}
 
-#icono_mas {
+/*#icono_mas {
 
 	float: right;
 	margin-left: -10px;
 	margin-top: 15px;
 
-}
+}*/
 
 
 .precio {
@@ -109,21 +137,21 @@ tbody.scrollContent2 {
 	height: 20px;
 }
 
-.linea { 
+/*.linea { 
   
 	border-right: black 1px solid;
 
-}
+}*/
 
 .txt{
 
 	text-align: center;
 }
 
-#precio_total{
+/*#precio_total{
 
 	margin-top:-18px; 
-}
+}*/
 
 
 --------Historial de contratos------------------
