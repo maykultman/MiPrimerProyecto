@@ -1,5 +1,4 @@
 		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
-		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
 		<script>
 		  $(function() {
@@ -40,21 +39,23 @@
 					<h3>Datos basicos</h3>					
 					<hr>
 					<div>						  
-					<input type="text" class="form-control input_largo" placeholder="Buscar cliente">
+					<input type="text" id="busqueda" class="form-control input_largo" placeholder="Buscar cliente">
+					<input type="hidden" id="hidden_idCliente" name="idcliente">
 					<span id="span_buscar" class="icon-search"></span>			
-					<input type="text" class="form-control input_largo" disabled placeholder="Representante">
+					<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante">
+					<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
 					<input class="form-control input_largo" disabled  type="text" placeholder="Fecha de creación">
 				    </div>
 					
 					
 					<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
 					<div class="btn-group"  data-toggle="buttons" style="margin-top: -5px;">
-					  <label for="option1" class="btn btn-primary active">
-					    <input type="radio" name="options" id="option1" value="" checked>Por Evento
-					  </label>
-					  <label for="option2" class="btn btn-primary">
-					    <input type="radio" name="options" id="option2" value="">Iguala Mensual
-					  </label>			
+						<label for="option1" class="btn btn-primary active">
+							<input type="radio" name="options" id="option1" value="" checked>Por Evento
+						</label>
+						<label for="option2" class="btn btn-primary">
+							<input type="radio" name="options" id="option2" value="">Iguala Mensual
+						</label>			
 					</div>
 					  
 					
@@ -63,10 +64,10 @@
 					<h3>Servicios a contratar</h3>
 					<hr>								            
 					<div id="tabla_servicios" class="panel panel-primary">
-				      <!-- Default panel contents -->
-				      <div class="panel-heading">Seleccionar Servicios</div>
-				      <!-- Table -->
-				      <table class="table">
+				        <!-- Default panel contents -->
+				        <div class="panel-heading">Seleccionar Servicios</div>
+				        <!-- Table -->
+				        <table class="table">
 				        <tbody class="scroll_tbody">
 							<tr>
 								<td style="width: 580px ">
@@ -383,3 +384,24 @@
 		</section>   	 
 	</section>   	                
 </div>
+
+
+<script type="text/javascript">
+	var app = app || {};
+	app.coleccionDeClientes = <?php echo json_encode($clientes) ?>;
+	app.coleccionDeServicios = <?php echo json_encode($servicios) ?>;
+	app.coleccionDeRepresentantes = <?php echo json_encode($representantes) ?>;
+</script>
+
+<!-- Librerias Backbone -->
+    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
+    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
+
+<!-- modelos -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
+<!-- colecciones -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
+<!-- vistas -->
+		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoContrato.js'?>"></script>

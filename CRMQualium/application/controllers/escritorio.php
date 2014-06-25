@@ -155,16 +155,16 @@ class Escritorio extends Api {
 	public function contratos()
 	{
 		$this->area_Estatica('modulo_contratos');
-		$data['clientes']		  = $this->customer->get_customers($this->ruta());	# Lista de clientes
-		$data['servicios'] 		  = $this->serv->get_sNuevoCliente();              	# Lista de Servicios
+		$data['clientes']		  = $this->customer->get_customerProyect($this->ruta());	# Lista de clientes
+		$data['servicios'] 		  = $this->serv->get_s();			              	# Lista de Servicios
 		$data['representantes']	  =$this->representa->get();					# List de representantes
 		if($this->ruta() == 'modulo_contratos_nuevo')
 		{
-			$this->load->view($this->ruta());
+			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'modulo_contratos_historial')
 		{
-			$this->load->view($this->ruta());
+			$this->load->view($this->ruta(), $data);
 		}
 	}
 
