@@ -22,4 +22,3 @@ var ColeccionRolesProyectos = Backbone.Collection.extend({
 	// }
 });
 
-app.coleccionRolesProyectos = new ColeccionRolesProyectos(app.coleccionDeProyectoRoles);

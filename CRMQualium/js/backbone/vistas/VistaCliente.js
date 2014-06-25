@@ -611,14 +611,15 @@ app.VistaCliente = Backbone.View.extend({
 
 		this.esperar = setTimeout(
 			function () {
-				var valorJson = $(elem.currentTarget)
-								.serializeArray();
+				// var valorJson = $(elem.currentTarget)
+				// 				.serializeArray();
 				modelo.save(
 					/*La función pasarAJson obtiene el nuevo valor y la
 					propiedad que queremos actualizar en formato json,
 					pero antes los datos en el htmo se serializan para
 					obtener un array con las propiedades name y value.*/
-					pasarAJson(valorJson),
+					pasarAJson($(elem.currentTarget)
+								.serializeArray()),
 					{
 						wait	: true,//Esperamos respuesta del server
 						patch	: true,//Evitamos enviar todo el modelo
