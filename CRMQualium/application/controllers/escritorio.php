@@ -19,7 +19,6 @@ class Escritorio extends Api {
         $this->load->model('modelo_usuarios',        'usuario');
         $this->load->model('modelo_empleado',        'empleado');
         $this->load->model('Model_budget',           'budget');
-        $this->load->model('Modelo_permisos',        'permisos');
         $this->load->model('Modelo_servicioCotizado','SC');
         $this->load->model('modelo_archivos',        'archivo');
     }  
@@ -35,6 +34,8 @@ class Escritorio extends Api {
 	public function catalogos()
 	{
 		$this->area_Estatica('modulo_catalogos');
+		$this->load->model('Modelo_permisos', 'permisos');
+		$this->load->model('Modelo_permisoPerfil', 'perper');
 
 		if($this->ruta() == 'catalogo_Servicios')
 		{
@@ -43,8 +44,12 @@ class Escritorio extends Api {
 		}
 		if($this->ruta() == 'catalogo_perfiles')
 		{
-			
-			$this->load->view($this->ruta());	
+			$this->load->model('modelo_perfil','perfil');
+			$data['perfiles'] = $this->perfil->get();
+			$data['permisos'] = $this->permisos->get();
+			$data['permisos_perfil'] = $this->perper->get();
+
+			$this->load->view($this->ruta(), $data);	
 		}
 		if($this->ruta() == 'catalogo_permisos')
 		{

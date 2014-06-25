@@ -246,11 +246,11 @@
 							    <tfoot>
 							    	<tr>
 								    	<td colspan="4">
-								    		<!-- <button id="checkboxEmpleados" class="btn_marcarTodos"></button> -->
-											<div class="btn-group" data-toggle="buttons">
-												<label class="btn btn-default btn-xs">
+								    		<button id="checkboxEmpleados" class="btn_marcarTodos"></button>
+											<!-- <div class="btn-group" data-toggle="buttons">
+												<label class="btn btn-default btn-xs"> -->
 													<input type="checkbox" id="checkboxEmpleados" class="btn_marcarTodos"> Marcar todos
-												</label>
+												<!-- </label> -->
 											</div>
 											<button type="button" class="btn btn-danger btn-xs checkboxEmpleados btn_eliminarMarcados">Eliminar marcados</button>
 								    	</td>

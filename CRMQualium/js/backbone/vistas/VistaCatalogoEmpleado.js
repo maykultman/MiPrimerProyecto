@@ -102,8 +102,8 @@ app.VistaCatalogoEmpleado = Backbone.View.extend({
 	render : function(info) 
 	{	var empleado;
 
-		if(info.empleado) { empleado = info.empleado;	}
-		else    		  { empleado = info;     		}
+		if   (info.empleado) { empleado = info.empleado;	}
+		else    		     { empleado = info;     		}
 
 
 		this.$el.html(this.plantilla(empleado));

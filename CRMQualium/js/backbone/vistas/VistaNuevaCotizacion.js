@@ -7,7 +7,7 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             
             'click    #cliente'   : 'buscarCliente',     //Cuando escribes una letra, despliega un menu de sugerencias
             'click 	  #guardar'	  : 'guardarCotizacion', //Guarda la cotización
-            'click    #todos'	  : 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
+            'click    #todos'	    : 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
             'keypress #cliente'   : 'soloLetras',        //Valida que en el campo cliente haya solo letras
             'click 	  .btndelete' : 'eliminarServicio',  //Elimina un servicio de la tabla servicios cotizando
             'keyup    .valor'     : 'establecerTotal',   //Escucha los cambios en los inputs numericos y actualiza el total
@@ -85,18 +85,18 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         marcarTodosCheck : function(elemento){
         	/*..Totos los checkbox de la tabla de servicios cotizando tienen el mismo id....*/
         	var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
-        	/*..Asi es como obtenemos todos...para luego iterar sobre ellos estableciendo true o false...*/
+          /*..Asi es como obtenemos todos...para luego iterar sobre ellos estableciendo true o false...*/
         	/*..Si marcar todos es TRUE entonces todos los de la lista son TRUE caso contrario FALSO*/
- 	 		if ($(elemento.currentTarget).is(':checked')) {
- 	 			for (var i = 0; i < checkboxTabla.length; i++) {
-					checkboxTabla[i].checked = true;
-				}
- 	 		}
-            else{
-        		for (var i = 0; i < checkboxTabla.length; i++) {
-					checkboxTabla[i].checked = false;
-				}
-        	}
+     	 		if ($(elemento.currentTarget).is(':checked')) {
+     	 			for (var i = 0; i < checkboxTabla.length; i++) {
+    					checkboxTabla[i].checked = true;
+    				}
+     	 		}
+                else{
+            		for (var i = 0; i < checkboxTabla.length; i++) {
+    					checkboxTabla[i].checked = false;
+    				}
+            	}
         },
 
         buscarCliente : function (elemento){

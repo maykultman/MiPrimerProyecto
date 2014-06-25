@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include 'api.php';
-class  Perfil extends Api {
+class  permisoPerfil extends Api {
 
     public function __construct() 
     {
         parent::__construct();
-        $this->load->model('Modelo_perfil', 'perfil');             
+        $this->load->model('Modelo_permisoPerfil', 'permPerfil');             
     }
 
     public function api() 
@@ -17,25 +17,25 @@ class  Perfil extends Api {
     
     private function create()
     {
-        $query = $this->perfil->create($this->ipost());
+        $query = $this->permPerfil->create($this->ipost());
         $this->pre_response($query, 'create');                  
     }
 
     private function get()
     {
-        $query = $this->perfil->get($this->id());                        
+        $query = $this->permPerfil->get($this->id());                        
         $this->pre_response($query, 'get'); 
     }
 
     private function update()
     {
-        $query = $this->perfil->save($this->id(), $this->put());
+        $query = $this->permPerfil->save($this->id(), $this->put());
         $this->pre_response($query, 'update');         
     }
 
     private function delete()
     {
-        $query = $this->perfil->destroy($this->id());        
+        $query = $this->permPerfil->destroy($this->id());        
         $this->pre_response($query, 'delete'); 
     }
 

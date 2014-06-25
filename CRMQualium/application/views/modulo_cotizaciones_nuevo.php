@@ -75,11 +75,11 @@
 		<td><input type="text" id="descuento" value="0" 				 class="valor">   </td>		
 		<td><input 			   id="importe" 							 class="importes" name="importes" >
 		<form class="filas">
-			  <input type="hidden"   				 name="id" 		  value="<%-id%>">
-		      <input type="hidden"  id="hduracion"   name="duracion"  value="<%-realizacion%>">
-		      <input type="hidden"  id="hcantidad"   name="cantidad"  value="1"> 
+			  <input type="hidden"   				 name="id" 		  value="<%-id%>"		   >
+		      <input type="hidden"  id="hduracion"   name="duracion"  value="<%-realizacion%>" >
+		      <input type="hidden"  id="hcantidad"   name="cantidad"  value="1"                > 
 		      <input type="hidden"  id="hprecio"     name="precio" 	  value="<%-precio     %>" >
-		      <input type="hidden"  id="hdescuento"  name="descuento" value="0">
+		      <input type="hidden"  id="hdescuento"  name="descuento" value="0"                >
 		</form>
 		</td>
 

@@ -1,84 +1,137 @@
 var app = app || {};
+app.VistaPermisoPerfil = Backbone.View.extend({
+	tagName : 'label',
+	className : 'chek',
 
+	plantilla : _.template($('#Permisos').html()),
+	events : {},
+
+	initialize : function(){},
+
+	render : function (){
+		this.$el.html(this.plantilla(this.model.toJSON()));
+		return this;
+	},
+});
 app.VistaNuevoPerfil = Backbone.View.extend({
 	el : '#contenido_nuevoperfil',
 
-	events : {},
+	events : {
+		'click .btn-primary' : 'guardar',
+		'change #idpermiso'   : 'marcarTodos'
+	},
 
 	initialize : function ()
 	{
-		/* Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar*/
-        this.$scroll_permisos = this.$('#scroll_permisos');
-        /*Invocamos el metodo para cargar y pintar los servicios*/
+	    this.$ListaPermisos = this.$('#ListaPermisos');
         this.cargarPermisos();
-        this.listenTo( app.coleccionPermisos, 'add', this.cargarServicio );
-		this.listenTo( app.coleccionPermisos, 'reset', this.cargarPermisos );     
+      
 	},
-// 	render : function ()
-// 	{
-// 		return this;
-// 	},
+	render : function ()
+	{
+		return this;
+	},
 
-// 	buscarPermiso : function (elemento)
-// 	{
-// 		var buscando = $(elemento.currentTarget).val();
-// 		if(elemento.keyCode===8)
-// 		{
-// 			app.coleccionPermisos.fetch({
-// 				reset:true, data:{nombre: buscando}
-// 			});
-// 		}
-// 		app.coleccionPermisos.fetch({
-// 			reset:true, data:{nombre: buscando}
-// 		});
+	guardar : function (evento)
+	{
+		var modeloPerfil = pasarAJson($('#registroPerfil').serializeArray());
+		console.log(modeloPerfil.idpermiso.length);
+		if(modeloPerfil.nombre)
+		{
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionPerfiles.create
+			(
+				{ nombre : modeloPerfil.nombre},
+				{
+					wait: true,
+					success: function (exito)
+					{ 
+						Backbone.emulateHTTP = true;
+						Backbone.emulateJSON = true;
+						if(modeloPerfil.idpermiso.length>1)
+						{
+							
+							for(i in modeloPerfil.idpermiso)
+							{
+								app.coleccionPermisosPerfil.create
+								(
+									{ 	idperfil  : exito.get('id'),
+										idpermiso : modeloPerfil.idpermiso[i]
+									},
+									{
+										wait: true,
+										success: function (data){ console.log('exito')},
+										error : function (){}
+									}
+								);	
+							}
 
-// 		this.sinCoincidencias();
+							
+						} /*Modeloperfilpermisos*/
+						else
+						{
+							app.coleccionPermisosPerfil.create
+							(
+								{ 	idperfil  : exito.get('id'),
+									idpermiso : modeloPerfil.idpermiso
+								},
+								{
+									wait: true,
+									success: function (data){ console.log('exito')},
+									error : function (){}
+								}
+							);
+						}
+						Backbone.emulateHTTP = false;
+						Backbone.emulateJSON = false;
 
-// 		this.$scroll_permisos.html('');
-// 		this.cargarPermisos();	
-// 	},
 
-// 	sinCoincidencias	: function () {
-// 		if (app.coleccionPermisos.length == 0) {
-// 			app.coleccionPermisos.fetch({
-// 				reset:true, data:{nombre: ''}
-// 			});
-// 		};
-// 	},
+					},
+					error: function (error) {}
+				}
+			); /*...Create del perfil...*/
 
-// 	guardar : function (evento)
-// 	{
-// 		var modeloPermiso = pasarAJson($('#registroPermiso').serializeArray());
-// 		if(modeloPermiso.nombre)
-// 		{
-// 			Backbone.emulateHTTP = true;
-// 			Backbone.emulateJSON = true;
-// 			app.coleccionPermisos.create
-// 			(
-// 				modeloPermiso,
-// 				{
-// 					wait: true,
-// 					success: function (data){},
-// 					error: function (error) {}
-// 				}
-// 			);
-
-// 			Backbone.emulateHTTP = false;
-// 			Backbone.emulateJSON = false;
-// 		}
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		} /*...If de modelo Perfil...*/
 		
-// 		evento.preventDefault();
-// 	},
+		evento.preventDefault();
+	},
 
-// 	cargarPermiso : function (permiso)
-// 	{
-// 		var vistaPermiso = new app.VistaPermiso({model : permiso});		
-// 		this.$scroll_permisos.append(vistaPermiso.render().el);
-// 	},
-// 	cargarPermisos : function ()
-// 	{	
-// 		app.coleccionPermisos.each(this.cargarPermiso, this);
-// 	}
-// });
+	marcarTodos : function(elemento)
+	{
+		console.log($(elemento.currentTarget).attr('id'));
+		var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
+		
+		if ($(elemento.currentTarget).is(':checked')) 
+		{
+ 	 		for (var i = 0; i < checkboxTabla.length; i++) 
+ 	 		{
+				checkboxTabla[i].checked = true;
+			}
+ 	 	}
+        else
+        {
+        	for (var i = 0; i < checkboxTabla.length; i++) 
+        	{
+				checkboxTabla[i].checked = false;
+			}
+        }
+        
+		// console.log()
+	},
 
-// app.vistaNuevoPermiso = new app.VistaNuevoPermiso();
+	cargarPermiso : function (permiso)
+	{
+		var vistaPermiso = new app.VistaPermisoPerfil({model : permiso});		
+		this.$ListaPermisos.append(vistaPermiso.render().el);
+	},
+	cargarPermisos : function ()
+	{	
+		app.coleccionPermisos.each(this.cargarPermiso, this);	
+	},
+
+});
+
+app.vistaNuevoPerfil = new app.VistaNuevoPerfil();
