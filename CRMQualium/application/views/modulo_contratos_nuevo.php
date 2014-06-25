@@ -1,8 +1,6 @@
 		<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_contratos.css'?>" type="text/css">
 		<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 		<!-- scrpit de prueba para la fecha y efecto de toggle para mostrar detalles del servicio -->
-		
-
 		<script>
 		  $(function() {
 		    $( ".datepicker" ).datepicker({
@@ -11,32 +9,30 @@
 		    });
 		  });
 
-		$(document).ready(function(){
-		  $(".detalles").click(function(){
-		    $("#info_servicio").slideToggle();
-		  });
-		});
+			$(document).ready(function(){
+			  $(".icon_detalles").click(function(){
+			    $("#div_info").slideToggle();
+			  });
+			});		
 
-		
+			$(document).ready(function() {
+			    // $("input[name$='options']").click(function() {
+			    //     var test = $(this).val();
 
-		$(document).ready(function() {
-		    // $("input[name$='options']").click(function() {
-		    //     var test = $(this).val();
+			    //     $("div.desc").hide();
+			    //     $("#Cars" + test).show();
+			    // });
+				var cont= 1;
 
-		    //     $("div.desc").hide();
-		    //     $("#Cars" + test).show();
-		    // });
-			$('.btn-primary').on('change',function (){
-				$("input[name$='options']").click(function() {
-		      var test = $(this).val();
+				$('.btn-primary').on('change',function (){
 
-		      $("div.desc").hide();
-		         $("#Cars" + test).show();
-		     });
-			});
-		});
-		
+					if ( cont==1 ){}
 
+
+					// console.log($(this).html());
+					$('.tabla_visible').toggleClass('tabla_oculto');
+				});
+			});		
 		</script>
 		<section>
 			<div class="row" >
@@ -44,44 +40,39 @@
 					<h3>Datos basicos</h3>					
 					<hr>
 					<div>						  
-					<input type="text" class="form-control largo" placeholder="Buscar cliente">
-					<span id="buscar" class="icon-search"></span>			
-					<input type="text" class="form-control largo" disabled placeholder="Representante">
-					<input class="form-control largo" disabled  type="text" placeholder="Fecha de creación">
+					<input type="text" class="form-control input_largo" placeholder="Buscar cliente">
+					<span id="span_buscar" class="icon-search"></span>			
+					<input type="text" class="form-control input_largo" disabled placeholder="Representante">
+					<input class="form-control input_largo" disabled  type="text" placeholder="Fecha de creación">
 				    </div>
 					
 					
 					<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
 					<div class="btn-group"  data-toggle="buttons" style="margin-top: -5px;">
-					  <label class="btn btn-primary">
-					    <input   type="radio" name="options" id="option1" value="2" >Por Evento
+					  <label for="option1" class="btn btn-primary active">
+					    <input type="radio" name="options" id="option1" value="" checked>Por Evento
 					  </label>
-					  <label class="btn btn-primary">
-					    <input type="radio" name="options" id="option2" value="3">Iguala Mensual
+					  <label for="option2" class="btn btn-primary">
+					    <input type="radio" name="options" id="option2" value="">Iguala Mensual
 					  </label>			
 					</div>
-					  <div id="Cars2" class="desc" style="display: none;">
-					       por evento
-					    </div>
-					    <div id="Cars3" class="desc" style="display: none;">
-					        iguala mensual
-					    </div>    
+					  
 					
 				</div>
 				<div class="col-md-6" >	
 					<h3>Servicios a contratar</h3>
 					<hr>								            
-					<div id="tbla_de_servicios" class="panel panel-primary">
+					<div id="tabla_servicios" class="panel panel-primary">
 				      <!-- Default panel contents -->
 				      <div class="panel-heading">Seleccionar Servicios</div>
 				      <!-- Table -->
 				      <table class="table">
-				        <tbody class="scrollContent2">
+				        <tbody class="scroll_tbody">
 							<tr>
 								<td style="width: 580px ">
-									<span   class="icon-info detalles" data-toggle="tooltip" title="Información"></span>
+									<span   class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>
 									<label for="" name="">Tarjeta de presentación frente</label>
-									<div id="info_servicio">
+									<div id="div_info">
 										<ul>	
 											<li>Concepto:&nbsp;<h7>Diseño Gráfivo</h7><li>
 											<li>P/Unitario:&nbsp;<h7>$300</h7><li>
@@ -94,19 +85,19 @@
 							</tr>
 							<tr>
 								<td>
-									<span  class="icon-info detalles" data-toggle="tooltip" title="Información"></span>
+									<span  class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>
 									<label for="" name="">Medallón</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span  class="icon-info detalles" data-toggle="tooltip" title="Información"></span>
+									<span  class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>
 									<label for="" name="">Tríptico</label>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<span  class="icon-info detalles" data-toggle="tooltip" title="Información"></span>
+									<span  class="icon-info icon_detalles" data-toggle="tooltip" title="Información"></span>
 									<label for="" name="">díptico</label>
 								</td>
 							</tr>
@@ -157,7 +148,7 @@
 				    </div>
 				</div>    
 			</div><br>        			    
-		    <table id ="servicios_elegidos" class="table table-striped" >
+		    <table id ="tabla_contrato" class="table table-striped" >
 				<thead  style="background-color: #f9f9f9!important;">
 					<tr>
 						<td></td>
@@ -175,10 +166,10 @@
 					<tr>
 						<td style="width: 50px;"><input type="checkbox"></td>
 						<td>Tarjeta de presentación frente</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td ><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>									
-						<td><input class="precio" type="text" placeholder="$"></td>
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td ><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>									
+						<td><input class="input_precio" type="text" placeholder="$"></td>
 						<td>$12,000</td>
 						
 						<td class="icon-eliminar">
@@ -190,10 +181,10 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>Medallón</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>								
-						<td><input class="precio" type="text" placeholder="$"></td>
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>								
+						<td><input class="input_precio" type="text" placeholder="$"></td>
 						<td>$12,000</td>
 						
 						<td class="icon-eliminar">
@@ -205,10 +196,10 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>Tríptico</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder="$"></td>								
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder="$"></td>								
 						<td>$12,000</td>
 						
 						<td class="icon-eliminar">
@@ -220,10 +211,10 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>díptico</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>								
-						<td><input class="precio" type="text" placeholder="$"></td>
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>								
+						<td><input class="input_precio" type="text" placeholder="$"></td>
 						<td>$12,000</td>
 						
 						<td class="icon-eliminar">
@@ -235,11 +226,11 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>Catálogo</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
 						
-						<td><input class="precio" type="text" placeholder="$"></td>
+						<td><input class="input_precio" type="text" placeholder="$"></td>
 						<td>$12,000</td>
 						
 						<td class="icon-eliminar">
@@ -251,10 +242,10 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>Aplicacion movil</td>
-						<td><input class="descuento" type="text" >&nbsp;%</td>
-						<td><input class="precio" type="text" placeholder=""></td>
-						<td><input class="precio" type="text" placeholder=""></td>						
-						<td><input class="precio" type="text" placeholder=""></td>
+						<td><input class="input_descuento" type="text" >&nbsp;%</td>
+						<td><input class="input_precio" type="text" placeholder=""></td>
+						<td><input class="input_precio" type="text" placeholder=""></td>						
+						<td><input class="input_precio" type="text" placeholder=""></td>
 						<td>$12,000</td>						
 						<td class="icon-eliminar">
 				        	<div class="eliminar_cliente">
@@ -264,32 +255,20 @@
 					</tr>
 					<tr class="warning">
 						<td></td>
-						<td>Importe</td>
-						<td></td>
-						<td></td>
-						<td></td>						
-						<td></td>
-						<td>$122,323</td>						
+						<td colspan="5"><b>Importe</b></td>						
+						<td><b>$122,323</b></td>						
 						<td></td>					
 				    </tr>
 				    <tr>
 						<td></td>
-						<td>+IVA</td>
-						<td></td>
-						<td></td>
-						<td></td>						
-						<td></td>
-						<td>$122,323</td>						
+						<td colspan="5"><b>+IVA</b></td>						
+						<td><b>$122,323</b></td>						
 						<td></td>					
 				    </tr>
 				    <tr class="info">
 						<td></td>
-						<td>Total Neto</td>
-						<td></td>
-						<td></td>
-						<td></td>						
-						<td></td>
-						<td>$122,323</td>						
+						<td colspan="5"><b>Total Neto</b></td>						
+						<td><b>$122,323</b></td>						
 						<td></td>					
 				    </tr>
 				    <tr style="height: 100px">
@@ -303,15 +282,15 @@
 				    	</td>
 					</tr>							    		   										
 				</tbody>				
-		        <tbody class="planes">
+		        <tbody class="tabla_visible tabla_oculto">
 				    	<tr >
 							<td colspan="8">
 								<div class="row">
 									<div class="col-md-4">
-										<input class="form-control datepicker input_fecha" type="text"  placeholder="Inicio">
+										<input class="form-control datepicker inputs_planIguala" type="text"  placeholder="Inicio">
 									</div>
 									<div class="col-md-4">
-										<select   class="form-control input_fecha">
+										<select   class="form-control inputs_planIguala">
 										  <option>3 Meses</option>
 										  <option>6 Meses</option>
 										  <option>12 Meses</option>
@@ -322,7 +301,7 @@
 										</select>	
 									</div>
 									<div class="col-md-4">
-										<input class="form-control datepicker input_fecha" disabled type="text" placeholder="Vencimiento">
+										<input class="form-control datepicker inputs_planIguala" disabled type="text" placeholder="Vencimiento">
 									</div>									
 								</div>
 							</td>	       									          			         
@@ -352,26 +331,21 @@
 				          <td  colspan="2">$2,000</td>				         
 				        </tr>
 				</tbody>
-				<tbody class="planes">
+				<tbody class="tabla_visible">
 				    	<tr>
 							<td colspan="8">
 								<div class="row">
-									<div class="col-md-4">
-										<input class="form-control datepicker input_fecha" type="text"  placeholder="Inicio">
+									<div class="col-md-3">
+										<input class="form-control datepicker inputs_planEvento" type="text"  placeholder="Inicio">
 									</div>
-									<div class="col-md-4">
-										<select   class="form-control input_fecha">
-										  <option>3 Meses</option>
-										  <option>6 Meses</option>
-										  <option>12 Meses</option>
-										  <option>18 meses</option>
-										  <option>24 meses</option>
-										   <option>48 meses</option>
-										  <option selected disabled>soy plan por evento</option>
-										</select>	
+									<div class="col-md-3">
+										<input type="number"  class="form-control inputs_planEvento" name="quantity" min="1" max="" placeholder="Plazo en días">	
 									</div>
-									<div class="col-md-4">
-										<input class="form-control datepicker input_fecha" disabled type="text" placeholder="Vencimiento">
+									<div class="col-md-3">
+										<input type="number" class="form-control inputs_planEvento" name="quantity" min="1" max="" placeholder="Numero de Plazos">	
+									</div>
+									<div class="col-md-3">
+										<input class="form-control datepicker inputs_planEvento" disabled type="text" placeholder="Vencimiento">
 									</div>									
 								</div>
 							</td>	       									          			         
