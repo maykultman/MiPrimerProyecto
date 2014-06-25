@@ -63,6 +63,7 @@ app.VistaProyecto = Backbone.View.extend({
 	tagName	: 'tr',
 	plantilla_tr		: _.template($('#plantilla_tr_proyecto').html()),
 	plantillaModal	: _.template($('#plantillaModalProyecto').html()),
+	plantillaArchivo	: _.template($('#tr_archivoNuevo').html()),
 	plantillaRol : _.template($('#input_rol').html()),
 	events				: {
 		'keypress #nombreProyecto'		: 'validarAtributo',
@@ -79,20 +80,32 @@ app.VistaProyecto = Backbone.View.extend({
 		'change #select_empleados'		: 'validarRelacionRolEmpleado',
 		'click #btn_enviarRolesProy'	: 'guadarRoles',
 
-		'keydown #descripcion'			: 'actualizarComentario'
+		'keydown #descripcion'			: 'actualizarComentario',
+
+		'click .cerrar'					: 'cerrarAlerta',
+
+		'change #inputArchivos'			: 'cargarArchivos',
+		'click #btn_subirArchivo'		: 'subirArchivo',
+		'click #inputArchivos'			: 'eliminarFileList',
+		'click .eliminarArchivoNuevo'	: 'eliminarArchivo',
+		'click #btn_cancelarArchivo'	: 'cancelarArchivos',
+		'click #cancelar'				: 'cancelarArchivos',
+		'click #continuar'				: 'cancelarArchivos',
 	},
-	initialize	: function () {
+	initialize				: function () {
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(app.coleccionRoles, 'reset', this.cargarSelectRol);
+
+		// this.htmlAdvertencia;
 		this.esperar;
 	},
-	render				: function () {
+	render					: function () {
 		/*Creamos nueva propiedad duracion para calculos con fechas*/
 		this.model.set( {duracion:this.carcularDuracion()} );
 		this.$el.html( this.plantilla_tr(this.model.toJSON()) );
 		return this;
 	},
-	verInfo				: function (elem) {
+	verInfo					: function (elem) {
 		var esto = this;
 		
 		/* ---Añade el nombre de los representantes del cliente--- */
@@ -117,6 +130,9 @@ app.VistaProyecto = Backbone.View.extend({
 		this.$archivos_proy			= this.$el.find('#archivos_proy');
 		this.$select_servicios		= this.$el.find('#select_servicios');
 		this.$select_rol			= this.$el.find('#select_rol');
+		this.$tbody_archivos		= this.$el.find('#tbody_archivos');
+		this.$inputArchivos			= this.$el.find('#inputArchivos');
+
 		/*Cacheamos el id del boton editar del modal para luego 
 		  cambiar su icono en cuanto se haga click en etidar tando en
 		  el tr o el modal*/
@@ -158,11 +174,33 @@ app.VistaProyecto = Backbone.View.extend({
 						toggleClass('editando2');
 				});
 				esto.cargarRoles();
-				esto.cargarArchivos();
+				esto.cargarArchivosProy();
 			/* plugin Datepicker jQueryUI */
-				$( ".datepicker" ).datepicker({
-					yearRange : "1970 : 2000" ,
-					dateFormat: 'yy-mm-dd'
+				$('.datepicker').datepicker({ 
+					dateFormat	: 'yy-mm-dd', 
+					monthNames	: [
+						'Enero',
+						'Febrero',
+						'Marzo',
+						'Abril',
+						'Mayo',
+						'Junio',
+						'Julio',
+						'Agosto',
+						'Septiembre',
+						'Octubre',
+						'Noviembre',
+						'Diciembre'
+					], 
+					dayNames	: [
+						'Lunes',
+						'Martes',
+						'Miercoles',
+						'Jueves',
+						'Viernes',
+						'Sábado',
+						'Domingo'
+					]
 				});
 			/* Evento para el obtener la fecha del calendario */
 				$( ".datepicker" ).on('change', function (elem){
@@ -199,6 +237,7 @@ app.VistaProyecto = Backbone.View.extend({
 
 /*Funciones para la dinamina de roles de empleados sobre el proyecto*/
 	validarRelacionRolEmpleado		: function (elem) {
+		$('#rolesNuevosProy').html('');
 		this.$select_rol.children().attr('disabled',false);
 		this.$select_rol.children().first().attr('disabled',true);
 		var roles = app.coleccionRolesProyectos.where({idproyecto:this.model.get('id'),idpersonal:$(elem.currentTarget.selectedOptions).val()})
@@ -206,7 +245,7 @@ app.VistaProyecto = Backbone.View.extend({
 			this.$select_rol.children('#'+roles[i].get('idrol')).attr('disabled',true);
 		};
 	},
-	guadarRoles		: function (event) {
+	guadarRoles				: function (event) {
 		var modelo = pasarAJson(this.$('#form_roles').serializeArray());
 
 		if ( typeof modelo.idpersonal === 'undefined' ) {
@@ -237,7 +276,7 @@ app.VistaProyecto = Backbone.View.extend({
 		};
 		event.preventDefault();
 	},
-	guadarRolRecursivo	: function (modelo) {
+	guadarRolRecursivo		: function (modelo) {
 		var esto = this;
 		if ($.isArray(modelo.idrol)) {
 			for (var i = 0; i < modelo.idrol.length; i++) {
@@ -280,7 +319,7 @@ app.VistaProyecto = Backbone.View.extend({
 			Backbone.emulateJSON = false;
 		};	
 	},
-	guardarRolesNuevos	: function (nuevosRoles) {
+	guardarRolesNuevos		: function (nuevosRoles) {
 		var esto = this;
 
 		if ($.isArray(nuevosRoles.nombre)) {
@@ -316,11 +355,11 @@ app.VistaProyecto = Backbone.View.extend({
 		};	
 	},
 //
-	validarAtributo		: function (elem) {
+	validarAtributo			: function (elem) {
 		if (elem.keyCode === 13)
 			this.actualizarAtributo( elem );
 	},
-	actualizarAtributo	: function (elem) {
+	actualizarAtributo		: function (elem) {
 		var datoSerializdo = $(elem.currentTarget).serializeArray();
 		if (datoSerializdo[0].value != '') {
 			/*Pasamos el dato al formato key:value con la función 
@@ -392,7 +431,7 @@ app.VistaProyecto = Backbone.View.extend({
 			3000
 		);
 	},
-	guadarServicio		: function () {
+	guadarServicio			: function () {
 		var esto = this,
 			dato = pasarAJson(this.$select_servicios.serializeArray()),
 
@@ -476,10 +515,10 @@ app.VistaProyecto = Backbone.View.extend({
 				console.log('No has seleccionado servicio');
 			};
 	},
-	eliminar			: function () {
+	eliminar				: function () {
 		this.model.destroy();
 	},
-	editando			: function () {
+	editando				: function () {
 		if (this.$btn_editar
 			.children()
 			.attr('class') == 
@@ -502,11 +541,11 @@ app.VistaProyecto = Backbone.View.extend({
 			this.$('.editar2').toggleClass('editando2');
 		};	
 	},
-	cargarServicio		: function (servicio) {
+	cargarServicio			: function (servicio) {
 		var vista = new app.VistaServicioProyecto({ model:servicio });
 		this.$ul_serviciosProyecto.append(vista.render().el);
 	},
-	cargarServicios		: function (callback) {
+	cargarServicios			: function (callback) {
 		this.$ul_serviciosProyecto.html('');
 		var servicios = app.coleccionServiciosProyecto.where({idproyecto:this.model.get('id'), status:'1'});
 		for (var i = 0; i < servicios.length; i++) {
@@ -514,11 +553,11 @@ app.VistaProyecto = Backbone.View.extend({
 		};
     	callback();
 	},
-	cargarRol			: function (rol) {
+	cargarRol				: function (rol) {
 		var vista = new app.VRolProyEmpleado({ model:rol });
 		this.$ul_rolesProyecto.append(vista.render().el);
 	},
-	cargarRoles			: function () {
+	cargarRoles				: function () {
 		var roles = app.coleccionRolesProyectos.where({idproyecto:this.model.get('id')});
 		for (var i = 0; i < roles.length; i++) {
 			this.cargarRol(roles[i]);
@@ -547,39 +586,152 @@ app.VistaProyecto = Backbone.View.extend({
 			{ empleados : app.coleccionDeEmpleados }
 		));
 	},
-	agregarRol			: function (elem) {
+	agregarRol				: function (elem) {
 		$('#rolesNuevosProy').append(this.plantillaRol( { id:$(elem.currentTarget).val(), nombre:$(elem.currentTarget.selectedOptions).text(), name:'idrol' } ));
 		$(elem.currentTarget.selectedOptions).attr('disabled',true);	
 	},
-	eliminarRol 		: function (elem) {
+	eliminarRol 			: function (elem) {
 		$('#select_rol').children('#'+$(elem.currentTarget).attr('value')).attr('disabled',false);
 		$(elem.currentTarget).parents('.tag_rol').remove();
 		elem.preventDefault();
 	},
-	cargarArchivo		: function (archivo) {
+	cargarArchivoProy		: function (archivo) {
 		var vista = new app.V_A_ConsultaProyecto({ model:archivo });
 		this.$archivos_proy.append(vista.render().el);
 	},
-	cargarArchivos		: function () {
+	cargarArchivosProy		: function () {
 		var archivo = app.coleccionArchivos.where({idpropietario:this.model.get('id'), tabla:'proyectos'});
 		for (var i = 0; i < archivo.length; i++) {
-			this.cargarArchivo(archivo[i]);
+			this.cargarArchivoProy(archivo[i]);
 		};
 	},
-	carcularDuracion	: function () {
+	carcularDuracion		: function () {
 		var valorFechaInicio = new Date(this.model.get('fechainicio')).valueOf();
 		var valorFechaEntrega = new Date(this.model.get('fechafinal')).valueOf();
 		var valorFechaActual = new Date().valueOf();
-		var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed();
-		var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed();
+		var plazo = ((((valorFechaEntrega-valorFechaInicio))/24/60/60/1000) + 1).toFixed() - this.excluirDias(this.model.get('fechainicio'), this.model.get('fechafinal'));
+		var queda = ((((valorFechaEntrega-valorFechaInicio)-((valorFechaEntrega-valorFechaInicio)-(valorFechaEntrega-valorFechaActual)))/24/60/60/1000) +1).toFixed() - this.excluirDias(new Date(), this.model.get('fechafinal'));
 		if (queda == -0) queda = 0;
-		var porcentaje = (100 * queda)/plazo;
+		var porcentaje = ((100 * queda)/plazo).toFixed();
 
-		// console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
+		console.log('plazo: '+plazo, 'queda: '+queda, 'porcentaje: '+porcentaje+'%');
 		return {
 			plazo		:plazo,
 			queda		:queda,
 			porcentaje	:porcentaje
 		};
+	},
+	excluirDias	: function (fechaInicio, fechaFinal) {
+		var contador = 0;
+		var valorFechaInicio = new Date(fechaInicio).valueOf();
+		var valorFechaEntrega = new Date(fechaFinal).valueOf();
+		var duracion = (((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1).toFixed();
+		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		for(var i = 0; i<duracion; i++){
+			var dia = (new Date(new Date(fechaInicio).getTime() + i*24*60*60*1000)).getDay();
+		   	if(days[dia] == 'Saturday' || days[dia] == 'Sunday'){ 
+		   		contador++;
+		   	};
+		};
+		return contador;
+	},
+/* Archivos nuevos */
+	cargarArchivos	: function (elem) {
+		this.$tbody_archivos.html('');
+		this.arrArchivos = new Array();
+		// if ( this.arrArchivos == $(elem.currentTarget).prop('files') ) {console.log('Si')} else{console.log('No')};
+		var archivos = $(elem.currentTarget).prop('files');
+		for (var i = 0; i < archivos.length; i++) {
+			this.$tbody_archivos.append( this.plantillaArchivo( {i:i, tipo:(archivos[i].type).split('/')[1], nombre:archivos[i].name, tamaño:(archivos[i].size/1024).toFixed() +' KB'} ) );
+		};
+	},
+	eliminarFileList	: function () {
+		delete this.$inputArchivos.val('');
+	},
+	subirArchivo		: function () {/*elem*/
+		console.log('subirArchivo');
+		// elem.preventDefault();
+		var archivos = this.$inputArchivos.prop('files');
+		
+		var esto = this;
+		esto.classTr =  archivos.length - 1;
+		if (this.arrArchivos) {
+			// for (var i = 0; i < archivos.length; i++) {
+			for (var i = archivos.length - 1; i >= 0; i--) {
+				if ( this.arrArchivos.indexOf(String(i)) == -1 ) {
+					this.$tbody_archivos.children('.'+i).children('.icon-eliminar').html('<img src="img/ajax-loader25x25.gif">');
+					var formData = new FormData(document.getElementById('form_subirArchivos'));
+					// formData.append('tabla','proyectos');
+					formData.append('archivo[]',archivos[i]);
+					// formData.append('idpropietario',this.idProyecto);
+					var resp = $.ajax({
+			            url: 'http://crmqualium.com/api_archivos',  
+			            type: 'POST',
+			            async:true,
+			            data: formData,
+			            //necesario para subir archivos via ajax
+			            cache: false,
+			            contentType: false,
+			            processData: false,
+			            success: function (exito) {
+			            	esto.$tbody_archivos.children('.'+esto.classTr).addClass('success');
+			            	esto.$tbody_archivos.children('.'+esto.classTr).children('.icon-eliminar').html('<div class="has-success"><span class="glyphicon glyphicon-ok form-control-feedback"></span></div>');
+			   				esto.classTr--;
+			            },
+			            error  : function (error) {
+			            	esto.$tbody_archivos.children('.'+esto.classTr).addClass('danger');
+			            	esto.$tbody_archivos.children('.'+esto.classTr).children('.icon-eliminar').html('<div class="has-error"><span class="glyphicon glyphicon-remove form-control-feedback"></span></div>');
+			   				esto.classTr--;
+			            }
+			        });
+				};
+			};
+		}			
+	},
+	eliminarArchivo		: function (elem) {
+		this.arrArchivos.push( $(elem.currentTarget).attr('id') );
+		$(elem.currentTarget).parents('.'+$(elem.currentTarget).attr('id')).remove();
+	},
+	cancelarArchivos	: function (elem) {
+		if ($(elem.currentTarget).attr('id') == 'btn_cancelarArchivo') {
+			this.$('#advertencia #comentario').html('Los archivos a subir seran cancelados');
+			this.$('#advertencia').removeClass('oculto');
+		}; 
+		if ($(elem.currentTarget).attr('id') == 'cancelar') {
+			for (var i = 0; i < $('.eliminarArchivo').length; i++) {
+				this.arrArchivos.push(i);
+			};
+			this.$('#advertencia').addClass('oculto');
+			this.$tbody_archivos.html('');
+		};
+		if ($(elem.currentTarget).attr('id') == 'continuar') {
+			/*Este condicion evalua si existe la variable global
+			que almacena el html para la alerta de advertencia. de lo
+			contrario no pa a la otra línea. esta variable se crea y 
+			se guarda el html cuando el usuario preciona el botón de 
+			cancelar proyecto en la función cancelarProyecto.
+			DAR MANTENIMIENTO*/
+			// if (this.htmlAdvertencia) {
+			// 	this.$advertencia.html(this.htmlAdvertencia);
+			// 	this.$advertencia.toggleClass('oculto');
+			// };
+			$(elem.currentTarget).parents('div').children('.cerrar').click();
+		};
+	},
+// 
+
+	cerrarAlerta		: function (elem) {
+		/*Este condicion evalua si existe la variable global
+		que almacena el html para la alerta de advertencia. de lo
+		contrario no pa a la otra línea. esta variable se crea y 
+		se guarda el html cuando el usuario preciona el botón de 
+		cancelar proyecto en la función cancelarProyecto.
+		DAR MANTENIMIENTO*/
+		// if (this.htmlAdvertencia) {
+		// 	this.$advertencia.html(this.htmlAdvertencia);
+		// 	this.$advertencia.toggleClass('oculto');
+		// 	return;	
+		// };
+		$(elem.currentTarget).parent().toggleClass('oculto');
 	},
 });

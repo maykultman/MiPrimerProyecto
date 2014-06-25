@@ -85,19 +85,46 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.$duracion          = $('#duracion');
 
 		this.$inputArchivos		= $('#inputArchivos');
-		this.$fecha_creacion	= $('#fecha_creacion');
-		this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
+		// this.$fecha_creacion	= $('#fecha_creacion');
+		// this.$section_resp_Paso3 = $('#paso3 .panel-info .panel-body');
 		this.$tbody_archivos	= $('#tbody_archivos');
-		this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
-		this.$tablaProyecto = $('#form_subirArchivos #tabla');
+		// this.$propietarioArchivo = $('#form_subirArchivos #idpropietario');
+		// this.$tablaProyecto = $('#form_subirArchivos #tabla');
 		
 		this.cargarClientes();
 
 		this.cargarEmpleados();
 
-		this.idProyecto;
+		// this.idProyecto;
 
 		this.array = new Array();
+
+		$('.datepicker').datepicker({ 
+			dateFormat:'dd/mm/yy', 
+			monthNames:[
+				'Enero',
+				'Febrero',
+				'Marzo',
+				'Abril',
+				'Mayo',
+				'Junio',
+				'Julio',
+				'Agosto',
+				'Septiembre',
+				'Octubre',
+				'Noviembre',
+				'Diciembre'
+			], 
+			dayNames:[
+				'Lunes',
+				'Martes',
+				'Miercoles',
+				'Jueves',
+				'Viernes',
+				'Sábado',
+				'Domingo'
+			]
+		});
 	},
 	render				: function () {
 		return this;
@@ -126,7 +153,7 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		tener en cada formulario rol el id del proyecto, de esta 
 		manera es más facil enviar los roles a la api de roles de 
 		proyecto*/
-		empleado.set({idproyecto:this.idProyecto});
+		// empleado.set({idproyecto:this.idProyecto});
 		var vistaEmpleado = new app.VistaEmpleado({ model:empleado });
 		this.$tbody_empleados.append( vistaEmpleado.render().el );
 	},
@@ -134,36 +161,38 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		app.coleccionEmpleados.each( this.cargarEmpleado, this );
 	},
 	calcularDuracion	: function (elem) {
-		var valorFechaInicio = new Date(this.$fechaInicio.val())
-										.valueOf();
-		var valorFechaEntrega = new Date(this.$fechaEntrega.val())
-										.valueOf();
+		var fecha = this.$fechaInicio.val().split('/');
+		var valorFechaInicio = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf();
+			fecha = this.$fechaEntrega.val().split('/');
+		var valorFechaEntrega = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf();
 		this.$duracion.val(
 			((valorFechaEntrega-valorFechaInicio)/24/60/60/1000) +1
 		);
 	},
-	calcularEntrega 	: function (elem) {
-		var valorFechaInicio = new Date(this.$fechaInicio.val())
-										.valueOf();
-		
-		var valorFechaTermuno = 
-			valorFechaInicio 
-			+ ( parseInt(this.$duracion.val())*24*60*60*1000 );
-		
-		var fF = new Date(valorFechaTermuno);
+	calcularEntrega 	: function () {
+		var fecha = this.$fechaInicio.val().split('/'),
+			valorFechaInicio = new Date(fecha[2]+'-'+fecha[1]+'-'+fecha[0]).valueOf(),
+			valorFechaTermino = valorFechaInicio + ( parseInt(this.$duracion.val())*24*60*60*1000 ),
+			fF = new Date(valorFechaTermino),
+			fechaEntrega;
 
-		var fechaEntrega = fF.getFullYear() +'-';
-
-		if ((fF.getMonth() +1) < 10 )
-			fechaEntrega += '0'+(fF.getMonth() +1) +'-';
-		else
-			fechaEntrega += (fF.getMonth() +1) +'-';
 		if ((fF.getDate()) < 10 )
-			fechaEntrega += '0'+(fF.getDate());
+			fechaEntrega = '0'+(fF.getDate());
 		else
-			fechaEntrega += (fF.getDate());
+			fechaEntrega = (fF.getDate());
+		if ((fF.getMonth() +1) < 10 )
+			fechaEntrega += '/0'+(fF.getMonth() +1);
+		else
+			fechaEntrega +=  '/'+(fF.getMonth() +1);
 
-		this.$fechaEntrega.val( fechaEntrega );
+		fechaEntrega +=  '/'+fF.getFullYear();
+
+		if (fechaEntrega != 'NaN/NaN/NaN') {
+			this.$fechaEntrega.val( fechaEntrega );
+		} else{
+			this.$fechaEntrega.val('');
+		};
+
 	},
 	cerrarAlerta		: function (elem) {
 		/*Este condicion evalua si existe la variable global
@@ -252,6 +281,18 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			return;
 		};
 
+		if (modeloProyecto.fechainicio != '' && modeloProyecto.fechafinal != '') {
+			modeloProyecto.fechainicio = modeloProyecto.fechainicio.split('/');
+			modeloProyecto.fechainicio = 	modeloProyecto.fechainicio[2]+'-'+
+											modeloProyecto.fechainicio[1]+'-'+
+											modeloProyecto.fechainicio[0];
+
+			modeloProyecto.fechafinal = modeloProyecto.fechafinal.split('/');
+			modeloProyecto.fechafinal = 	modeloProyecto.fechafinal[2]+'-'+
+											modeloProyecto.fechafinal[1]+'-'+
+											modeloProyecto.fechafinal[0];
+		} else{};
+
 		/******************************/
 		var servicios = modeloProyecto.servicios;
 		delete modeloProyecto.servicios;
@@ -315,27 +356,31 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 			.toggleClass('oculto');
 	},
 	guadarServiciosProyecto	: function (idproyecto,servicios) {
-		console.log('guadarServiciosProyecto ',idproyecto,servicios);
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
-		app.coleccionServiciosProyecto.create(
-			{ idproyecto:idproyecto, idservicio:servicios },
-			{
+		if ($.isArray(servicios)) {
+			for (var i = 0; i < servicios.length; i++) {
+				this.guadarServiciosProyecto(idproyecto,servicios[i]);
+			};
+		} else{
+			Backbone.emulateHTTP = true;
+			Backbone.emulateJSON = true;
+			app.coleccionServiciosProyecto.create({ 
+				idproyecto:idproyecto, idservicio:servicios, status:true
+			},{
 				wait 	:true,
 				success : function (exito) {
 					console.log('recordar validar que seleccione servicios para el proyecto');
 				},
 				error 	: function (error) {
-					// console.log(error)
+					console.log('error', error);
 				}
-			}
-		);
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
+			});
+			Backbone.emulateHTTP = false;
+			Backbone.emulateJSON = false;
+		};
 	},
-	globalizarIdProyecto	: function (modelo) {
-		this.idProyecto = modelo.get('id');
-	},
+	// globalizarIdProyecto	: function (modelo) {
+	// 	this.idProyecto = modelo.get('id');
+	// },
 /*Funciones para la dinamina de roles de empleados sobre el nuevo proyecto*/
 	validarRolesEmpleados			: function () {/*elem*/
 		console.log('validarRolesEmpleados');

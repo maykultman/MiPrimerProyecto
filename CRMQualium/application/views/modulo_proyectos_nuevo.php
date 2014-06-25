@@ -1,15 +1,11 @@
 	<link rel="stylesheet" href="<?=base_url().'css/estilos_modulo_proyectos.css'?>" type="text/css">
-	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"> -->
-	<!-- // <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
-	<!-- <link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css"> -->
-	<!-- <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script> -->
 
 	<div class="alert alert-warning oculto" id="advertencia">
 		<button type="button" class="close cerrar">×</button>
 		<h4>¡Advertencia!</h4>
 		<p id="comentario"></p>
 		<br>
-		<button type="button" id="cancelar" class="btn btn-danger">Cancelar</button>
+		<button type="button" id="cancelar" class="btn btn-danger">Borrar</button>
 		<button type="button" id="continuar" class="btn btn-default">Continuar</button>
 	</div>
 	<div class="alert alert-danger alert-dismissable oculto" id="error">
@@ -99,15 +95,15 @@
 									<div class="row">
 										<div class="col-md-3">
 											<div style="margin: 23px 0px 21px 0px;"><b>Inicio</b></div>
-								    		<input id="fechaInicio" class="form-control" type="date" name="fechainicio">
+								    		<input id="fechaInicio" class="form-control datepicker" type="text" name="fechainicio">
 										</div>
 										<div class="col-md-3">
 											<div style="margin: 23px 0px 21px 0px;"><b>Termino</b></div>
-											<input id="fechaEntrega" class="form-control" type="date" name="fechafinal">
+											<input id="fechaEntrega" class="form-control datepicker" type="text" name="fechafinal">
 										</div>
 										<div class="col-md-3">
 											<div style="margin: 23px 0px 21px 0px;"><b>Duración en días</b></div>
-											<input type="number" id="duracion" class="form-control">
+											<input type="number" id="duracion" class="form-control" min="1">
 										</div>
 									</div>
 								</fieldset>
@@ -352,7 +348,7 @@
 					</div>
 				</div>
 	    		<form class="form_participante">
-	    			<input type="hidden" name="idproyecto" value="<%- idproyecto %>">
+	    			<input type="hidden" name="idproyecto" value="">
 	    			<input type="hidden" name="idpersonal" value="<%- id %>">
 				</form>
 	    </td>
@@ -402,12 +398,12 @@
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-    <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.localStorage.js'?>"></script>
 
 <!-- MV* -->
 	<!-- modelos -->
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
+		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRol.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloProyecto.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>"></script>
@@ -430,3 +426,7 @@
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaEmpleado.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script>
 		<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevoProyecto.js'?>"></script>
+
+	<script type="text/javascript">
+		
+	</script>

@@ -58,6 +58,26 @@
 		margin-top: -25px;
 	}
 </style>
+	<!-- Alertas -->
+		<div class="alert alert-warning oculto" id="advertencia">
+			<button type="button" class="close cerrar">×</button>
+			<h4>¡Advertencia!</h4>
+			<p id="comentario"></p>
+			<br>
+			<button type="button" id="cancelar" class="btn btn-danger">Cancelar</button>
+			<button type="button" id="continuar" class="btn btn-default">Continuar</button>
+		</div>
+		<div class="alert alert-danger alert-dismissable oculto" id="error">
+			<button type="button" class="close cerrar">&times;</button>
+			<strong>¡Error!</strong>
+			<div id="comentario"></div>
+		</div>
+		<div class="alert alert-success alert-dismissable oculto" id="exito">
+			<button type="button" class="close cerrar">&times;</button>
+			<strong>¡Exito!</strong>
+			<div id="comentario"></div>
+		</div>
+
 	<div id="posicion_infotd">
 		<table id="tbla_cliente" class="table table-striped">
 			<thead>
@@ -95,7 +115,28 @@
 </script>
 <!-- plantillas -->
 	<script type="text/template" id="plantilla_tr_proyecto">
-		<td><input  type="checkbox"></td>
+		<td>
+			<!-- Alertas -->
+				<div class="alert alert-warning oculto" id="advertencia">
+					<button type="button" class="close cerrar">×</button>
+					<h4>¡Advertencia!</h4>
+					<p id="comentario"></p>
+					<br>
+					<button type="button" id="cancelar" class="btn btn-danger">Cancelar</button>
+					<button type="button" id="continuar" class="btn btn-default">Continuar</button>
+				</div>
+				<div class="alert alert-danger alert-dismissable oculto" id="error">
+					<button type="button" class="close cerrar">&times;</button>
+					<strong>¡Error!</strong>
+					<div id="comentario"></div>
+				</div>
+				<div class="alert alert-success alert-dismissable oculto" id="exito">
+					<button type="button" class="close cerrar">&times;</button>
+					<strong>¡Exito!</strong>
+					<div id="comentario"></div>
+				</div>
+			<input  type="checkbox">
+		</td>
 		<td><%- propietario %></td>
 		<td><%- nombre %></td>                     
 		<!-- <td>Responsable</td> -->
@@ -120,24 +161,17 @@
 			<%- Anio_Mes_dia[0] %>
 		</td> 
 		<td >
-			<% if (duracion.queda > duracion.plazo) { %>
-				<span class="badge">
-					<!-- Comienza en <%- (duracion.queda - duracion.plazo) + 1 %> <%= ((duracion.queda - duracion.plazo) + 1) === 1 ? 'día' : 'días' %> -->
-
-					Comienza <%= (duracion.queda - duracion.plazo) == 1 ? 'mañana' : 'en ' + (duracion.queda - duracion.plazo) + ' días' %>
-				</span>
-			<% }; %>
-			<% if (duracion.porcentaje >= 51 && duracion.porcentaje <= 100) { %>
+			<% if (duracion.porcentaje >= 51 && duracion.porcentaje < 100) { %>
 				<span class="badge color_success">
 					Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if ( duracion.porcentaje >= 15 && duracion.porcentaje <= 50) { %>
+			<% if ( duracion.porcentaje >= 15 && duracion.porcentaje < 51) { %>
 				<span class="badge color_warning">
 					Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 				</span>
 			<% }; %>
-			<% if (duracion.porcentaje >= 0 && duracion.porcentaje <= 14) { %>
+			<% if (duracion.porcentaje >= 0 && duracion.porcentaje < 15) { %>
 				<span class="badge color_error">
 					Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 				</span>
@@ -263,35 +297,29 @@
 										<tr class="filaInformacion"><!-- Duración -->
 											<td class="atributo"><b>Duración</b></td>
 											<td>
-											    <% if (duracion.queda > duracion.plazo) { %>
-													<span class="badge">
-														<!-- Comienza en <%- (duracion.queda - duracion.plazo) + 1 %> <%= ((duracion.queda - duracion.plazo) + 1) === 1 ? 'día' : 'días' %> -->
-
-														Comienza <%= (duracion.queda - duracion.plazo) == 1 ? 'mañana' : 'en ' + (duracion.queda - duracion.plazo) + ' días' %>
-													</span>
-												<% }; %>
-												<% if (duracion.queda <= duracion.plazo && (duracion.porcentaje >= 51 && duracion.porcentaje <= 100)) { %>
+											    <% if (duracion.porcentaje >= 51 && duracion.porcentaje < 100) { %>
 													<span class="badge color_success">
-														Queda <%- duracion.queda %> <%= duracion.queda === 1 ? 'día' : 'días' %>
+														Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 													</span>
 													 de <%- duracion.plazo %>
 												<% }; %>
-												<% if ( duracion.porcentaje >= 15 && duracion.porcentaje <= 50) { %>
+												<% if ( duracion.porcentaje >= 15 && duracion.porcentaje < 51) { %>
 													<span class="badge color_warning">
-														Queda <%- duracion.queda %> <%= duracion.queda === 1 ? 'día' : 'días' %>
+														Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 													</span>
 													 de <%- duracion.plazo %>
 												<% }; %>
-												<% if (duracion.porcentaje >= 0 && duracion.porcentaje <= 14) { %>
+												<% if (duracion.porcentaje >= 0 && duracion.porcentaje < 15) { %>
 													<span class="badge color_error">
-														Queda <%- duracion.queda %> <%= duracion.queda === 1 ? 'día' : 'días' %>
+														Queda <%- duracion.queda %> <%= duracion.queda == 1 ? 'día' : 'días' %>
 													</span>
 													 de <%- duracion.plazo %>
 												<% }; %>
 												<% if (duracion.porcentaje < 0) { %>
 													<span class="badge color_error">
-														<%- -(duracion.queda) %> <%= -(duracion.queda) === 1 ? 'día' : 'días' %> de atraso
+														<%- -(duracion.queda) %> <%= -(duracion.queda) == 1 ? 'día' : 'días' %> de atraso
 													</span>
+													 de <%- duracion.plazo %>
 												<% }; %>
 											</td>
 											<td><!--td SIN UTILIZAR--></td>
@@ -349,8 +377,8 @@
 															</div>
 															<div id="rolesNuevosProy" class="panel-body">
 																<!-- PLANTILLAS DE ROLES -->
-																	<input type="hidden" name="idproyecto" value="<%- id %>">
 															</div>
+															<input type="hidden" name="idproyecto" value="<%- id %>">
 															<div class="panel-footer">
 																<button type="submit" id="btn_enviarRolesProy" class="btn btn-default btn-sm">Agregar al proyecto</button>
 															</div>
@@ -388,47 +416,49 @@
 								<!-- ------- Archivos del proyecto------- -->
 							</div>
 							<div class="tab-pane" id="profile">
-								<!-- Adjuntar archivos nuevos -->
-									<div>
-										<div class="row">
-											<div class="col-md-12">
-												<fieldset>
-													<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas. Los archivos deben estár en la misma carpeta</h5></legend>
-												</fieldset>
-											</div>
-										</div>
-										<label class="btn btn-success fileinput-button">
-						                    <span class="icon-paperclip"></span>
-						                    <span>Adjuntar archivos</span>
-						                    <input type="file" id="inputArchivos" multiple name="archivo[]">
-						                </label>
-						                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start" style="display:none;">
-						                    <i class="glyphicon glyphicon-upload"></i>
-						                    <span>Subir</span>
-						                </button>
-						                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
-						                    <i class="glyphicon glyphicon-ban-circle"></i>
-						                    <span>Borrar lista</span>
-						                </button>
-										<form id="form_subirArchivos">
-							                <input type="hidden" id="idpropietario" name="idpropietario">
-							                <input type="hidden" id="tabla" name="tabla" value="proyectos">
-							                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
-									    </form>
-									    <br>
-										<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
-											<thead>
-												<tr>
-													<th>Archivos a subir</th>
-													<th>Tipo</th>
-													<th>Tanaño</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody id="tbody_archivos">
-											</tbody>
-										</table>
+								<br>
+								<div class="row">
+									<div class="col-md-12">
+										<fieldset>
+											<legend><h5>Adjunta los archivos para el proyecto. No seleccione carpetas. Los archivos deben estár en la misma carpeta</h5></legend>
+										</fieldset>
 									</div>
+								</div>
+								<label class="btn btn-success fileinput-button">
+				                    <span class="icon-paperclip"></span>
+				                    <span>Adjuntar archivos</span>
+				                    <input type="file" id="inputArchivos" multiple name="archivo[]">
+				                </label>
+				                <button type="submit" id="btn_subirArchivo" class="btn btn-primary start">
+				                    <i class="icon-upload"></i>
+				                    <span>Subir</span>
+				                </button>
+				                <button type="reset" id="btn_cancelarArchivo" class="btn btn-warning cancel">
+				                    <i class="glyphicon glyphicon-ban-circle"></i>
+				                    <span>Borrar lista</span>
+				                </button>
+								<form id="form_subirArchivos">
+					                <input type="hidden" id="idpropietario" name="idpropietario" value="<%- id %>">
+					                <input type="hidden" id="tabla" name="tabla" value="proyectos">
+					                <input type="hidden" id="fecha_creacion" name="fecha_creacion">
+							    </form>
+							    <br>
+								<table class="table table-hover"><!-- style="display: table-cell; width: 400px;" -->
+									<thead>
+										<tr>
+											<th>Archivos a subir</th>
+											<th>Tipo</th>
+											<th>Tanaño</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tbody_archivos">
+									</tbody>
+								</table>
+								<br>
+								<br>
+								<h4>Archivos subidos</h4>
+								<br>
 								<table id="archivos_proy" class="table table-striped">
 									<!-- PLANTILLAS TR DE ARCHIVOS -->
 								</table>
@@ -488,10 +518,23 @@
 		</td>
 		<td class="icon-operaciones">
 			<div class="btn_eliminar_archivo">
-				<span class="icon-circledelete eliminar" id="<%- id %>" data-toggle="tooltip" title="Eliminar"></span>
+				<span class="icon-circledelete eliminar" data-toggle="tooltip" title="Eliminar"></span>
 			</div>
-			<span class="icon-uniF7D5" data-toggle="tooltip" data-placement="top" title="Descargar">
+			<a href="<%- ruta %>" download>
+				<span class="icon-uniF7D5" data-toggle="tooltip" data-placement="top" title="Descargar">
+			</a>
 	    </td>
+	</script>
+
+	<script type="text/template" id="tr_archivoNuevo">
+		<tr class="<%- i %>">
+			<td><%- nombre %></td>
+			<td><%- tipo %></td>
+			<td><%- tamaño %></td>
+			<td class="icon-eliminar">
+		    	<label id="<%- i %>" class="icon-circledelete eliminarArchivoNuevo"></label>
+		    </td>
+		</tr>
 	</script>
 
 
