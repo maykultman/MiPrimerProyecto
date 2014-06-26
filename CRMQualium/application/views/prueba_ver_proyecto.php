@@ -5,7 +5,7 @@
 			<ul id="menu_modulo" class="nav nav-pills">
 				 	  
 				<li>
-                	<a href="modal_consulta_proyecto">
+                	<a href="formato_cotizacion">
                  		<div class="icono_menu_modulo">
                     		<span class="icon-uniF476"></span>
                   	    </div>

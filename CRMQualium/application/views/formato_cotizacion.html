@@ -4,47 +4,60 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Cotizacion</title>	
 	<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
-<div id="hoja">
+<div id="contenedor_formato">
 	<div id="cabecera">
-	<P><font color="white" size="20px;">PRESUPUESTO</font></P>	
+		<type = "button"  class = "btn btn-primaria" >
+	<label id="p_titulo"><font color="white">PRESUPUESTO</font></label>
+	<div class="desborde"></div>
+	<label  id="label_nomcotizacion"><font color="white">App & Sitio Web</font></label>
+	<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: -80px;">
+	<script>
+    var f = new Date();
+	document.write('<div id="div_fecha">'+' <font color="white">' + f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() + '</font>' + '</div>');
+	</script>
+	<label>Cliente:</label>
+	<label>Enrique Xacur</label>
+						
 	</div>
 	<div class="desborde"></div>
 	<div id="barra"></div>
 	<div id="detalles">	
-		<p>Detalle</p>
-		<p>Una aplicación móvil o app es una aplicación informática diseñada para ser ejecutada en teléfonos inteligentes,tabletas y otros dispositivos móviles.</p>
-		<p>Características</p>
-		<p>
-		-Directorio de restaurantes y bares en Chetumal<br>
-		-La aplicación cuenta con una página web la cual alimenta la información y el contenido<br>
-		-La aplicación se descargará de manera nativa en la App Store,Google Play y Windows Store desde sus respectivas cuentas de developers<br>
-		-La aplicación Web se pondrá visualizar desde los navegadores móviles sin tener que instalarla
-		</p>
+		<p style="margin-top: -1px;"><b>Detalle</b></p>
+		<font color="gray">
+			<p>Una aplicación móvil o app es una aplicación informática diseñada para ser ejecutada en teléfonos inteligentes,tabletas y otros dispositivos móviles.</p>
+			<p>Características:</p>
+			<p>
+			-Directorio de restaurantes y bares en Chetumal<br>
+			-La aplicación cuenta con una página web la cual alimenta la información y el contenido<br>
+			-La aplicación se descargará de manera nativa en la App Store,Google Play y Windows Store desde sus respectivas cuentas de developers<br>
+			-La aplicación Web se pondrá visualizar desde los navegadores móviles sin tener que instalarla
+			</p>
+	    </font>
     </div>
 	<div id="info_contacto">
 
-		<p style="margin-left:15px;"><font color="#FAF4F4"><b><font color="white">Contacto</b></font><br>
-		Email: contacto@qualium.mx<br>
+		<p style="margin-left:15px;"><font color="white"><b>Contacto</b></font><br>
+		<font color="white">Email: contacto@qualium.mx<br>
 		Teléfono: (999)2852274<br>
-		Dirección: Calle 36 diagonal #301 x 24
-		Montebello, C.P. 97113. Mérida, Yucatán.<br>
-	    www.qualium.mx.<br><br>
-        <b><font color="white">Horario de  atención</font></b><br>
-		Lunes  a viernes 9am  - 6pm</p></font> 
-
+		Dirección: Calle 22 x 7 y 9
+		Col.México, C.P. 97113. Mérida, Yucatán.<br>
+	    <a href="http://qualium.mx/" target="_blank" >www.qualium.mx</a><br><br>
+        <font color="white"><b>Horario de  atención</b></font><br>
+		Lunes  a viernes 9am - 6pm</font></p>
 
 
 
 		<div id="redes_sociales">
-			<img  src="http://crmqualium.com/img/formatoCotizacion/face.png" alt="">
-			<img src="http://crmqualium.com/img/formatoCotizacion/twitter.png" alt="">
-			<img src="http://crmqualium.com/img/formatoCotizacion/google.png" alt="">
-			<img src="http://crmqualium.com/img/formatoCotizacion/in.png" alt="">
-			<img src="http://crmqualium.com/img/formatoCotizacion/be.png" alt="">
-			<img src="http://crmqualium.com/img/formatoCotizacion/vine.png" alt="">	
+			<img  src="http://crmqualium.com/img/formatoCotizacion/face.png" alt="" class="img_redesociales">
+			<img src="http://crmqualium.com/img/formatoCotizacion/twitter.png" alt="" class="img_redesociales">
+			<img src="http://crmqualium.com/img/formatoCotizacion/google.png" alt="" class="img_redesociales">
+			<img src="http://crmqualium.com/img/formatoCotizacion/in.png" alt="" class="img_redesociales">
+			<img src="http://crmqualium.com/img/formatoCotizacion/be.png" alt="" class="img_redesociales">
+			<img src="http://crmqualium.com/img/formatoCotizacion/vine.png" alt="" class="img_redesociales">	
 		</div>
 		
 		
@@ -128,13 +141,8 @@
 		  <li>El presupuesto se considera aprobado al recibir una copia del mismo firmada por el destinatario.</li>
 		</ul>	
 	</div>	
-	
     <div id="pie">
     </div>
-  
-
-
-
-
+</div>
 </body>
 </html>
