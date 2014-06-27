@@ -13,12 +13,9 @@
 
 			<div style="margin-top:15px;" class="panel-group" id="accordion">
 				<div id="unperfil">
-									
+					<!-- EN ESTA SECCION SE UBICA LA LISTA DE PERFILES -->
 				</div> 
             </div>
-
-
-
 
             <!-- Modal NUEVO PERFIL-->
             <div  class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"        
@@ -33,7 +30,7 @@
 				        <div class="modal-body">
                             <form id="registroPerfil">
 					            <input id="nombre" name="nombre" type="search" class="form-control" placeholder="Nombre del perfil"><br>
-					            <div style="width:850px; " class="panel panel-primary permisos">  
+					            <div style="width:850px;" class="panel panel-primary permisos">  
 						            <div class="panel-heading">Asignar Permisos</div>           
 					            	
 					            	<div id="ListaPermisos" class="row">										
@@ -50,11 +47,11 @@
 											<input type="checkbox" id="idpermiso" class="btn_marcarTodos"> Marcar todos
 										</label>
 									</div>
-
 					            </div>
 					        </form>    
 				        </div>					       
-		            </div><!-- /.modal-content -->
+		            </div>
+		            <!-- /.modal-content -->
 
 
 		        </div><!-- /.modal-dialog -->
@@ -62,6 +59,8 @@
         </section>    
     </section>
 </div>
+
+
 
 <script type="text/plantilla" id="Permisos">
 		<% if (typeof palomita != 'undefined') { %>

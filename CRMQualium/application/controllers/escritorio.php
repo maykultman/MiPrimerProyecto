@@ -182,12 +182,21 @@ class Escritorio extends Api {
 		$this->area_Estatica('modulo_actividades');
 	}
 
-	public function usuarios(){
+	public function usuarios()
+	{
 		$this->area_Estatica('modulo_usuarios');
 
+		$this->load->model('Modelo_permisos', 'permisos');
+		$this->load->model('Modelo_permisoPerfil', 'perper');
+		$this->load->model('modelo_perfil','perfil');
+		
 		if($this->ruta() == 'modulo_usuarios_nuevo')
 		{
-			$this->load->view($this->ruta());
+			$data['perfiles'] = $this->perfil->get();
+			$data['permisos'] = $this->permisos->get();
+			$data['permisos_perfil'] = $this->perper->get();
+			$data['empleados'] = $this->empleado->get();
+			$this->load->view($this->ruta(), $data);
 		}
 		if($this->ruta() == 'modulo_usuarios_consulta')
 		{

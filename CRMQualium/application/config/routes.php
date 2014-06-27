@@ -175,3 +175,6 @@ $route['api_puestos/(:num)'] = 'puesto/api/$1';
 
 $route['api_permisoPerfil'] = 'permisoPerfil/api';
 $route['api_permisoPerfil/(:num)'] = 'permisoPerfil/api/$1';
+
+$route['api_permisoUsuario'] = 'permisoUsuario/api';
+$route['api_permisoUsuario/(:num)'] = 'permisoUsuario/api/$1';

@@ -830,6 +830,7 @@ body .ui-tooltip {
 	color: #2e6e9e;
 	text-decoration: none;
 }
+/*$$$$$$ BETO $$$$$$*/
 .ui-state-hover,
 .ui-widget-content .ui-state-hover,
 .ui-widget-header .ui-state-hover,
@@ -837,9 +838,13 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
 	border: 1px solid #79b7e7;
-	background: #d0e5f5 url("images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;
+	/*background: #d0e5f5 url("images/ui-bg_glass_75_d0e5f5_1x400.png") 50% 50% repeat-x;*/
+	background: #0492e6;;
 	font-weight: bold;
-	color: #1d5987;
+	/*color: #1d5987;*/
+	color: #ffffff;
+
+	
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,

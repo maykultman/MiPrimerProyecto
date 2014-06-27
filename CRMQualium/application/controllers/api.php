@@ -6,33 +6,27 @@ class  Api extends CI_Controller {
 
      public function request() 
     {
-        switch ($this->metodo()) 
+        switch ($_SERVER['REQUEST_METHOD']) 
         {
-            case     'post':   return 'create'; # POST
-            case     'get':    return $this->metodo(); # GET 
-            case     'delete': return $this->metodo(); # DELETE
-            case     'patch':  return 'update';        # PATCH
-            case     'put':    return 'update';        # PUT
-            
+            case     'POST':   return 'create';  # POST
+            case     'GET':    return 'get';     # GET 
+            case     'DELETE': return 'delete';  # DELETE
+            case     'PATCH':  return 'update';  # PATCH
+            case     'PUT':    return 'update';  # PUT            
             ###########METODO NO DEFINIDO###############
             default:  $this->response  ('',405);  exit; 
         }
     }
-         
-    # Recupera el nombre del metodo de la petición y lo convierte a minusculas...
-    public function metodo(){ return strtolower($_SERVER['REQUEST_METHOD']);  }
-
     # Captura el primer segmento de la URL para cargar la vista...
     public function ruta()  {   return $this->uri->segment(1);                }
-   
     # Captura el Segundo segmento de la URL tomar el id para get, update o delete...
     public function id()
     {
         $id = $this->uri->segment(2); 
         # La peticion fue get entonces retorna un $id = num o $id = NULL
-        if($this->metodo()==='get'||$this->metodo()==='delete') return $id;       
+        if($_SERVER['REQUEST_METHOD'] ==='GET'||$_SERVER['REQUEST_METHOD'] ==='DELETE') return $id;       
         # La petición fue put O patch entonces validamos que el id sea un numero
-        if($this->metodo()==='put'||$this->metodo()==='patch'){
+        if($_SERVER['REQUEST_METHOD'] ==='PUT'||$_SERVER['REQUEST_METHOD'] ==='PATCH'){
             if(is_numeric($id)) return $id; 
             # Si no llega ningún ID para estas peticiones regresamos un 400 petición incorrecta...
             $this->response('ID Required', 400);
@@ -74,13 +68,12 @@ class  Api extends CI_Controller {
     
     protected function response($data, $status)
     {  
-        (is_numeric($data)) ? $response['id'] = $data : $response = $data;
         # Establece el codigo y el mensaje de estado de la cabecera de la respuesta...
          $this->output->set_status_header($status);
         # Establece el contenido de respuesta en este caso devolvemos JSON
          $this->output->set_content_type('application/json');
         # Regresamos el data en formato JSON...
-        return $this->output->set_output(json_encode($response));       
+        return $this->output->set_output(json_encode($data));       
     }   
 
     # Esta funcion verifica si llegaron las variables post de la manera normal $_POST['nombre'] O

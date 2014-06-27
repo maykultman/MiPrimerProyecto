@@ -13,6 +13,7 @@ app.VistaPermisoPerfil = Backbone.View.extend({
 		return this;
 	},
 });
+
 app.VistaNuevoPerfil = Backbone.View.extend({
 	el : '#contenido_nuevoperfil',
 
@@ -117,9 +118,7 @@ app.VistaNuevoPerfil = Backbone.View.extend({
         	{
 				checkboxTabla[i].checked = false;
 			}
-        }
-        
-		// console.log()
+        }        
 	},
 
 	cargarPermiso : function (permiso)

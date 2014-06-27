@@ -1,4 +1,5 @@
 var app = app || {};
+/*...Esta vista es para crear o eliminar permisos de un determinado perfiel...*/
 app.VistaPermisoDePerfil = Backbone.View.extend({
 	tagName : 'label',
 	className : 'chek',

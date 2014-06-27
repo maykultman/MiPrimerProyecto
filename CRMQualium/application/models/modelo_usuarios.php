@@ -8,7 +8,7 @@
 
 		public function create($post)
 		{	
-			$this->db->insert('usuarios', $args);
+			$this->db->insert('usuarios', $post);
             return $this->get($this->db->insert_id());
         }
 

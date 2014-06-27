@@ -116,7 +116,6 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             $( "#cliente" ).on( "autocompleteselect", function( event, ui ) {
                 esto.buscarRepresentante(ui.item.value);
             });
-
         },
 
 	    /* Validamos que el campo #cliente solo contenga letras*/
