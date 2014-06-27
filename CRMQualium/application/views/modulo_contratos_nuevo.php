@@ -44,17 +44,17 @@
 						<span id="span_buscar" class="icon-search"></span>			
 						<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante">
 						<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
-						<input type="text" id="fechaFirma" class="form-control input_largo" placeholder="Fecha en que se formará el contrato">
+						<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se formará el contrato">
 						<!-- <input type="hidden" id="hidden_fecha" name="idrepresentante"> -->
 				    </div>
 					
 					
 					<h5 style="display: inline-block"><b>Eliga Tipo de plan:</b></h5>
-					<div class="btn-group"  data-toggle="buttons">
-						<label for="option1" class="btn btn-primary">
+					<div id="planes" class="btn-group" data-toggle="buttons">
+						<label for="porEvento" class="btn btn-primary">
 							<input type="radio" name="options" id="porEvento" class="btn_plan" value="">Por Evento
 						</label>
-						<label for="option2" class="btn btn-primary">
+						<label for="iguala" class="btn btn-primary">
 							<input type="radio" name="options" id="iguala" class="btn_plan" value="">Iguala Mensual
 						</label>			
 					</div>
@@ -76,8 +76,8 @@
 				</div>    
 			</div>
 			<br>        			    
-		    <table id="tabla_contrato" class="table table-striped" >
-				<thead  style="background-color: #f9f9f9!important;">
+		    <table id="tabla_contrato" class="table table-striped">
+				<thead style="background-color: #f9f9f9!important;">
 					<tr>
 						<td></td>
 						<td><b>Servicio</b></td>
@@ -122,99 +122,65 @@
 				    	</td>
 					</tr>
 				</tbody>				
-		        <tbody id="tbody_porEvento" class="tabla_oculto">
-				    	<tr >
-							<td colspan="8">
-								<div class="row">
-									<div class="col-md-4">
-										<input class="form-control datepicker inputs_planIguala" type="text"  placeholder="Inicio">
-									</div>
-									<div class="col-md-4">
-										<select   class="form-control inputs_planIguala">
-										  <option>3 Meses</option>
-										  <option>6 Meses</option>
-										  <option>12 Meses</option>
-										  <option>18 meses</option>
-										  <option>24 meses</option>
-										   <option>48 meses</option>
-										  <option selected disabled>Duración de contrato</option>
-										</select>	
-									</div>
-									<div class="col-md-4">
-										<input class="form-control datepicker inputs_planIguala" disabled type="text" placeholder="Vencimiento">
-									</div>									
+		        <thead id="tbody_porEvento" class="tabla_oculto" style="background-color: #f9f9f9!important;">
+			    	<tr>
+						<td colspan="8">
+							<div class="row">
+								<div class="col-md-3">
+									<input class="form-control datepicker inputs_planEvento input_fechaInicioPago" type="text"  placeholder="Inicio">
 								</div>
-							</td>	       									          			         
-				        </tr>
-				        <tr>
-							<td colspan="2"><b>No. de Pago</b></td>
-							<td colspan="2"><b>Fecha de pago</b></td>
-							<td colspan="2"><b>Renta Mensual</b></td>
-							<td colspan="2"><b>Saldo</b></td>				         
-				        </tr>	
-				         <tr>
-							<td colspan="2">1</td>
-							<td colspan="2">21/06/14</td>
-							<td colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000" ></td>
-							<td colspan="2">$2,000</td>			          
-				        </tr>
-				        <!--<tr>
-							<td colspan="2">2</td>
-							<td colspan="2">22/06/14</td>
-							<td colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000"></td>
-							<td colspan="2">$2,000</td>						         
-				        </tr>
-				        <tr>
-							<td colspan="2">3</td>
-							<td colspan="2">23/06/14 </td>
-							<td colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000"></td>
-							<td colspan="2">$2,000</td>				         
-				        </tr> -->
-				</tbody>
-				<tbody id="tbody_iguala" class="tabla_oculto">
-				    	<tr>
-							<td colspan="8">
-								<div class="row">
-									<div class="col-md-3">
-										<input class="form-control datepicker inputs_planEvento" type="text"  placeholder="Inicio">
-									</div>
-									<div class="col-md-3">
-										<input type="number"  class="form-control inputs_planEvento" name="quantity" min="1" max="" placeholder="Plazo en días">	
-									</div>
-									<div class="col-md-3">
-										<input type="number" class="form-control inputs_planEvento" name="quantity" min="1" max="" placeholder="Numero de Plazos">	
-									</div>
-									<div class="col-md-3">
-										<input class="form-control datepicker inputs_planEvento" disabled type="text" placeholder="Vencimiento">
-									</div>									
+								<div class="col-md-3">
+									<input type="number" id="plazo"  class="form-control inputs_planEvento" name="quantity" min="1" max="" placeholder="Plazo en días">	
 								</div>
-							</td>	       									          			         
-				        </tr>
-				       <tr>
-				          <td colspan="2"><b>No. de Pago</b></td>
-				          <td colspan="2"><b>Fecha de pago</b></td>
-				          <td colspan="2"><b>Renta Mensual</b></td>
-				          <td colspan="2"><b>Saldo</b></td>				         
-				        </tr>	
-				        <tr>
-				          <td  colspan="2">1</td>
-				          <td  colspan="2">21/06/14</td>
-				          <td  colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000" ></td>
-				          <td  colspan="2">$2,000</td>			          
-				        </tr>
-				         <!-- <tr>
-				          <td  colspan="2">2</td>
-				          <td  colspan="2">22/06/14</td>
-				          <td  colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000"></td>
-				          <td  colspan="2">$2,000</td>						         
-				        </tr>
-				        <tr>
-				          <td  colspan="2">3</td>
-				          <td  colspan="2">23/06/14 </td>
-				          <td  colspan="2"><input type="text" name="" value="" class="input_renta" placeholder="$2,000"></td>
-				          <td  colspan="2">$2,000</td>				         
-				        </tr> -->
-				</tbody>		       		       
+								<div class="col-md-3">
+									<input type="number" class="form-control inputs_planEvento n_pagos" name="quantity" min="1" max="" value="1" placeholder="Numero de Plazos">	
+								</div>
+								<div class="col-md-3">
+									<input class="form-control datepicker inputs_planEvento" disabled type="text" placeholder="Vencimiento">
+								</div>									
+							</div>
+						</td>	       									          			         
+			        </tr>
+			        <tr>
+			          <td colspan="2"><b>No. de Pago</b></td>
+			          <td colspan="3"><b>Fecha de pago</b></td>
+			          <td colspan="3"><b>Renta Mensual</b></td>
+			        </tr>
+				</thead>
+				<thead id="tbody_iguala" class="tabla_oculto" style="background-color: #f9f9f9!important;">
+			    	<tr >
+						<td colspan="8">
+							<div class="row">
+								<div class="col-md-4">
+									<input class="form-control datepicker inputs_planIguala input_fechaInicioPago" type="text"  placeholder="Inicio">
+								</div>
+								<div class="col-md-4">
+									<select class="form-control inputs_planIguala n_pagos">
+									  <option value="1">1 Mes</option>
+									  <option value="3">3 Meses</option>
+									  <option value="6">6 Meses</option>
+									  <option value="12">12 Meses</option>
+									  <option value="18">18 meses</option>
+									  <option value="24">24 meses</option>
+									  <option value="48">48 meses</option>
+									  <option selected disabled>Seleccione duración de contrato</option>
+									</select>	
+								</div>
+								<div class="col-md-4">
+									<input class="form-control datepicker inputs_planIguala" disabled type="text" placeholder="Vencimiento">
+								</div>									
+							</div>
+						</td>	       									          			         
+			        </tr>
+			        <tr>
+			          <td colspan="2"><b>No. de Pago</b></td>
+			          <td colspan="3"><b>Fecha de pago</b></td>
+			          <td colspan="3"><b>Renta Mensual</b></td>
+			        </tr>
+				</thead>
+				<tbody id="tbody_pagos">					
+			       <!-- PLANTILLAS DE PAGOS DE CONTRATO -->
+				</tbody>	       		       
 		    </table>  
 		   	<div class="desborde"></div>		 
 		   	<button type="button" class="btn btn-default">Aceptar</button>
@@ -255,13 +221,12 @@
            </div>
        </td>
 	</script>
-	<script type="text/template" id="pagos">
+	<script type="text/template" id="tr_pagos">
 		<tr>
-			<td colspan="2"><b>No. de Pago</b></td>
-			<td colspan="2"><b>Fecha de pago</b></td>
-			<td colspan="2"><b>Renta Mensual</b></td>
-			<td colspan="2"><b>Saldo</b></td>				         
-        </tr>
+			<td colspan="2"><%- n %></td>
+			<td colspan="3"><%- fecha %></td>
+			<td colspan="3">$<input type="text" name="" value="<%- pago %>" class="input_renta"></td>          
+		</tr>
 	</script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
