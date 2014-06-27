@@ -556,7 +556,7 @@ app.VistaNuevoCliente = Backbone.View.extend({
         var mensaje = "";    
         //hacemos la petición ajax  
         var resp = $.ajax({
-            url: 'http://crmqualium.com/api_archivos',  
+            url: 'http://crmqualium.com/api_foto',  
             type: 'POST',
             async:false,
             // Form data

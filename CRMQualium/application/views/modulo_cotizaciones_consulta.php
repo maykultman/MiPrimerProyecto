@@ -5,11 +5,11 @@
 		 <tr id="color_titulos">
 			<th style="text-align:center; width:40px; ">Marcar</th>
 			<th>
-				<input class="form-control" type="text" placeholder="Cliente">
+				<input id="buscarCliente" class="form-control" type="text" placeholder="Cliente">
 			    <span class="icon-search busqueda"></span>
 			</th>
 			<th>
-				<input class="form-control" type="text" placeholder="Relizado por"><span class="icon-search busqueda"></span>
+				<input id="buscarUsuario" class="form-control" type="text" placeholder="Relizado por"><span class="icon-search busqueda"></span>
 			</th>
 				<th>&nbsp;Total</th>
 				<th>&nbsp;&nbsp;Fecha</th>
@@ -63,6 +63,7 @@
 	app.coleccionDeEmpleados      	= <?php echo json_encode($empleados) 			?>;
 	app.coleccionServiciosCotizados = <?php echo json_encode($serviciosCotizados) ?>;
 </script>
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'?>">			 		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>">             		</script>

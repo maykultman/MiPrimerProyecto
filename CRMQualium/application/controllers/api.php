@@ -110,7 +110,6 @@ class  Api extends CI_Controller {
     # Valida la petición CREATE y UPDATE
     protected function validar($args)
     {
-        // var_dump($args); die();
         if(array_key_exists(0, $args)&&is_object($args[0])) 
         {
             $args = (array)$args[0];

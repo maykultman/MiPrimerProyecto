@@ -139,8 +139,11 @@ $route['api_servicioCotizado']        = 'servicioCotizado/api';
 $route['api_servicioCotizado/(:num)'] = 'servicioCotizado/api/$1';
 ##################################################################
 # Ruta para la api de Servicios de Interes...
-$route['api_archivos'] = 'multimedia/api';
-$route['api_archivos/(:num)'] = 'multimedia/api/$1';
+$route['api_archivos'] = 'archivo/api';
+$route['api_archivos/(:num)'] = 'archivo/api/$1';
+
+
+$route['api_foto'] = 'foto/api';
 
 # Ruta para la api de Servicios de Interes...
 $route['api_personal'] = 'personal/api';

@@ -50,9 +50,10 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	el : '#datosUsuario',
 
 	events : {
-		'click #guardar'    : 'guardar',
+		'click #guardar'    : 'urlFoto',
 		'click #empleado'   : 'buscarEmpleado',
 		'blur  #empleado'   : 'Aidempleado',
+		'keypress #empleado': 'soloLetras',
 		'change #idperfil'  : 'mostrarPermisos',
 		'change #idpermiso' : 'marcarTodos'
 	},
@@ -67,6 +68,27 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 	},
 
 	render : function()	{	return this; },
+
+	soloLetras : function(e)
+    {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = "8-37-39-46";
+
+        tecla_especial = false
+        for(var i in especiales)
+        {
+            if(key == especiales[i])
+            {
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial){
+             return false;
+        }
+    },
 
 	cargarPermiso : function (permiso)
 	{
@@ -126,7 +148,6 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 
 	marcarTodos : function(elemento)
 	{
-		// console.log($(elemento.currentTarget).attr('id'));
 		var checkboxTabla = document.getElementsByName($(elemento.currentTarget).attr('id'));
 		
 		if ($(elemento.currentTarget).is(':checked')) 
@@ -145,29 +166,29 @@ app.VistaNuevoUsuario = Backbone.View.extend({
         }        
 	},
 
-	guardar : function (evento)
+	guardar : function (fotoUsuario)
 	{
 		var modeloUsuario = pasarAJson($('#registroUsuario').serializeArray());
 		modeloUsuario = limpiarJSON(modeloUsuario);	
+		
 		var permisos = modeloUsuario.idpermiso;
 		var self = this;
-
+		$('#registroUsuario')[0].reset();
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		app.coleccionUsuarios.create
 		(
 			{
-				idempleado : modeloUsuario.idempleado,
-				idperfil   : modeloUsuario.idperfil,
-				usuario    : modeloUsuario.usuario,
-				contrasenia : modeloUsuario.contrasenia
+				idempleado  : modeloUsuario.idempleado,
+				idperfil    : modeloUsuario.idperfil,
+				usuario     : modeloUsuario.usuario,
+				contrasenia : modeloUsuario.contrasenia,
+				foto        : fotoUsuario
 			},
 			{
 				wait	: true,
 				success : function (exito) {
-					$('#registroUsuario')[0].reset();
-					self.cargarPermisos();
-
+					
 					Backbone.emulateHTTP = true;
 					Backbone.emulateJSON = true;
 					for(i in modeloUsuario.idpermiso)
@@ -182,6 +203,8 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 								wait	: true,
 								success : function (exito) {
 									console.log('exito');
+									
+									// self.cargarPermisos();
 								},
 								error 	: function (error) {}
 							}
@@ -197,27 +220,39 @@ app.VistaNuevoUsuario = Backbone.View.extend({
 		);
 		Backbone.emulateHTTP = false;
 		Backbone.emulateJSON = false;
-		evento.preventDefault();
+		
 	}, /*... Fin de la función guardar ...*/
 
 	// -----obtenerFoto------------------------------- 
-	// obtenerFoto	: function () {
-	//     $("#input_foto").hide();
-	//     //queremos que esta variable sea global
-	//     this.fileExtension = "";
-	//         //obtenemos un array con los datos del archivo
-	//         var file = $("#input_foto").files;
-	//         //obtenemos el nombre del archivo
-	//         var fileName = file.name;
-	//         //obtenemos la extensión del archivo
-	//         this.fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-	//         //obtenemos el tamaño del archivo
-	//         var fileSize = file.size;
-	//         //obtenemos el tipo de archivo image/png ejemplo
-	//         var fileType = file.type;
-	//         //mensaje con la información del archivo
-	//         showMessage("<span class='info'>Foto a subir: "+fileName+", peso total: "+fileSize+" bytes.</span>");
-	// },
+	urlFoto	: function (evento) {
+		
+        var formData = new FormData($("#registroUsuario")[0]);
+        //hacemos la petición ajax  
+        var resp = $.ajax({
+            url: 'http://crmqualium.com/api_foto',  
+            type: 'POST',
+            async:false,
+            //datos del formulario
+            data: formData,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        var nombreFoto = jQuery.parseJSON(resp.responseText);
+        if (nombreFoto != false)
+        {
+        	var foto = 'img/fotosUsuario/'+nombreFoto+'';	
+        	this.guardar(foto);        	
+        	return;
+        }
+        else
+        {        	
+        	return 'img/fotoUsuario/sinfoto.png';
+        };
+
+        evento.preventDefault();
+	},
 });
 
 app.vistaNuevoUsuario = new app.VistaNuevoUsuario();

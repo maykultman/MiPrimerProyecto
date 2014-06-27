@@ -4,9 +4,11 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 el : '.contenedor_principal_modulos',
 
 	 events : {
-	 	'click #marcar'    : 'marcarTodos',
-	 	'click #desmarcar' : 'desmarcarTodos',
-	 	'click #eliminar'  : 'eliminar'
+	 	'click #marcar'    		   : 'marcarTodos',
+	 	'click #desmarcar' 		   : 'desmarcarTodos',
+	 	'click #eliminar'  		   : 'eliminar',
+        'keypress #buscarCliente'  : 'porCliente',
+        'keypress #buscarUsuario'  : 'porUsuario'
 	 },
 
 	 initialize : function (){
@@ -33,6 +35,38 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 {
 	 	alert('e.e');
 	 },
+    /************************/
+    porCliente : function(elemento)
+    {       
+		var buscando = $(elemento.currentTarget).val();
+		if(elemento.keyCode===8)
+		{		
+			app.coleccionCotizaciones.fetch({
+				reset:true, data:{idcliente: buscando}
+			});
+		}
+		app.coleccionCotizaciones.fetch({
+			reset:true, data:{idcliente: buscando}
+		});
+
+		this.sinCoincidencias();
+
+		this.$tablaCotizaciones.html('');
+		this.cargarCotizaciones();	
+    },
+  
+    sinCoincidencias	: function () {
+		if (app.coleccionCotizaciones.length == 0) {
+			app.coleccionCotizaciones.fetch({
+				reset:true, data:{idcliente: ''}
+			});
+		};
+	},
+    /************************/
+    porUsuario : function(elemento)
+    {
+        alert('Busco Por Usuario');
+    },
 
 	 cargarCotizacion : function (modelocotizacion)
 	 {

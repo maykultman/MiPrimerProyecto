@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include 'api.php';
-class  Multimedia extends Api {
+class  Archivo extends Api {
 
 	public function __construct() {
         parent::__construct();
@@ -14,18 +14,16 @@ class  Multimedia extends Api {
         $this->$metodo();           # y la variable $metod según la respuesta del switch es create, get, update, delete
     }
     
-    private function create(){
-
-        # Con $this->inpost() recuperamos las variables post y lo enviamos al modelo...
+    private function create()
+    {
         $query = $this->archivos->create($this->ipost());
         $this->pre_response($query, 'create'); 
     }
 
-    private function get(){
-
+    private function get()
+    {
     	$query = $this->archivos->get($this->id());                        
-    	$this->pre_response($query, 'get'); 
-    	
+    	$this->pre_response($query, 'get'); 	
     }
 
     private function update()

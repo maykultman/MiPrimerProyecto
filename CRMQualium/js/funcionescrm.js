@@ -112,6 +112,26 @@ app.busquedaPuesto.puesto = (function () {
     };
 }()); 
 
+
+//Cotizaciones...
+app.busquedaCotizacion.cotizacion = (function () {
+    buscarPorNombre = function (searchKey) {
+        var deferred = $.Deferred();
+        var results = cotizaciones.filter(function (element) {
+            var nombre = element.idcliente;
+           return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+        deferred.resolve(results);
+        return deferred.promise();
+    },
+    cotizaciones = app.coleccionDeCotizaciones;
+
+    // The public API
+    return {
+        buscarPorNombre: buscarPorNombre
+    };
+}()); 
+
 // -----limpiarJSON------------------------------- 
    function  limpiarJSON (objeto) {
      /*La variable valorJson y el ciclo for eliminan los

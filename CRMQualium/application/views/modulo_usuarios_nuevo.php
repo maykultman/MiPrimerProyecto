@@ -16,10 +16,10 @@
 						<input type="text" id="usuario" name="usuario" class="form-control ancho_campos" placeholder="Usuario">
 				        <input type="password" name ="contrasenia" class="form-control ancho_campos" id="contrasena" placeholder="Password">
 				        <label class="btn btn-success fileinput-button" style="float: left;">
-	                    <span class="icon-paperclip"></span>
-	                    <span>Adjuntar Foto</span>
-	                    <input type="file" id="input_foto" multiple name="fotoUsuario">
-	                	</label><br><br>	              
+			                    <span class="icon-paperclip"></span>
+			                    <span>Adjuntar Foto</span>
+			                       	<input type="file" id="input_foto" name="fotoUsuario">			                    				               
+			                </label><br><br>	              
 				        <div id="btn_guardar">
 				        	<button id="guardar" type="button" class="btn btn-primary">Guardar</button>
 					    	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -32,12 +32,13 @@
 							  <!-- Lista de permisos -->
 							</div>							   
 				        </div>
-		                <!-- <div class="btn-group" data-toggle="buttons"> -->
+		                <div class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default btn-xs">
 								<input type="checkbox" id="idpermiso" class="btn_marcarTodos"> Marcar todos
 							</label>
-						<!-- </div>			 -->
+						</div>			
 				    </div>
+				    
 				</form>			    
 	        </div>      
         </section> 
