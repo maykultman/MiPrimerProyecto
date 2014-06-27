@@ -55,7 +55,7 @@ body{
 	font-weight: bold; 	
 	text-shadow:3px 4px 40px #000000;
 	float: left;
-	margin-left: 68px;
+	margin-left: 60px;
 	margin-top: 5px;
 
 }
@@ -117,7 +117,7 @@ body{
    	margin-top:30px; 
 	/*margin-left: 85px;*/
 	float: right;
-	height:255px;
+	height:205px;
 	width:415px;
 }
 
@@ -131,7 +131,9 @@ body{
 	background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); /* W3C */
 	width: 415px;
-	height: 51px;
+	height: 50px;
+	margin-top: -50px;
+	float: right;
 	
 }
 .img_redesociales{
