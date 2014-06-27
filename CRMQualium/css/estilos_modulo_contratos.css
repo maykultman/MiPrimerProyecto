@@ -3,7 +3,10 @@
 	width: 150px !important;
 	
 }*/
-
+.btn-group	{
+	z-index: 0 !important;
+	 margin-top: -5px;
+}
 .tabla_visible{
 
 	display: inline-grid;
@@ -38,12 +41,14 @@
 }
 .inputs_planIguala{
 
-	width: 350px !important;
+	/*width: 350px !important;*/
+	width: 100%;
 }
 
 .inputs_planEvento{
 
-	width: 250px !important;
+	/*width: 250px !important;*/
+	width: 100%;
 }
 #span_buscar{
 	float:right;

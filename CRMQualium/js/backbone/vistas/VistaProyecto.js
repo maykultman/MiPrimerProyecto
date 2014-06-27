@@ -101,7 +101,7 @@ app.VistaProyecto = Backbone.View.extend({
 	},
 	render					: function () {
 		/*Creamos nueva propiedad duracion para calculos con fechas*/
-		this.model.set( {duracion:this.carcularDuracion()} );
+		this.model.set( {duracion:this.calcularDuracion()} );
 		this.$el.html( this.plantilla_tr(this.model.toJSON()) );
 		return this;
 	},
@@ -605,7 +605,7 @@ app.VistaProyecto = Backbone.View.extend({
 			this.cargarArchivoProy(archivo[i]);
 		};
 	},
-	carcularDuracion		: function () {
+	calcularDuracion		: function () {
 		var valorFechaInicio = new Date(this.model.get('fechainicio')).valueOf();
 		var valorFechaEntrega = new Date(this.model.get('fechafinal')).valueOf();
 		var valorFechaActual = new Date().valueOf();

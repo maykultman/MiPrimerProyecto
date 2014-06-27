@@ -100,7 +100,16 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 		this.array = new Array();
 
 		$('.datepicker').datepicker({ 
-			dateFormat:'dd/mm/yy', 
+			dateFormat:'dd/mm/yy',  
+			dayNamesMin:[
+				'Do',
+				'Lu',
+				'Ma',
+				'Mi',
+				'Ju',
+				'Vi',
+				'Sá'
+			],
 			monthNames:[
 				'Enero',
 				'Febrero',
@@ -114,15 +123,6 @@ app.VistaNuevoProyecto = Backbone.View.extend({
 				'Octubre',
 				'Noviembre',
 				'Diciembre'
-			], 
-			dayNames:[
-				'Lunes',
-				'Martes',
-				'Miercoles',
-				'Jueves',
-				'Viernes',
-				'Sábado',
-				'Domingo'
 			]
 		});
 	},
