@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include 'api.php';
-class  Perfil extends Api {
+include 'REST.php';
+class  Perfil extends REST{
 
     public function __construct() 
     {

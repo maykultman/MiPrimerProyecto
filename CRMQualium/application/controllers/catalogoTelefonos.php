@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 # Catalogo para el registro de los tipos de telefonos.
-include 'api.php';
-class  catalogoTelefonos extends Api {
+include 'REST.php';
+class  catalogoTelefonos extends REST {
 
 	public function __construct() {
         parent::__construct();

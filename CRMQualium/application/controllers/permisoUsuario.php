@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include 'api.php';
-class  PermisoUsuario extends Api {
+include 'REST.php';
+class  PermisoUsuario extends REST {
 
 	public function __construct() 
     {

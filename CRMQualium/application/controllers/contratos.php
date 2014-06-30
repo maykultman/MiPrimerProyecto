@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include 'api.php';
-class  Contratos extends Api {
+include 'REST.php';
+class  Contratos extends REST {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Modelo_contract', 'contract');             
+        $this->load->model('Model_contract', 'contract');             
     }
 
     public function api() 

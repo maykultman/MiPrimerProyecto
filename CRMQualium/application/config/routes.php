@@ -181,3 +181,9 @@ $route['api_permisoPerfil/(:num)'] = 'permisoPerfil/api/$1';
 
 $route['api_permisoUsuario'] = 'permisoUsuario/api';
 $route['api_permisoUsuario/(:num)'] = 'permisoUsuario/api/$1';
+
+$route['api_serviciosContrato'] = 'serviciosDeContrato/api';
+$route['api_serviciosContrato/(:num)'] = 'serviciosDeContrato/api/$1';
+
+$route['api_pagos'] = 'payment/api';
+$route['api_pagos/(:num)'] = 'payment/api/$1';

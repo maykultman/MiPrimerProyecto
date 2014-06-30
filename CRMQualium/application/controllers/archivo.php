@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include 'api.php';
-class  Archivo extends Api {
+include 'REST.php';
+class  Archivo extends REST {
 
 	public function __construct() {
         parent::__construct();

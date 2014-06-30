@@ -5,7 +5,7 @@
     #  'fecha'       => $post['fecha'       ],  'fecha_inicio' =>$post['fecha_inicio'],
     #  'fecha_final' => $post['fecha_final' ],  'honorario'    =>$post['honorario'   ],
 
-  class Modelo_contract extends Modelo_crud
+  class Model_contract extends Modelo_crud
   { 
       public function __construct(){}
       
@@ -15,7 +15,6 @@
         return $this->get($this->db->insert_id());  
       }
 
-      # Este metodo línea hace dos cosas devuelve todos los registros o devuelve el especificado con el ID
       public function get ( $id = FALSE ) 
       {  
         $reply = $this->where($id);

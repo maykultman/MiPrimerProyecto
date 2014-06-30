@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include 'api.php';
-class  Foto extends Api {
+include 'REST.php';
+class  Foto extends REST {
 
   public function __construct() {   parent::__construct();   }
 
