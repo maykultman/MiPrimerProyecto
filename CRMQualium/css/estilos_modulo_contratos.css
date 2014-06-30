@@ -130,7 +130,7 @@ float: left !important;
 
 }
 
-tbody.scroll_tbody { 
+tbody#tbody_servicios { 
 	display: block; /*obligado*/ 
 	height: 165px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/

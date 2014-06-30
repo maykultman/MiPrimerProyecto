@@ -1,19 +1,24 @@
 app	= app || {};
 
-var VistaServicioSeleccionado = app.VistaServicio.extend({
+app.VistaServicioSeleccionado = app.VistaServicio.extend({
 	tagName	: 'tr',
 	plantillaDefault	: _.template($('#servicioContratado').html()),
 	events					: {
 		'click .eliminar'		: 'eliminarSeleccion',
-		'keyup #descuento'		: 'establecerPrecio',
-		'keyup #cantidad'		: 'calcularTotal',
-		'keyup #precio'			: 'calcularDescuento'
+		'keyup  #descuento'		: 'establecerPrecio',
+		'keyup  #cantidad'		: 'calcularTotal',
+		'keyup  #precio'		: 'calcularDescuento',
+		'change #descuento'		: 'establecerPrecio',
+		'change #cantidad'		: 'calcularTotal',
+		'change #precio'		: 'calcularDescuento'
 	},
 	initialize			: function () {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'change', this.calcularImporteIVATotalNeto);
 	},
 	eliminarSeleccion	: function (elem) {
+		// console.log($(elem.currentTarget).attr('id'), ' ',this.model.get('id'));
+		$('#tbody_servicios .check_posicion #servicio_'+this.model.get('id')).attr('disabled',false)
 		this.$el.remove();
 		this.calcularImporteIVATotalNeto();
 	},
@@ -74,13 +79,13 @@ var VistaServicioSeleccionado = app.VistaServicio.extend({
 	}
 });
 
-var VistaServicio = app.VistaServicio.extend({
+app.VistaServicioContrato = app.VistaServicio.extend({
 	tagName	: 'tr',
 	plantillaDefault	: _.template($('#plantillaServicio').html()),
 	events	: {
-		'click label'		: 'agregarServicio',
+		'click .checkbox_servicio'		: 'apilarServicio',
 	},
-	agregarServicio		: function () {
+	apilarServicio		: function (elem) {
 		var modelCopia = this.model;
 		modelCopia.set({
 			descuento 		: '0',
@@ -88,24 +93,58 @@ var VistaServicio = app.VistaServicio.extend({
 			total 			: parseInt(this.model.get('precio')).toFixed(2),
 			precioDefault	: parseInt(this.model.get('precio'))
 		});
-		var vista = new VistaServicioSeleccionado({ model:modelCopia });
-		$('#tbody_servicios').append(vista.render().el);
+		var vista = new app.VistaServicioSeleccionado({ model:modelCopia });
+		$('#tbody_servicios_seleccionados').append(vista.render().el);
+		$(elem.currentTarget).attr('disabled',true);
 		vista.calcularImporteIVATotalNeto();
 	},
 });
 
+app.VistaPago = Backbone.View.extend({
+	tagName 	: 'tr',
+	plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
+	events	: {
+		'click .icon-unlock'	: 'bloquear',
+		'click .icon-lock'		: 'desbloquear',
+		// 'keyup .input_renta'	: 'modificarPago',
+		// 'change .input_renta'	: 'modificarPago',
+	},
+	initialize		: function () {
+
+	},
+	render			: function () {
+		this.$el.html(this.plantilla_tr_pagos(this.model));
+		return this;
+	},
+	bloquear		: function (elem) {
+		$(elem.currentTarget).removeClass().addClass('icon-lock');
+		this.$('.input_renta').attr('disabled',true).toggleClass('bloqueado');
+	},
+	desbloquear		: function (elem) {
+		$(elem.currentTarget).removeClass().addClass('icon-unlock');
+		this.$('.input_renta').attr('disabled',false).toggleClass('bloqueado');
+	},
+	// modificarPago 	: function () {}
+});
+
 app.VistaNuevoContrato = Backbone.View.extend({
 	el						: '.contenedor_principal_modulos',
-	plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
+	// plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
 	events					: {
-		'change .btn_plan'	: 'conmutarTablaPlan',
-		'change .n_pagos'	: 'obtenerAtributoValue',
+		'change .btn_plan'		: 'conmutarTablaPlan',
+		'change .n_pagos'		: 'obtenerAtributoValue',
+		'keyup .input_renta'	: 'modificarPagos',
+		'change .input_renta'	: 'modificarPagos',
+		'click	#guardar'		: 'guardar'
 	},
 	initialize				: function () {
 		this.cargarClientes();
 		this.cargarServicios();
 		this.fecha();
+		var fecha;
 		$('.input_fechaInicioPago').on('change', function(){
+			fecha = $(this).val().split('/');
+			$('#fechainicio').val(fecha[2] + "-" + fecha[1] + "-" + fecha[0]);
 			var a = $('.btn_plan');
 			for (var i = 0; i < a.length; i++) {
 				if ($(a[i]).is(':checked')) {
@@ -114,8 +153,30 @@ app.VistaNuevoContrato = Backbone.View.extend({
 				};
 			};
 		});
+
+		$('#fechaFirma').on('change', function () {
+			$('.input_fechaInicioPago').val($(this).val());
+			fecha = $(this).val().split('/');
+			$('#hidden_fechafirma').val(fecha[2] + "-" + fecha[1] + "-" + fecha[0]);
+		});
+
+		fecha = new Date();
+		$('#fechacreacion').val( fecha.getFullYear() + "-" + (fecha.getMonth() +1) + "-" + fecha.getDate() );
 	},
 	render					: function () {},
+	guardar					: function (elem) {
+		var json = pasarAJson($('form').serializeArray());
+		if ($('#porEvento').is(':checked') && $('#plazo').val() != "") {
+			delete json.mensualidades;
+			json.fechafinal = json.fechafinal[0];
+		} else if ($('#iguala').is(':checked')){
+			delete json.plazo;
+			delete json.nPlazos;
+			json.fechafinal = json.fechafinal[1];
+		} else {console.log('Elija tipo de plan');};
+		console.log(json);
+		elem.preventDefault();
+	},
 	cargarClientes			: function () {
 		$('#busqueda').autocomplete({
 			source : app.coleccionClientes.pluck('nombreComercial'),
@@ -151,8 +212,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	cargarServicio			: function (servicio) {
-		var vista = new VistaServicio({model:servicio});
-		$('.scroll_tbody').append(vista.render().el);
+		var vista = new app.VistaServicioContrato({model:servicio});
+		$('#tbody_servicios').append(vista.render().el);
 	},
 	cargarServicios			: function () {
 		app.coleccionServicios.each(this.cargarServicio, this);
@@ -206,6 +267,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		};
 	},
 	establecerPagos			: function (n, totalNeto) {
+		$('#margen').text(totalNeto);
 		totalNeto = totalNeto.split('');
 		totalNeto.shift();
 
@@ -215,41 +277,93 @@ app.VistaNuevoContrato = Backbone.View.extend({
 
 		var plazo = 1;
 		var aumento = 0;
+		var fecha = '';
+		var fechaNormal = '';
+		var fecha2 = '';
+
 		if ($('#porEvento').is(':checked') && $('#plazo').val() != "") {
 			plazo = parseInt($('#plazo').val());
 			aumento = plazo;
-		}; 
-		if ($('#iguala').is(':checked')){
+			fecha = $('#fechainicio').val();
+			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
+			$('#vencimientoPlanEvento').val( fecha2 );
+			fecha2 = fecha2.split('/');
+			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
+			$('#fechafinalEvento').val(fecha2);
+		} else if ($('#iguala').is(':checked')){
 			plazo = 30;
 			aumento = plazo;
-		};
-			
-		var fechaNormal = $('.input_fechaInicioPago').val();
-		for (var i = 0; i < n; i++) {
+			fecha = $('#fechainicio').val();
+			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
+			$('#vencimientoPlanIguala').val( fecha2 );
+			fecha2 = fecha2.split('/');
+			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
+			$('#fechafinalIguala').val(fecha2);
+		} else {console.log('Sin plan seleccionado');return;};
+		
+		fechaNormal = $('.input_fechaInicioPago').val();
+		fecha2 = fechaNormal.split('/');
 
-			$('#tbody_pagos').append(this.plantilla_tr_pagos({ 
+		for (var i = 0; i < n; i++) {
+			var vista = new app.VistaPago({model:{ 
 				n 		: i+1,
 				fecha	: fechaNormal,
+				fecha2	: fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0],
 				pago 	: (parseInt(totalNeto.join(''))/n).toFixed(2), 
-			}));
+			}});
 
-			var fecha = $('.input_fechaInicioPago').val().split('/');
-			fecha = new Date(new Date(fecha[2] + "-" + fecha[1] + "-" + fecha[0]).getTime() + (plazo*24*60*60*1000));
+			$('#tbody_pagos').append(vista.render().el);
 
-			if ((fecha.getDate()) < 10 )
-			fechaNormal = '0'+(fecha.getDate());
-			else
-				fechaNormal = (fecha.getDate());
-			if ((fecha.getMonth() +1) < 10 )
-				fechaNormal += '/0'+(fecha.getMonth() +1);
-			else
-				fechaNormal +=  '/'+(fecha.getMonth() +1);
-
-			fechaNormal +=  '/'+fecha.getFullYear();
-
+			fechaNormal = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + (plazo*24*60*60*1000)));
+			fecha2 = fechaNormal.split('/');
 			plazo = plazo + aumento;
 		};
-	}
+		this.modificarPagos();
+	},
+	modificarPagos	: function (elem) {
+		if (typeof elem == 'undefined') {
+			$('#margen').css('color','black'); return;
+		};
+		
+		if (elem.keyCode !== 37 && elem.keyCode !== 38 && elem.keyCode !== 39 && elem.keyCode !== 40) {
+			console.log
+			var margen = $('#totalNeto').text().split(''),
+				rentas = $('.input_renta'),
+				suma = 0.0, /*Debe inicializarse como flotante*/
+				masmenos;
+
+			margen.shift();
+			margen = margen.join('');
+			margen = parseInt(margen).toFixed();
+
+			for (var i = 0; i < rentas.length; i++) {
+				suma += parseFloat($(rentas[i]).val());
+			};
+
+			masmenos = suma;
+			suma = suma.toFixed();
+			if (suma > margen || suma < margen) {
+				$('#margen').text('$'+masmenos.toFixed(2)).css('color','red');
+			} else{
+				$('#margen').text($('#totalNeto').text()).css('color','black');
+			};
+		}
+	},
+	formatearFechaUsuario	: function (fecha) {
+		var fechaFormateada = '';
+		if ((fecha.getDate()) < 10 )
+		fechaFormateada = '0'+(fecha.getDate());
+		else
+			fechaFormateada = (fecha.getDate());
+		if ((fecha.getMonth() +1) < 10 )
+			fechaFormateada += '/0'+(fecha.getMonth() +1);
+		else
+			fechaFormateada +=  '/'+(fecha.getMonth() +1);
+
+		fechaFormateada +=  '/'+fecha.getFullYear();
+
+		return fechaFormateada;
+	},
 });
 
 app.vistaNuevoContrato = new app.VistaNuevoContrato();
