@@ -1,61 +1,73 @@
 app	= app || {};
 
-app.VistaServicioSeleccionado = app.VistaServicio.extend({
+app.VistaServicioSeleccionado = Backbone.View.extend({
 	tagName	: 'tr',
 	plantillaDefault	: _.template($('#servicioContratado').html()),
 	events					: {
 		'click .eliminar'		: 'eliminarSeleccion',
-		'keyup  #descuento'		: 'establecerPrecio',
-		'keyup  #cantidad'		: 'calcularTotal',
-		'keyup  #precio'		: 'calcularDescuento',
-		'change #descuento'		: 'establecerPrecio',
-		'change #cantidad'		: 'calcularTotal',
-		'change #precio'		: 'calcularDescuento'
+		// 'keyup  #descuento'		: 'establecerPrecio',
+		// 'keyup  #cantidad'		: 'calcularTotal',
+		// 'keyup  #precio'		: 'calcularDescuento',
+		// 'change #descuento'		: 'establecerPrecio',
+		// 'change #cantidad'		: 'calcularTotal',
+		// 'change #precio'		: 'calcularDescuento'
 	},
 	initialize			: function () {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'change', this.calcularImporteIVATotalNeto);
+
+		
+	},
+	render	: function () {
+		this.$el.html(this.plantillaDefault( this.model.toJSON() ));
+
+		var thiS = this;
+		var descuento = this.$el.find('#descuento');
+		descuento.one('change',function (){
+			thiS.calcularTotal(this);
+		});
+		var cantidad = this.$el.find('#cantidad');
+		cantidad.one('change',function (){
+			thiS.calcularTotal(this);
+		});
+		var precio = this.$el.find('#precio');
+		precio.one('change',function (){
+			thiS.calcularTotal(this);
+		});
+
+		return this;
 	},
 	eliminarSeleccion	: function (elem) {
-		// console.log($(elem.currentTarget).attr('id'), ' ',this.model.get('id'));
+		// console.log($(elem.currentTarget).attr('id'), ' ',this.model.get('id')); BORRAR
 		$('#tbody_servicios .check_posicion #servicio_'+this.model.get('id')).attr('disabled',false)
 		this.$el.remove();
 		this.calcularImporteIVATotalNeto();
 	},
-	establecerPrecio	: function (elem) {
-		if (elem.keyCode !== 37 && elem.keyCode !== 38 && elem.keyCode !== 39 && elem.keyCode !== 40) {
-			this.$('#precio').val(this.model.get('precioDefault'));
-			this.calcularTotal(elem);
-		};
-	},
 	calcularDescuento	: function (elem) {
-		if (elem.keyCode !== 37 && elem.keyCode !== 38 && elem.keyCode !== 39 && elem.keyCode !== 40) {
-			var precio 		= this.$('#cantidad').val() * this.$('#precio').val();
-			this.$('#descuento').val(( 100 - ((precio * 100)/this.model.get('precioDefault')) ).toFixed());
-			this.calcularTotal(elem);
-		};
+		var precio 		= this.$('#precio').val();
+		this.$('#descuento').val(( 100 - ((precio * 100)/this.model.get('precioDefault')) ).toFixed());
+		this.calcularTotal(elem);
 	},
 	calcularTotal		: function (elem) {
-		if (elem.keyCode !== 37 && elem.keyCode !== 38 && elem.keyCode !== 39 && elem.keyCode !== 40) {
-			var precio 		= this.$('#cantidad').val() * this.$('#precio').val();
-			var descuento 	= precio*(this.$('#descuento').val()/100);
-			var json 		= pasarAJson(this.$('.inputsServicios').serializeArray());
-			json.total 		= (precio - descuento).toFixed(2);
-			/*Respaldamos id del input que se está editando*/
-			var idHtml 		= $(elem.currentTarget).attr('id');
-			
-			/*Al establecer nuevos valores en el modelo,
-			  ejecutaremos la función render, que está 
-			  especificado en la función initialize en el
-			  listener para con evento change*/
-			this.model.set(json);
+		var precio 		= this.$('#cantidad').val() * this.$('#precio').val();
+		var descuento 	= precio*(this.$('#descuento').val()/100);
+		var json 		= pasarAJson(this.$('.inputsServicios').serializeArray());
+		json.total 		= (precio - descuento).toFixed(2);
+		/*Respaldamos id del input que se está editando*/
+		var idHtml 		= $(elem).attr('id');
+		
+		/*Al establecer nuevos valores en el modelo,
+		  ejecutaremos la función render, que está 
+		  especificado en la función initialize en el
+		  listener para con evento change*/
+		this.model.set(json);
 
-			/*Hacemos focus sobre el input en que se esta.
-			  Al hacerlo el texto se auto selecciona, para
-			  evitar tal efecto se reescribe su valor para
-			  que el cursor se posiciones al fonal del texto*/
-			this.$('#'+idHtml).focus().val( this.$('#'+idHtml).val() );
-		};
+		/*Hacemos focus sobre el input en que se esta.
+		  Al hacerlo el texto se auto selecciona, para
+		  evitar tal efecto se reescribe su valor para
+		  que el cursor se posiciones al fonal del texto*/
+		this.$('#'+idHtml).focus().val( this.$('#'+idHtml).val() );
+		
 	},
 	calcularImporteIVATotalNeto	: function () {
 		var totales = $('.total');
@@ -90,8 +102,7 @@ app.VistaServicioContrato = app.VistaServicio.extend({
 		modelCopia.set({
 			descuento 		: '0',
 			cantidad		: '1',
-			total 			: parseInt(this.model.get('precio')).toFixed(2),
-			precioDefault	: parseInt(this.model.get('precio'))
+			total 			: parseInt(this.model.get('precio')).toFixed(2)
 		});
 		var vista = new app.VistaServicioSeleccionado({ model:modelCopia });
 		$('#tbody_servicios_seleccionados').append(vista.render().el);
@@ -127,14 +138,6 @@ app.VistaPago = Backbone.View.extend({
 	desbloquear		: function () {
 		this.model.set({atrClase:'input_renta', candado: 'icon-unlock', checked:''});
 	},
-	// keypressPago	: function (elem) {
-	// 	if (elem.keyCode === 13) {
-	// 		this.modificarPago(elem);
-	// 	}
-	// },
-	// changePago 	: function (elem) {
-	// 	this.modificarPago(elem);
-	// },
 	modificarPago	: function (elem) {
 		var pagoActual = parseFloat(this.model.get('pago')),
 			id = '#'+$(elem).attr('id');
@@ -144,7 +147,7 @@ app.VistaPago = Backbone.View.extend({
 								(this.model.set({pago:$(elem).val()})).get('pago') )
 							)
 			.toFixed(2);
-			
+
 		this.bloquear();
 		app.vistaNuevoContrato.equilibrarPagos(residuo);
 		this.desbloquear();
@@ -160,7 +163,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		'change .n_pagos'		: 'obtenerAtributoValue',
 		// 'keyup .input_renta'	: 'modificarPagos',
 		// 'change .input_renta'	: 'modificarPagos',
-		'click	#guardar'		: 'guardar'
+		'click	#guardar'		: 'guardar',
+		'click #btn_recargarPagos'	: 'recargarPagos'
 	},
 	initialize				: function () {
 		this.cargarClientes();
@@ -290,6 +294,9 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			$(elem.currentTarget).val(1);
 			this.obtenerAtributoValue(elem);
 		};
+	},
+	recargarPagos 			: function () {
+		$('.n_pagos').first().trigger('change');
 	},
 	establecerPagos			: function (n, totalNeto) {
 		$('#margen').text(totalNeto);

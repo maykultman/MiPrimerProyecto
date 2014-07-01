@@ -83,10 +83,10 @@
 						<tr>
 							<td></td>
 							<td><b>Servicio</b></td>
-							<td><b>Descuento</b></td>
-							<td><b>Realización</b></td>
+							<!-- <td><b>Realización</b></td> -->
 							<td><b>Cantidad</b></td>							
 							<td><b>P/Unitario</b></td>
+							<td><b>Descuento</b></td>
 							<td><b>Precio</b></td>
 						    <td></td>					
 						</tr>							
@@ -97,19 +97,19 @@
 					<tbody id="totales">
 						<tr class="warning">
 							<td></td>
-							<td colspan="5"><b>Importe</b></td>						
+							<td colspan="4"><b>Importe</b></td>						
 							<td><b id="importe">$0.00</b></td>						
 							<td></td>					
 					    </tr>
 					    <tr>
 							<td></td>
-							<td colspan="5"><b>IVA</b></td>						
+							<td colspan="4"><b>IVA</b></td>						
 							<td><b id="IVA">$0.00</b></td>						
 							<td></td>					
 					    </tr>
 					    <tr class="info">
 							<td></td>
-							<td colspan="5"><b>Total Neto</b></td>						
+							<td colspan="4"><b>Total Neto</b></td>						
 							<td><b id="totalNeto">$0.00</b></td>						
 							<td></td>					
 					    </tr>
@@ -136,7 +136,7 @@
 										<input type="number" id="plazo"  class="form-control inputs_planEvento" name="plazo" min="1" max="" placeholder="Plazo en días">	
 									</div>
 									<div class="col-md-3">
-										<input type="number" class="form-control inputs_planEvento n_pagos" name="nPlazos" min="1" max="" value="1" placeholder="Numero de Plazos">	
+										<input type="number" class="form-control inputs_planEvento n_pagos" name="nPlazos" min="1" max="" placeholder="Numero de Plazos">	
 									</div>
 									<div class="col-md-3">
 										<input id="vencimientoPlanEvento" class="form-control datepicker inputs_planEvento" disabled type="text" placeholder="Vencimiento">
@@ -145,11 +145,11 @@
 								</div>
 							</td>	       									          			         
 				        </tr>
-				        <!-- <tr>
+				        <tr>
 				          <td colspan="2"><b>No. de Pago</b></td>
 				          <td colspan="3"><b>Fecha de pago</b></td>
-				          <td colspan="3"><b>Renta Mensual</b></td>
-				        </tr> -->
+				          <td colspan="3"><b>Renta Mensual</b> <button type="button"><span id="btn_recargarPagos" class="icon-refresh"></button> </td>
+				        </tr>
 					</thead>
 					<thead id="tbody_iguala" class="tabla_oculto" style="background-color: #f9f9f9!important;">
 				    	<tr>
@@ -177,14 +177,19 @@
 								</div>
 							</td>	       									          			         
 				        </tr>
-					</thead>
-					<tbody>
 				        <tr>
 				          <td colspan="2"><b>No. de Pago</b></td>
 				          <td colspan="3"><b>Fecha de pago</b></td>
 				          <td colspan="3"><b>Renta Mensual</b></td>
 				        </tr>
-					</tbody>
+					</thead>
+					<!-- <tbody>
+				        <tr>
+				          <td colspan="2"><b>No. de Pago</b></td>
+				          <td colspan="3"><b>Fecha de pago</b></td>
+				          <td colspan="3"><b>Renta Mensual</b></td>
+				        </tr>
+					</tbody> -->
 					<tbody id="tbody_pagos">					
 				       <!-- PLANTILLAS DE PAGOS DE CONTRATO -->
 					</tbody>
@@ -227,11 +232,11 @@
 	</script>
 	<script type="text/template" id="servicioContratado">
 		<td style="width: 50px;"><input type="checkbox"></td>
-		<td><%- nombre %><input type="hidden" value="<%- id %>"></td>
-		<td><input id="descuento" 	class="input_descuento inputsServicios" name="descuento"	type="number" min="0" max="100" value="<%- descuento %>"> %</td>
-		<td><input id="realizacion" class="input_precio inputsServicios" 	name="realizacion"	type="text" value="<%- realizacion %>" placeholder="Realización"></td>
+		<td><%- nombre %><input type="hidden" name="idservicio" value="<%- id %>"></td>
+		<!-- <td><input id="realizacion" class="input_precio inputsServicios" 	name="realizacion"	type="text" value="<%- realizacion %>" placeholder="Realización"></td> -->
 		<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>" min="1"></td>
 		<td><input id="precio" 		class="input_precio inputsServicios"	name="precio"		type="number" value="<%- precio %>"></td>
+		<td><input id="descuento" 	class="input_descuento inputsServicios" name="descuento"	type="number" min="0" max="100" value="<%- descuento %>"> %</td>
 		<td>$<%- total %> <input type="hidden" class="total" value="<%- total %>"></td>
 		<td class="icon-eliminar">
         	<div class="eliminar_cliente">
@@ -250,8 +255,7 @@
 				<input type="number" id="<%- id %>" min="1" max="" name="pago_n" value="<%- pago %>" class="<%- atrClase %>" <%- checked %>>
 				<input type="hidden" class="hidden_renta" value="<%- pago %>">
 				<span class="<%- candado %>"></span>
-			</td>          
-		
+			</td>
 	</script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
