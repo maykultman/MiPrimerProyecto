@@ -1,27 +1,34 @@
-<script type="text/javascript" src="<?=base_url() ?>js/jquery-ui-1.10.4.custom.js"></script>
-<link rel="stylesheet" type="text/css" href="<?=base_url().'css/cotizacion/jquery-ui-1.10.4.custom.css'?>">
-
 <section class="contenedor_principal_modulos"> 
 	<h3>Información Básica</h3>
 	<hr>
 		<div class="datos_cotizacion">
-			<input id="cliente" 	  type="search" value="" class="form-control" placeholder="Buscar cliente"><span id="buscar" class="icon-search"></span>
-			<input type="hidden" id="idcliente" value="">
+			<input id="cliente" 	  type="search" value="" class="form-control" placeholder="Buscar cliente"><span id="busqueda_icono" class="icon-search"></span>
 			<input id="representante" type="text"   value="" class="form-control" placeholder="Representante" disabled="true">	
-			<input type="hidden" id="idrepresentante" value="">
-			<input id="fecha"   type="text"   class="form-control" placeholder="12/12/2014" disabled="true" >	
+			<form id="registroCotizacion">			
+				<input type="hidden" id="idcliente" name="idcliente" value="">
+				<input type="hidden" id="idrepresentante" name="idrepresentante" value="">
+				<input id="fecha"   type="text"   name="fecha" class="form-control" val="" disabled="true" >	
 		</div>		
 		<div class="datos_cotizacion">
-			<textarea id="detalles" style="width: 400px; height: 132px;" class="form-control" rows="3" placeholder="Detalles"></textarea><br>				
+			<textarea id="detalles" name="detalles" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Detalles"></textarea><br>
+
 		</div>
+		<div class="datos_cotizacion">
+			<textarea id="caracteristicas" name="caracteristicas" style="width: 300px; height: 132px;" class="form-control" rows="3" placeholder="Caracteristicas"></textarea><br>
+		</div>
+		</form>
+
 		<div class="desborde"></div>			
 		<h3>Inversión & Tiempo</h3>
 	<hr>		
 	<div id="txt_aliniado" >
-	    <table     id="tablaServicios" class="table table-striped">
-	    	<thead id="cabecera_serv"><tr><th>Servicios</th></tr>	</thead>
-			<tbody class="scrollContent">							</tbody>
-		</table> <!-- Tabla de Servicios -->
+		<div class="panel panel-primary" style="width:23%;">
+		    <table class="table table-hover">
+		    	<div class="panel-heading"><input type="text" id="bserv" style = "width : 240px;" class="valor" val="" placeholder="Buscar Servicios"></div>
+	    		<tbody id="listaServicios">																									
+				</tbody>
+			</table> <!-- Tabla de Servicios -->
+		</div>	        
 
 		<table id="mostrarTabla" class="table table-striped">
 			<thead style="background : #F9F9F9;">
@@ -47,12 +54,12 @@
 		<!-- <table id="con"></table>	 -->
     </section>    
 </div>
-
+<script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type = "text/plantilla" id="plantilla_Cotizacion">
 </script>
 
 <script type = "text/plantilla" id="PCservicios">
-	<td>
+	<td style="width: 1% !important; " class="icon-operaciones">
 		<span id="infoSC" class="icon-info"></span>
 
 		<label for="<%- id %>"><%- nombre %></label>
@@ -88,7 +95,6 @@
 		</td>	
 </script>
 
-<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
@@ -100,14 +106,20 @@
 	app.coleccionDeClientes       	  = <?php echo json_encode($clientes)       	?>;
 	app.coleccionDeRepresentantes 	  = <?php echo json_encode($representantes) 	?>;
 </script>
-
+<script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
 <!-- MVC -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'			      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCotizacion.js'			      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'	      ?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'	      		  ?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'    		  ?>"> </script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'	      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosCotizados.js'?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'          ?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'    ?>"> </script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevaCotizacion.js'		      ?>"> </script>

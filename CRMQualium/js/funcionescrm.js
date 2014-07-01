@@ -65,6 +65,7 @@ app.busquedaRol.rol = (function () {
         deferred.resolve(results);
         return deferred.promise();
     },
+
     roles = app.coleccionDeRoles;
 
     // The public API
@@ -131,6 +132,25 @@ app.busquedaCotizacion.cotizacion = (function () {
         buscarPorNombre: buscarPorNombre
     };
 }()); 
+
+app.busquedaCotizacion2.cotizacion2 = (function () {
+    buscarPorNombre = function (searchKey) {
+        var deferred = $.Deferred();
+        var results = cotizaciones2.filter(function (element) {
+            var nombre = element.idempleado;
+           return nombre.toLowerCase().indexOf(searchKey.toLowerCase()) > -1;
+        });
+        deferred.resolve(results);
+        return deferred.promise();
+    },
+    cotizaciones2 = app.coleccionDeCotizaciones;
+
+    // The public API
+    return {
+        buscarPorNombre: buscarPorNombre
+    };
+}()); 
+
 
 // -----limpiarJSON------------------------------- 
    function  limpiarJSON (objeto) {

@@ -1,4 +1,3 @@
-	
 	<section class="contenedor_principal_modulos">
     <table id="tabla_cotizaciones" class="table table-striped table-curved">
 		<thead>
@@ -51,7 +50,6 @@
 </script>
 
 <!-- Librerias -->
-<script type="text/javascript" src="<?=base_url().'js/backbone/lib/jquery.js'?>">		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>">	</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>">		</script>
 <script type="text/javascript">
@@ -69,12 +67,11 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>">             		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloEmpleado.js'?>">            		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'?>">           </script>
+
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'?>"> 		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>">     		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/coleccionServiciosCotizados.js'?>">  </script>
-<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCotizacion.js'?>">			 		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionEmpleados.js'?>">    		</script>
+
+<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaCotizacion.js'?>">			 		</script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaCotizaciones.js'?>">  		</script>
-<script type="text/javascript">	var app = app || {};													 		</script>
-
-

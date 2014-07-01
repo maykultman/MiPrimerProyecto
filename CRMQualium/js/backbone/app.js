@@ -7,6 +7,7 @@ var app = app || {
     busquedaPermiso:{},
     busquedaPuesto:{},
     busquedaCotizacion:{},
+    busquedaCotizacion2:{},
     // funciones:{}
 };
 

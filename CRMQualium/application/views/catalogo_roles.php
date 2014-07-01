@@ -18,11 +18,13 @@
 		  	<hr><br>	       
 	        <input id="buscar_rol" type="search" class="form-control" placeholder="Search" style="width:100%; ">
 	        <span id="busqueda_icono" class="glyphicon glyphicon-search"></span>    			
+		  	
 		  	<div class="panel panel-primary" style="width:100%;">
 		  		<table class="table table-hover">
     				<tbody id="scroll_roles"></tbody>
 				</table>							    	      
             </div>										
+            
 		</section>
 	</section>
 <div>

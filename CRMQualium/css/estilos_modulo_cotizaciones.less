@@ -53,6 +53,13 @@
 		color: white;
     }
 
+#busqueda_icono{
+
+	float: right;	
+	margin-top: -38px;
+	margin-right: 10px;
+}
+
 
 /* {{{{{{{{{{{Sección consulta cotizacion}}}}}}}}}}} */
 
@@ -74,7 +81,12 @@
 input{	width: 100%; }
 
 
-	
+tbody#listaServicios{ 
+	display: block; 
+	height: 310px; 
+	overflow: auto; 
+	width: 100%!important;
+}	
 
 
 
@@ -90,15 +102,6 @@ input{	width: 100%; }
     display: inline-table;
     width: 270px;
 }
-
-tbody.scrollContent { 
-	display: block; /*obligado*/ 
-	height: 300px; /*la que necesites*/ 
-	overflow: auto; /*obligado*/
-	width: 285px;
-	
-	}
-
 
 #txt_aliniado td { 	text-align: left;	vertical-align: middle;  }
 

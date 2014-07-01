@@ -6,12 +6,15 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         events : {
             
             'click    #cliente'   : 'buscarCliente',     //Cuando escribes una letra, despliega un menu de sugerencias
+            'keyup    #cliente'   : 'borrar',     //Cuando escribes una letra, despliega un menu de sugerencias
             'click 	  #guardar'	  : 'guardarCotizacion', //Guarda la cotización
             'click    #todos'	    : 'marcarTodosCheck',  //Marca todas las casillas de la tabla servicios cotizando
             'keypress #cliente'   : 'soloLetras',        //Valida que en el campo cliente haya solo letras
             'click 	  .btndelete' : 'eliminarServicio',  //Elimina un servicio de la tabla servicios cotizando
             'keyup    .valor'     : 'establecerTotal',   //Escucha los cambios en los inputs numericos y actualiza el total
-
+            'keypress #bserv'     : 'buscarServicio',   //Escucha los cambios en los inputs numericos y actualiza el total
+            'keyup #bserv'        : 'buscarServicio',
+            'click #vistaPrevia'  : 'vistaPrevia'
         },
 
         initialize : function () {
@@ -23,15 +26,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
             this.$('#fecha').val(dia+'/'+mes+'/'+fecha.getFullYear());
             /* Inicializamos la tabla servicios que es donde esta la lista de servicios a seleccionar*/
-            this.$tablaServicios = this.$('#tablaServicios');
+            this.$tablaServicios = this.$('#listaServicios');
             /*Invocamos el metodo para cargar y pintar los servicios*/
             this.cargarServiciosCo();
-
-            //Datos de la cotizacion
-            this.$idcliente 	  = this.$('#idcliente');
-            this.$idrepresentante = this.$('#idrepresentante');
-            this.$fecha 		  = this.$('#fecha');
-            this.$detalles   	  = this.$('#detalles');
         },
 
         render : function () { return this; },
@@ -54,9 +51,9 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         	/*....Eliminamos un modelo de la tabla de servicios cotizando....*/
            $(elemento.currentTarget).parents('tr').remove();
            /*.....Activamos el servicio de nuevo de la lista en la tablaServicios*/
-           $('#tablaServicios #'+$(elemento.currentTarget).attr('id')).attr('disabled',false);
+           $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('disabled',false);
            /*....Establecemos en checkbox oculto a falso y asi poder seleccionarlo de nuevo.....*/
-           $('#tablaServicios #'+$(elemento.currentTarget).attr('id')).attr('checked',false);
+           $('#listaServicios #'+$(elemento.currentTarget).attr('id')).attr('checked',false);
         },
 
         establecerTotal : function (elemento)
@@ -99,14 +96,14 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             	}
         },
 
-        buscarCliente : function (elemento){
+        buscarCliente : function (elemento)
+        {
         	/*..Establecemos global el array de clientes por que nos servira en el metodo buscarRepresentante...*/
         	this.clientes = new Array();  var cont  = 0;
         	/*..Iteramos la coleccionDeClientes y Obtenemos a todos los clientes en un array...*/
             for(i in app.coleccionDeClientes)
             {
                 this.clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;
-                this.clientes[cont] = app.coleccionDeClientes[i].id; 			 cont++;
             };
             /*...EL array obtenido lo usamos para un autocomplete..*/
             $('#cliente').autocomplete({ source: this.clientes});
@@ -118,7 +115,24 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             });
         },
 
-	    /* Validamos que el campo #cliente solo contenga letras*/
+        buscarServicio : function(elemento)
+        {
+          app.coleccionServicios.fetch({reset:true, data:{nombre: $(elemento.currentTarget).val() }});
+
+          this.sinCoincidencias();
+
+          this.$tablaServicios.html('');
+          this.cargarServiciosCo();
+        },
+
+        sinCoincidencias  : function () 
+        {
+          if (app.coleccionServicios.length == 0) {
+            app.coleccionServicios.fetch({reset:true, data:{nombre: ''}});
+          };
+        },
+
+	    // Validamos que el campo #cliente solo contenga letras
         soloLetras : function(e)
         {
            key = e.keyCode || e.which;
@@ -138,121 +152,108 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
             }
         },
 
+        borrar : function(e)
+        {
+          if(e.keyCode===8)
+          {          
+            $('#idcliente')       . val( '' );
+            $('#idrepresentante') . val( '' );
+            $('#representante')   . val( '' );    
+          }          
+        },
+
         buscarRepresentante : function(pcliente)
         {
-            var busca =0; var encontrado=0;
-            representante = new Array();  var contr = 0;
-            /*..Iteramos sobre la coleccion de Representantes y llenamos un array con los datos requeridos...*/
-            for(y in app.coleccionDeRepresentantes)
-            {
-                representante[contr] = app.coleccionDeRepresentantes[y].idcliente; contr++;
-                representante[contr] = app.coleccionDeRepresentantes[y].id;        contr++;
-                representante[contr] = app.coleccionDeRepresentantes[y].nombre;    contr++;
-            };
-            /*...Aqui iteramos sobre el array de clientes para buscar el parametro que nos pasaron ..*/
-            for(c in this.clientes)
-            {
-                if(pcliente==this.clientes[busca])
-                {   /*..Si encontramos el parametro entonces toca recorrer el array de representante...*/
-                    for(r in representante)
-                    {	/*..El id del cliente esta una posicion despues de su nombre y preguntamos 
-                    	  ..si esta en el array representante...*/
-                        if(this.clientes[busca+1]==representante[encontrado])
-                        {   
-                        	/*...Lo hemos encontrado ahora establecemos los id´s 
-                        	  ...En los inputs(Ocultos) de nuestro formulario para posteriores operaciones..*/
-                            $('#idcliente').val(this.clientes[busca+1]);
-                            $('#idrepresentante').val(representante[encontrado+1]);
-                            $('#representante').val(representante[encontrado+2]); break;
-                        }; encontrado++;
-                    };
+            var idcliente     = ( ( app.coleccionClientes.findWhere       ( { 'nombreComercial' : pcliente  } ) ).toJSON() ).id ;
+            var representante = ( ( app.coleccionRepresentantes.findWhere ( { 'idcliente'       : idcliente } ) ).toJSON() )    ;
+              
+              $('#idcliente')       . val( idcliente            );
+              $('#idrepresentante') . val( representante.id     );
+              $('#representante')   . val( representante.nombre ); 		
+	      },
 
-                }; busca++;
-            };
-		
-	    },
+        vistaPrevia : function()
+        {
+          $('#vistaPrevia').attr('true');
+          var f = new Date();
+          var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
-	    /*..Simple este metodo solo construye un JSON con los datos primarios de la cotizacion...*/
-        datosDeLaCotizacion : function () {
-        	var f = new Date();
-        	return {
-	            id            	: '',
-	            idcliente 	  	:  this.$idcliente.val().trim(),
-	            idrepresentante :  this.$idrepresentante.val().trim(),
-	            idempleado      :  '',
-	            fecha           : f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate(),
-	            detalles 	  	  :  this.$detalles.val().trim()
-        	};
+          modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+          modelocotizacion.idempleado = '46';
+
+          elemento.preventDefault();
         },
 
         /*..Una vez que tenemos lista la cotizacion nos toca el turno de guardala en la base de datos :D ...*/
         guardarCotizacion : function (elemento)
-        {
-          /*..¿Te acuerdas del metodo donde se arma el JSON de los datos primarios de la cotización?
-              bueno pues aqui lo llamamos...*/
-          var modelocotizacion = this.datosDeLaCotizacion();
-          /*...Ahora obtenemos el form de cada fila de la tabla servicios cotizando y lo pasamos a un array..*/
-          var serviciosCotizados = pasarAJson($('.filas').serializeArray());
-          /*..Como en el array serviciosCotizados no podemos usar el length entonces obtenermos el array de id´s
-          	  de los servicios de la tabla y ahora este array si nos dejara usar length y asi poder iterar sobre el array
-          	  serviciosCotizados ...*/
-          var longitud = serviciosCotizados.id;
+        {  
+          // $('#vistaPrevia').attr('true');
+        //   var f = new Date();
+        //   var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
-           Backbone.emulateHTTP = true; //Variables Globales
-		       Backbone.emulateJSON = true; //Variables Globales 
-           app.coleccionCotizaciones.create
-           (
-           		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
-           		{
-           			wait:true,
-           			success:function(exito)
-           			{
-           				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
-           				Backbone.emulateHTTP = true; //Variables Globales
-		   				Backbone.emulateJSON = true; //Variables Globales 
-		   				/*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
-		           		for(i in longitud)
-		           		{	
-		           			app.coleccionServiciosCotizados.create
-		           			(		           			
-		           				{   /*  El exito.get('id') obtiene el id de la cotización que se acaba de crear 
-		           				        y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear*/
-		           					idcotizacion : exito.get('id'),  
-		           					idservicio   : serviciosCotizados.id[i],
-			           				duracion     : serviciosCotizados.duracion[i],
-			           				cantidad     : serviciosCotizados.cantidad[i],
-			           				precio       : serviciosCotizados.precio[i],
-			           				descuento    : serviciosCotizados.descuento[i]		           			
-			           			},
-		           				{ 
-		           					wait:true,
-				           			success:function(exito)
-				           			{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
-				           				console.log('Fue exito');
-				           			},
-				           			error:function(error)
-				           			{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o 
-				           				 preguntale a la API que ¡onda! :/ ..*/
-				           				console.log('Fue error ',error);
-				           			}
+        //   modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+        //   modelocotizacion.idempleado = '46';
+         
+        //   /*...Ahora obtenemos el form de cada fila de la tabla servicios cotizando y lo pasamos a un array..*/
+        //   var serviciosCotizados = pasarAJson($('.filas').serializeArray());
+        //   /*..Como en el array serviciosCotizados no podemos usar el length entonces obtenermos el array de id´s
+        //   	  de los servicios de la tabla y ahora este array si nos dejara usar length y asi poder iterar sobre el array
+        //   	  serviciosCotizados ...*/
+        //   var longitud = serviciosCotizados.id;
 
-		           				}
-
-		           			);
+        //    Backbone.emulateHTTP = true; //Variables Globales
+		      //  Backbone.emulateJSON = true; //Variables Globales 
+        //    app.coleccionCotizaciones.create
+        //    (
+        //    		modelocotizacion, //Hacemos un CREATE con los datos primarios de la cotización
+        //    		{
+        //    			wait:true,
+        //    			success:function(exito)
+        //    			{
+        //    				/*..Si el programa pasa a este puntos significa que la cotización ha sido creada..*/           				           				
+        //    				Backbone.emulateHTTP = true; //Variables Globales
+		   			// 	    Backbone.emulateJSON = true; //Variables Globales 
+		   			// 	    /*Ahora recorremos las filas de la tabla para enviar cada modelo de servicio cotizado....*/
+		      //      		for(i in longitud)
+		      //      		{	
+		      //      			app.coleccionServiciosCotizados.create
+		      //      			(		           			
+		      //      				{     /*El exito.get('id') obtiene el id de la cotización que se acaba de crear 
+		      //      				        y ahora todos los servicios que estan dentro de este ciclo le pertenece a esa cotizacion acabada de crear*/
+		      //      					idcotizacion : exito.get('id'),  
+		      //      					idservicio   : serviciosCotizados.id[i],
+			     //       				duracion     : serviciosCotizados.duracion[i],
+			     //       				cantidad     : serviciosCotizados.cantidad[i],
+			     //       				precio       : serviciosCotizados.precio[i],
+			     //       				descuento    : serviciosCotizados.descuento[i]		           			
+			     //       			},
+		      //      				{ 
+		      //      					wait:true,
+				    //        			success:function(exito)
+				    //        			{ /*..Ok nuestros modelo de servicio cotizado se ha creado :D ..*/
+				    //        				console.log('Fue exito');
+				    //        			},
+				    //        			error:function(error)
+				    //        			{/*..¡Oh no! :( algo no anda bien verifica el código de este archivo o 
+				    //        				 preguntale a la API que ¡onda! :/ ..*/
+				    //        				console.log('Fue error ',error);
+				    //        			}
+		      //      				}
+		      //      			);
 		           			 
-		           		};
-		           		Backbone.emulateHTTP = false; //Variables Globales
-		   				Backbone.emulateJSON = false; //Variables Globales
+		      //      		};
+		      //      		Backbone.emulateHTTP = false; //Variables Globales
+		   			// 	    Backbone.emulateJSON = false; //Variables Globales
 
-           			},
-           			error:function(error)
-           			{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
-						console.log('Fue error ',error);
-           			}
-           		}
-           ); //Fin de app.coleccionCotizaciones
-           Backbone.emulateHTTP = false; //Variables Globales
-		   Backbone.emulateJSON = false; //Variables Globales
+        //    			},
+        //    			error:function(error)
+        //    			{	/*..Tu modelo Cotizacion no se creo por lo tanto el modelo servicio cotizado Tampoco :( ..*/
+						  //     console.log('Fue error ',error);
+        //    			}
+        //    		}
+        //    ); //Fin de app.coleccionCotizaciones
+        // Backbone.emulateHTTP = false; //Variables Globales
+		    // Backbone.emulateJSON = false; //Variables Globales
 
 		   /*..Con esta instrucción evitamos que la pagina del navegador se recargue y asi no perdemos los datos..*/
 		   elemento.preventDefault();

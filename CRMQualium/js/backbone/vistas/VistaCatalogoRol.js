@@ -116,13 +116,6 @@ app.VistaNuevoRol = Backbone.View.extend({
 	buscarRol : function (elemento)
 	{
 		var buscando = $(elemento.currentTarget).val();
-		if(elemento.keyCode===8)
-		{
-			
-			app.coleccionRoles.fetch({
-				reset:true, data:{nombre: buscando}
-			});
-		}
 		app.coleccionRoles.fetch({
 			reset:true, data:{nombre: buscando}
 		});

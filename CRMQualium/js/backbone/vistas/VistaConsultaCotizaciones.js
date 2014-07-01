@@ -3,12 +3,15 @@ var app = app || {};
 app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 el : '.contenedor_principal_modulos',
 
-	 events : {
-	 	'click #marcar'    		   : 'marcarTodos',
-	 	'click #desmarcar' 		   : 'desmarcarTodos',
-	 	'click #eliminar'  		   : 'eliminar',
-        'keypress #buscarCliente'  : 'porCliente',
-        'keypress #buscarUsuario'  : 'porUsuario'
+	 events : 
+	 {
+	 	'click    #marcar'    	   : 'marcarTodos',
+	 	'click    #desmarcar' 	   : 'desmarcarTodos',
+	 	'click    #eliminar'  	   : 'eliminar',
+        'click    #buscarCliente'  : 'autocompleteCliente',
+        'keyup    #buscarCliente'  : 'borrayRenderiza',
+        // 'click    #buscarUsuario'  : 'autocompleteUsuario'
+        // 'keyup    #buscarUsuario'  : 'autocompleteUsuario'
 	 },
 
 	 initialize : function (){
@@ -16,60 +19,88 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	this.cargarCotizaciones(); 
 	 	this.listenTo( app.coleccionCotizaciones, 'add', this.cargarCotizacion );
 		this.listenTo( app.coleccionCotizaciones, 'reset', this.cargarCotizaciones);
-	 	app.coleccionCotizaciones.fetch();
+	 	
 	 },
 
-	 render : function (){},
+    render : function (){},
 
-	 marcarTodos : function()
-	 {
-	 	alert('e.e');
-	 },
+	autocompleteCliente : function (elemento)
+	{
+        clientes = new Array();  var cont  = 0; 
+        for(i in app.coleccionDeClientes)
+        {
+             clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;          
+        };
+        
+        $('#buscarCliente').autocomplete({ source : clientes }); // Autocompletamos
+ 		
+ 		var esto = this; // Respaldamos el this para llamar a una funcion dentro del evento siguiente...
 
-	 desmarcarTodos : function()
-	 {
-	 	alert('e.e');
-	 },
+        $( "#buscarCliente" ).on( "autocompleteselect", function( event, ui ) {
+            /*...Buscamos al cliente que nos proporciono el autocomplete en la coleccion.....
+              ...Invocamos al metodo busquedaPorCliente y le enviamos el id como parametro...*/
+            esto.porCliente( ( ( app.coleccionClientes.findWhere( { 'nombreComercial' : ui.item.value } ) ).toJSON() ).id);
+        });
+	},
 
-	 eliminar : function()
-	 {
-	 	alert('e.e');
-	 },
+
     /************************/
-    porCliente : function(elemento)
-    {       
-		var buscando = $(elemento.currentTarget).val();
-		if(elemento.keyCode===8)
-		{		
-			app.coleccionCotizaciones.fetch({
-				reset:true, data:{idcliente: buscando}
-			});
-		}
-		app.coleccionCotizaciones.fetch({
-			reset:true, data:{idcliente: buscando}
-		});
-
+    porCliente : function(buscando)
+    {   
+     	app.coleccionCotizaciones.fetch({ reset:true, data:{ idcliente : buscando } });
+		
 		this.sinCoincidencias();
-
 		this.$tablaCotizaciones.html('');
 		this.cargarCotizaciones();	
     },
+
+ //    autocompleteUsuario : function (elemento)
+	// {
+ //        empleados = new Array();  var cont  = 0; 
+ //        for(i in app.coleccionDeEmpleados)
+ //        {
+ //             empleados[cont] = app.coleccionDeEmpleados[i].nombre; cont++;          
+ //        };
+        
+ //        $('#buscarUsuario').autocomplete({ source : empleados }); // Autocompletamos
+ 		
+ // 		var esto = this; // Respaldamos el this para llamar a una funcion dentro del evento siguiente...
+
+ //        $( "#buscarUsuario" ).on( "autocompleteselect", function( event, ui ) {
+ //            // ...Buscamos al cliente que nos proporciono el autocomplete en la coleccion.....
+ //            //   ...Invocamos al metodo busquedaPorCliente y le enviamos el id como parametro...
+ //            esto.porUsuario( ( ( app.coleccionEmpleados.findWhere( { 'nombre' : ui.item.value } ) ).toJSON() ).id);
+ //        });
+	// },
+
+	// porUsuario : function(empleado)
+ //    {       
+ //       	app.coleccionCotizaciones.fetch({ reset:true, data:{ idempleado : empleado }	});		
+	// 	this.sinCoincidencias();
+	// 	this.$tablaCotizaciones.html('');
+	// 	this.cargarCotizaciones();	
+ //    },
+	
+	borrayRenderiza : function(element)
+	{
+		if(element.keyCode===8)
+		{		
+			this.porCliente( $(element.currentTarget).val() );
+		}
+	},
   
-    sinCoincidencias	: function () {
+    sinCoincidencias	: function () 
+    {
 		if (app.coleccionCotizaciones.length == 0) {
 			app.coleccionCotizaciones.fetch({
 				reset:true, data:{idcliente: ''}
 			});
 		};
 	},
-    /************************/
-    porUsuario : function(elemento)
-    {
-        alert('Busco Por Usuario');
-    },
 
-	 cargarCotizacion : function (modelocotizacion)
-	 {
+
+	cargarCotizacion : function (modelocotizacion)
+	{
 	 	/*Variables para el calculo del total de cada cotizacion*/
 	 	var i;				//i para el ciclo for de calculo del total
 	 	var cantidad  = 0;
@@ -101,17 +132,28 @@ app.VistaConsultaCotizaciones = Backbone.View.extend({
 	 	var vistaCotizacion = new app.VistaCotizacion({model : modelocotizacion});
 	 	/*...Lo añadimos a la tabla para que se apile en la interfaz, mediante el metodo render de la vistaCotización...*/
 	 	this.$tablaCotizaciones.append( vistaCotizacion.render().el);
-	 },
+	},
 
-	 cargarCotizaciones : function ()
-	 {
+	cargarCotizaciones : function ()
+	{
 	 	app.coleccionCotizaciones.each(this.cargarCotizacion, this);
-	 },
+	},
 
-	 establecerNombres : function ()
-	 {	 	
-	 	var coleccionDeEmpleados = app.coleccionDeEmpleados();	 	
-	 }
+	//  marcarTodos : function()
+	//  {
+	//  	alert('e.e');
+	//  },
+
+	//  desmarcarTodos : function()
+	//  {
+	//  	alert('e.e');
+	//  },
+
+	//  eliminar : function()
+	//  {
+	//  	alert('e.e');
+	//  },
+
 
 });
 

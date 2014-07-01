@@ -9,14 +9,31 @@ var ColeccionCotizaciones = Backbone.Collection.extend({
 	// 	//Se ejecuta cuando se hace un fetch a la colección
 	// 	return response;
 	// }
+
 	sync	: function (method, model, options) {
+		
+	
 		if (method === 'read') {
-			app.busquedaCotizacion.cotizacion.buscarPorNombre(options.data.idcliente).done(function (data) {				
-				// console.log(data); //Debuelbe el objeto [Object]
+
+			// if(options.data.idcliente)
+			// {
+				app.busquedaCotizacion.cotizacion.buscarPorNombre(options.data.idcliente).done(function (data) {
+				
 				options.success(data);
-			});
+				});	
+			// }
+			// if(options.data.idempleado)
+			// {
+			// 	app.busquedaCotizacion.cotizacion.buscarPorNombre(options.data.idempleado).done(function (data) {
+				
+			// 	options.success(data);
+			// 	});	
+			// }
+			
 		};
-	}
+	
+		
+	},
 });
 
 app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones);
