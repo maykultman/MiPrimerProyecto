@@ -28,7 +28,7 @@
 
 	width: 100%!important;
 }
-.input_renta{
+.input_renta, .bloqueado{
 
 	width: 35%!important;
 }
@@ -130,7 +130,7 @@ float: left !important;
 
 }
 
-tbody.scroll_tbody { 
+tbody#tbody_servicios { 
 	display: block; /*obligado*/ 
 	height: 165px; /*la que necesites*/ 
 	overflow: auto; /*obligado*/
