@@ -105,26 +105,51 @@ app.VistaPago = Backbone.View.extend({
 	plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
 	events	: {
 		'click .icon-unlock'	: 'bloquear',
-		'click .icon-lock'		: 'desbloquear',
-		// 'keyup .input_renta'	: 'modificarPago',
-		// 'change .input_renta'	: 'modificarPago',
+		'click .icon-lock'		: 'desbloquear'
 	},
 	initialize		: function () {
-
+		this.listenTo(this.model, 'change', this.render);
+		this.residuo = 0.0;
 	},
 	render			: function () {
-		this.$el.html(this.plantilla_tr_pagos(this.model));
+		this.$el.html(this.plantilla_tr_pagos(this.model.toJSON()));
+		var thiS = this,
+			input_renta = this.$el.find('.input_renta');
+
+		input_renta.one('change',function(){
+			thiS.modificarPago(this);
+		});
 		return this;
 	},
-	bloquear		: function (elem) {
-		$(elem.currentTarget).removeClass().addClass('icon-lock');
-		this.$('.input_renta').attr('disabled',true).toggleClass('bloqueado');
+	bloquear		: function () {
+		this.model.set({atrClase:'bloqueado', candado: 'icon-lock', checked:'disabled'});
 	},
-	desbloquear		: function (elem) {
-		$(elem.currentTarget).removeClass().addClass('icon-unlock');
-		this.$('.input_renta').attr('disabled',false).toggleClass('bloqueado');
+	desbloquear		: function () {
+		this.model.set({atrClase:'input_renta', candado: 'icon-unlock', checked:''});
 	},
-	// modificarPago 	: function () {}
+	// keypressPago	: function (elem) {
+	// 	if (elem.keyCode === 13) {
+	// 		this.modificarPago(elem);
+	// 	}
+	// },
+	// changePago 	: function (elem) {
+	// 	this.modificarPago(elem);
+	// },
+	modificarPago	: function (elem) {
+		var pagoActual = parseFloat(this.model.get('pago')),
+			id = '#'+$(elem).attr('id');
+		// console.log();
+		var residuo = (
+			pagoActual 	- 	parseFloat( 
+								(this.model.set({pago:$(elem).val()})).get('pago') )
+							)
+			.toFixed(2);
+			
+		this.bloquear();
+		app.vistaNuevoContrato.equilibrarPagos(residuo);
+		this.desbloquear();
+		this.$(id).focus();
+	}
 });
 
 app.VistaNuevoContrato = Backbone.View.extend({
@@ -133,8 +158,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 	events					: {
 		'change .btn_plan'		: 'conmutarTablaPlan',
 		'change .n_pagos'		: 'obtenerAtributoValue',
-		'keyup .input_renta'	: 'modificarPagos',
-		'change .input_renta'	: 'modificarPagos',
+		// 'keyup .input_renta'	: 'modificarPagos',
+		// 'change .input_renta'	: 'modificarPagos',
 		'click	#guardar'		: 'guardar'
 	},
 	initialize				: function () {
@@ -304,15 +329,24 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		fechaNormal = $('.input_fechaInicioPago').val();
 		fecha2 = fechaNormal.split('/');
 
+		var Modelo;
+		this.vistaPago = [];
 		for (var i = 0; i < n; i++) {
-			var vista = new app.VistaPago({model:{ 
-				n 		: i+1,
-				fecha	: fechaNormal,
-				fecha2	: fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0],
-				pago 	: (parseInt(totalNeto.join(''))/n).toFixed(2), 
-			}});
+			Modelo = Backbone.Model.extend({
+				defaults	: { 
+					id 		: i,
+					n 		: i+1,
+					fecha	: fechaNormal,
+					fecha2	: fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0],
+					pago 	: (parseInt(totalNeto.join(''))/n).toFixed(2),
+					candado	: 'icon-unlock',
+					atrClase	: 'input_renta',
+					checked	: ''
+				}
+			});
+			this.vistaPago[i] = new app.VistaPago({model : new Modelo});
 
-			$('#tbody_pagos').append(vista.render().el);
+			$('#tbody_pagos').append(this.vistaPago[i].render().el);
 
 			fechaNormal = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + (plazo*24*60*60*1000)));
 			fecha2 = fechaNormal.split('/');
@@ -320,34 +354,38 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		};
 		this.modificarPagos();
 	},
-	modificarPagos	: function (elem) {
-		if (typeof elem == 'undefined') {
-			$('#margen').css('color','black'); return;
+	modificarPagos	: function () {
+		var margen = $('#totalNeto').text().split(''),
+			rentas = $('.hidden_renta'),
+			suma = 0.0, /*Debe inicializarse como flotante*/
+			masmenos;
+
+		margen.shift();
+		margen = margen.join('');
+		margen = parseInt(margen).toFixed();
+
+		for (var i = 0; i < rentas.length; i++) {
+			suma += parseFloat($(rentas[i]).val());
 		};
-		
-		if (elem.keyCode !== 37 && elem.keyCode !== 38 && elem.keyCode !== 39 && elem.keyCode !== 40) {
-			console.log
-			var margen = $('#totalNeto').text().split(''),
-				rentas = $('.input_renta'),
-				suma = 0.0, /*Debe inicializarse como flotante*/
-				masmenos;
 
-			margen.shift();
-			margen = margen.join('');
-			margen = parseInt(margen).toFixed();
-
-			for (var i = 0; i < rentas.length; i++) {
-				suma += parseFloat($(rentas[i]).val());
-			};
-
-			masmenos = suma;
-			suma = suma.toFixed();
-			if (suma > margen || suma < margen) {
-				$('#margen').text('$'+masmenos.toFixed(2)).css('color','red');
-			} else{
-				$('#margen').text($('#totalNeto').text()).css('color','black');
-			};
-		}
+		masmenos = suma;
+		suma = suma.toFixed();
+		if (suma > margen || suma < margen) {
+			$('#margen').text('$'+masmenos.toFixed(2)).css('color','red');
+		} else{
+			$('#margen').text($('#totalNeto').text()).css('color','black');
+		};
+	},
+	equilibrarPagos			: function (residuo) {
+		var rentas = $('.input_renta');
+		var pagoNuevo = 0.0;
+		residuo = residuo/parseFloat(rentas.length);
+		for (var i = 0; i < rentas.length; i++) {
+			pagoNuevo = (parseFloat($(rentas[i]).val()) + residuo).toFixed(2);
+			// $(rentas[i]).val(pagoNuevo);
+			this.vistaPago[parseInt($(rentas[i]).attr('id'))].model.set({pago:pagoNuevo});
+		};
+		this.modificarPagos();
 	},
 	formatearFechaUsuario	: function (fecha) {
 		var fechaFormateada = '';

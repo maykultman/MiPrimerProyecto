@@ -230,7 +230,7 @@
 		<td><%- nombre %><input type="hidden" value="<%- id %>"></td>
 		<td><input id="descuento" 	class="input_descuento inputsServicios" name="descuento"	type="number" min="0" max="100" value="<%- descuento %>"> %</td>
 		<td><input id="realizacion" class="input_precio inputsServicios" 	name="realizacion"	type="text" value="<%- realizacion %>" placeholder="Realización"></td>
-		<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>"></td>
+		<td><input id="cantidad" 	class="input_precio inputsServicios" 	name="cantidad"		type="number" value="<%- cantidad %>" min="1"></td>
 		<td><input id="precio" 		class="input_precio inputsServicios"	name="precio"		type="number" value="<%- precio %>"></td>
 		<td>$<%- total %> <input type="hidden" class="total" value="<%- total %>"></td>
 		<td class="icon-eliminar">
@@ -247,9 +247,9 @@
 			</td>
 			<td colspan="3">
 				$
-				<input type="number" min="1" max="" name="pago_n" value="<%- pago %>" class="input_renta">
+				<input type="number" id="<%- id %>" min="1" max="" name="pago_n" value="<%- pago %>" class="<%- atrClase %>" <%- checked %>>
 				<input type="hidden" class="hidden_renta" value="<%- pago %>">
-				<span class="icon-unlock"></span>
+				<span class="<%- candado %>"></span>
 			</td>          
 		
 	</script>
