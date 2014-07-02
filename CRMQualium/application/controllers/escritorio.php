@@ -185,6 +185,12 @@ class Escritorio extends REST {
 		$this->area_Estatica('modulo_actividades.html');
 	}
 
+	public function pdf(){
+		$this->load->view('pruebapdf');
+	}
+
+
+
 	public function usuarios()
 	{
 		$this->area_Estatica('modulo_usuarios');

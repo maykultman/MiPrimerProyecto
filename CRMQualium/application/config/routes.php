@@ -45,7 +45,7 @@ $route['modulo_cotizaciones_consulta'] = 'escritorio/cotizacion/$1';
 
 //Rutas para la actividades...
 $route['modulo_actividades'] = 'escritorio/actividades/$1';
-// $route['modulo_actividades'] = 'escritorio/actividades/$1';
+$route['pruebapdf'] = 'escritorio/pdf/$1';
 // $route['modulo_actividades'] = 'escritorio/actividades/$1';
 
 //Rutas para la catalogos...
@@ -67,7 +67,7 @@ $route['catalogo_puestos']  = 'escritorio/catalogos/$1';
 //Rutas para el modilo de usuarios...
 $route['modulo_usuarios'] = 'escritorio/usuarios/$1';
 $route['modulo_usuarios_nuevo'] = 'escritorio/usuarios/$1';
-// $route['modulo_usuarios'] = 'escritorio/usuarios/$1';
+$route['modulo_usuarios_consulta'] = 'escritorio/usuarios/$1';
 // $route['modulo_usuarios'] = 'escritorio/usuarios/$1';
 
 //Rutas para el modulo de configuracion...
