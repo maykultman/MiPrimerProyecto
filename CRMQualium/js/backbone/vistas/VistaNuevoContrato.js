@@ -15,10 +15,8 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 	initialize			: function () {
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'change', this.calcularImporteIVATotalNeto);
-
-		
 	},
-	render	: function () {
+	render				: function () {
 		this.$el.html(this.plantillaDefault( this.model.toJSON() ));
 
 		var thiS = this;
@@ -114,7 +112,7 @@ app.VistaServicioContrato = app.VistaServicio.extend({
 app.VistaPago = Backbone.View.extend({
 	tagName 	: 'tr',
 	plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
-	events	: {
+	events		: {
 		'click .icon-unlock'	: 'bloquear',
 		'click .icon-lock'		: 'desbloquear'
 	},
@@ -157,7 +155,6 @@ app.VistaPago = Backbone.View.extend({
 
 app.VistaNuevoContrato = Backbone.View.extend({
 	el						: '.contenedor_principal_modulos',
-	// plantilla_tr_pagos		: _.template($('#tr_pagos').html()),
 	events					: {
 		'change .btn_plan'		: 'conmutarTablaPlan',
 		'change .n_pagos'		: 'obtenerAtributoValue',
@@ -184,28 +181,116 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 
 		$('#fechaFirma').on('change', function () {
-			$('.input_fechaInicioPago').val($(this).val());
+			/*Pone la fecha de forma como la fecha en que se iniciaran
+			  los pagos*/
+			// $('.input_fechaInicioPago').val($(this).val());
 			fecha = $(this).val().split('/');
 			$('#hidden_fechafirma').val(fecha[2] + "-" + fecha[1] + "-" + fecha[0]);
 		});
-
-		fecha = new Date();
-		$('#fechacreacion').val( fecha.getFullYear() + "-" + (fecha.getMonth() +1) + "-" + fecha.getDate() );
 	},
 	render					: function () {},
 	guardar					: function (elem) {
-		var json = pasarAJson($('form').serializeArray());
+		var json = pasarAJson($('form').serializeArray()),
+			jsonContrato = {},
+			jsonServicios  = {},
+			jsonPagos	   = {},
+			thiS = this;
 		if ($('#porEvento').is(':checked') && $('#plazo').val() != "") {
 			delete json.mensualidades;
 			json.fechafinal = json.fechafinal[0];
+			/*------------------------------------------------------*/
+			jsonContrato.fechafirma 		= json.fechafirma;
+			jsonContrato.fechainicio 		= json.fechainicio;
+			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.idcliente 			= json.idcliente;
+			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.nplazos 			= json.nPlazos;
+			jsonContrato.plan 				= json.plan;
+			jsonContrato.plazo 				= json.plazo;
+
+			// jsonServicios.idcontrato	= 'json.idcontrato';
+			jsonServicios.idservicio	= json.idservicio;
+			jsonServicios.cantidad		= json.cantidad;
+			jsonServicios.descuento		= json.descuento;
+			jsonServicios.precio		= json.precio;
+
+			
+
+			jsonPagos.idcontrato 	= 'json.idcontrato';
+			jsonPagos.fechapago 	= json.fechapago;
+			jsonPagos.pago 			= json.pago;
 		} else if ($('#iguala').is(':checked')){
 			delete json.plazo;
 			delete json.nPlazos;
 			json.fechafinal = json.fechafinal[1];
+			/*------------------------------------------------------*/
 		} else {console.log('Elija tipo de plan');};
-		console.log(json);
+
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		/* -------------------------------------------------------- */
+		/**/app.coleccionContratos.create(jsonContrato,{
+		/**/	wait	: true,
+		/**/	success	: function (exito) {
+		/**/		thiS.guardarServicios(
+		/**/			this.jsonArray(exito.get('id'),
+		/**/			jsonServicios,
+		/**/			json.precio.length)
+		/**/		);
+		/**/		thiS.guardarPagos(
+		/**/			this.jsonArray(exito.get('id'),
+		/**/			jsonPagos,
+		/**/			jsonPagos.pago.length)
+		/**/		);
+		/**/	},
+		/**/	error	: function (error) {}
+		/**/});
+		/* -------------------------------------------------------- */
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+
+		console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
 		elem.preventDefault();
 	},
+	guardarServicios		: function (json) {
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		/* -------------------------------------------------------- */
+		/**/app.coleccionServiciosContrato.create(json,{
+		/**/	wait 	: true,
+		/**/	success	: function (exito) {
+		/**/		console.log('Se guardaron los Servicios');
+		/**/	},
+		/**/	error	: function (error) {
+		/**/		console.log('Al intentar guardar Servicios');
+		/**/	}
+		/**/});
+		/* -------------------------------------------------------- */		
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+	},
+	guardarPagos			: function (json) {
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		/* -------------------------------------------------------- */
+		/**/app.coleccionPagosContrato.create(json,{
+		/**/	wait 	: true,
+		/**/	success	: function (exito) {
+		/**/		console.log('Se guardaron los Pagos');
+		/**/	},
+		/**/	error	: function (error) {
+		/**/		console.log('Al intentar guardar Pagos');
+		/**/	}
+		/**/});
+		/* -------------------------------------------------------- */		
+		Backbone.emulateHTTP = false;
+		Backbone.emulateJSON = false;
+	},
+
+	jsonArray	: function (json) {
+		
+	},
+
 	cargarClientes			: function () {
 		$('#busqueda').autocomplete({
 			source : app.coleccionClientes.pluck('nombreComercial'),
@@ -361,7 +446,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		};
 		this.modificarPagos();
 	},
-	modificarPagos	: function () {
+	modificarPagos			: function () {
 		var margen = $('#totalNeto').text().split(''),
 			rentas = $('.hidden_renta'),
 			suma = 0.0, /*Debe inicializarse como flotante*/
