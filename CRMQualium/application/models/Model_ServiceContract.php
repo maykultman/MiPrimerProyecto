@@ -7,8 +7,8 @@
 
  	public function create($post)
  	{
- 		$this->db->insert('servicios_contrato', $post);
-		return $this->get( $this->db->insert_id() );
+ 		return $this->db->insert_batch('servicios_contrato', $post);
+		// return $this->get( $this->db->insert_id() );
  	}
 
  	public function get ( $id = FALSE )
