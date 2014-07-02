@@ -1,8 +1,8 @@
 var app = app || {};
 
-var ColeccionCotizaciones = Backbone.Collection.extend({
-	localStorage 	: new Backbone.LocalStorage('tareas-backbone'),
-	model : app.ModeloCotizacion,
+var ColeccionLocalCotizaciones = Backbone.Collection.extend({
+	localStorage 	: new Backbone.LocalStorage('cotizacion'),
+	model : app.ModeloLocalCotizacion,
 });
 
-app.coleccionCotizaciones = new ColeccionCotizaciones(app.coleccionDeCotizaciones);
+app.coleccionLocalCotizaciones = new ColeccionLocalCotizaciones(app.coleccionLocalCotizaciones);

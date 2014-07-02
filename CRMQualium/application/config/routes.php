@@ -10,6 +10,8 @@ $route['pruebausuario'] = 'escritorio/prueba';
 # Dashboard
 $route['dashboard'] = 'escritorio/dashboard';
 
+$route['formato'] = 'escritorio/formato';
+
 # Rutas para el cliente
 $route['modulo_Clientes'] 			 = 'escritorio/clientes';
 $route['modulo_cliente_nuevo'] 		 = 'escritorio/clientes/$1';
@@ -187,3 +189,4 @@ $route['api_serviciosContrato/(:num)'] = 'serviciosDeContrato/api/$1';
 
 $route['api_pagos'] = 'payment/api';
 $route['api_pagos/(:num)'] = 'payment/api/$1';
+

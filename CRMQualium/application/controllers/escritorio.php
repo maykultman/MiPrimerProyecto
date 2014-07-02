@@ -168,18 +168,13 @@ class Escritorio extends REST {
 		}
 	}
 
-	public function facturas (){
-		//$this->area_Estatica('modulo_facturas');
-		  $this->area_Estatica('prueba_ver_proyecto');
-		  
-		  if($this->ruta() == 'modal_consulta_proyecto')
-		{
-			$this->load->view($this->ruta());
-		}		
-	}
+	public function formato (){
+				  
+		$this->load->view('formato_cotizacion');
+		}
 
 	public function actividades(){
-		$this->area_Estatica('modulo_actividades');
+		$this->area_Estatica('modulo_actividades.html');
 	}
 
 	public function usuarios()

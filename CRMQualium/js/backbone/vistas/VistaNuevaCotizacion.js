@@ -174,6 +174,8 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
         vistaPrevia : function(elemento)
         {
+          
+
           // var html = document;
           // console.log(html);
           // var f = new Date();
@@ -182,6 +184,18 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
           // modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
           // modelocotizacion.idempleado = '46';
 
+          
+          // app.coleccionLocalCotizaciones.create
+          // (
+          //   modelocotizacion,
+          //   {
+          //     wait: true,
+          //     success: function (data){ console.log('exito')},
+          //     error: function (error) {}
+          //   }
+          // );
+        
+          
           elemento.preventDefault();
         },
 

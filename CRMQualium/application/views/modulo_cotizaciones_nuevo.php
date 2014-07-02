@@ -42,7 +42,7 @@
 			<tfoot>
 			<tr>
 			    <td><button id="delete_varios"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
-				    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
+				    <button id="vistaPrevia"    type="button" class="btn btn-primary" onclick="javascript:window.open('formato','','width=600,height=400,left=50,top=50,toolbar=yes');"> <span class="icon-preview"></span> Vista previa </button></td>		
 			</tr>
 			</tfoot>
 		</table>
@@ -98,7 +98,7 @@
 <!-- Librerias -->
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js' ?>"></script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'   ?>"></script>
-
+<script type="text/javascript" src="<?=base_url().'js/backbone.localStorage.js'?>"></script>
 
 <script type="text/javascript">
 	var app = app || {};
@@ -113,12 +113,14 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioCotizado.js'	      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'	      		  ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'    		  ?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloLocalCotizacion.js'  		  ?>"> </script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'	      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionCotizaciones.js'      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosCotizados.js'?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'          ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'    ?>"> </script>
+<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionLocalCotizaciones.js' ?>"> </script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>

@@ -121,7 +121,7 @@ li{
 	background: @colorPrimario-Menu;
 	/*height: 100%;*/
 	float: left;
-	padding: 0px 5px 0px 5px;
+	/*padding: 0px 5px 0px 5px;*/
 	/*position: absolute;*/
 	width: 160px;
 	/*margin-left: -160px;*/
@@ -137,29 +137,35 @@ li{
 	z-index: 1;
 }
 #menu-lista{
-	padding: 0px 5px 0px 5px;
+	/*padding: 0px 5px 0px 5px;*/
 }
 #menu-lista li{
-	border-bottom: 1px solid @colorElementoDeMenuHover;
-	line-height: 50px;
+border-bottom: 1px solid #4D4D4D;
+line-height: 50px;
+padding: 15px 0 5px 0;
+text-align: center;
+margin: 0 auto;
+padding-left: 10px;
+height: 50px;
 }
 #menu-lista li a{
-	position: absolute;
+	//position: absolute;
 }
 #menu-lista li:hover{
 	background: @colorElementoDeMenuHover;
-	margin: -1px -10px 0px -10px;
-	padding: 1px 10px 0px 10px;
+	margin: 0 0 0px 0;
+	/*padding: 1px 10px 0px 10px;
+	padding: 5px 10px 5px 0;*/
 	border-bottom: 1px solid @colorElementoDeMenuHover;
 }
 
 .anclaMenu{
 	color: @colorTextoMenu;
-	position: absolute;
+	//position: absolute;
 	-webkit-transition: .4s;
 	-moz-transition: .4s;
 	opacity: 1;
-	margin-left: 10px;
+	//margin-left: 10px;
 }
 .anclaMenu:hover{
 	color: @colorTextoMenu;
@@ -167,10 +173,10 @@ li{
 .icono{
 	color: @colorTextoMenu;
 	cursor: pointer;
-	padding-right: 25px;
-	padding-left: 2px;
+	/*padding-right: 25px;
+	padding-left: 2px;*/
 	font-size: 20px;
-	display: inline;
+	/*display: inline;*/
 }
 .icono:hover{
 	color: @colorTextoMenu;
@@ -209,11 +215,32 @@ li{
 	-moz-transition: margin 0.4s;
 
 }
+
+
+.item-text{
+	display: none;line-height: 20px; padding-left: 40px; text-align:justify;
+}
+
 #btn_menu:checked ~ #menu .anclaMenu{
-	opacity: 0;
-	visibility: collapse;
+	/*opacity: 0;
+	visibility: collapse;*/
 	-webkit-transform: translateX(-160px);
 	-moz-transform: translateX(-160px);
+
+	.item-text{
+		opacity:0;
+		display:none;
+		webkit-transform: all 100ms ease-in;
+	}
+}
+
+
+#btn_menu:not(checked) ~ #menu .anclaMenu{
+	.item-text{
+		opacity:1;
+		display:block;
+		webkit-transform: all 100ms ease-in;
+	}
 }
 
 #btn_menu:checked ~ #menu #btn{
@@ -221,6 +248,9 @@ li{
 	-webkit-transition: 0.4s;
 	-moz-transform:rotate(180deg);
 	-moz-transition: 0.4s;
+
+	
+
 }
 
 /*#btn_menu ~ #menu{
