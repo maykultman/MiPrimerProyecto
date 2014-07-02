@@ -36,7 +36,6 @@ app.VistaServicioSeleccionado = Backbone.View.extend({
 		return this;
 	},
 	eliminarSeleccion	: function (elem) {
-		// console.log($(elem.currentTarget).attr('id'), ' ',this.model.get('id')); BORRAR
 		$('#tbody_servicios .check_posicion #servicio_'+this.model.get('id')).attr('disabled',false)
 		this.$el.remove();
 		this.calcularImporteIVATotalNeto();
@@ -121,7 +120,6 @@ app.VistaPago = Backbone.View.extend({
 		this.residuo = 0.0;
 	},
 	render			: function () {
-		console.log(this.model.toJSON());
 		this.$el.html(this.plantilla_tr_pagos(this.model.toJSON()));
 		var thiS = this,
 			input_renta = this.$el.find('.input_renta');
@@ -262,26 +260,26 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		jsonPagos.pago 			= json.pago;
 
 		/* -------------------------------------------------------- */
-		// /**/Backbone.emulateHTTP = true;
-		// /**/Backbone.emulateJSON = true;
-		// /**/app.coleccionContratos.create(jsonContrato,{
-		// /**/	wait	: true,
-		// /**/	success	: function (exito) {
-		// /**/		console.log('En contrato se guardo con exito');
-		// /**/		jsonServicios.idcontrato = exito.get('id');
-		// /**/		jsonPagos.idcontrato = exito.get('id');
-		// /**/		thiS.guardarServicios(jsonServicios);
-		// /**/		thiS.guardarPagos(jsonPagos);
-		// /**/	},
-		// /**/	error	: function (error) {
-		// /**/		console.log('El contrato no a sido guardado');
-		// /**/	}
-		// /**/});
-		// /**/Backbone.emulateHTTP = false;
-		// /**/Backbone.emulateJSON = false;
+		/**/Backbone.emulateHTTP = true;
+		/**/Backbone.emulateJSON = true;
+		/**/app.coleccionContratos.create(jsonContrato,{
+		/**/	wait	: true,
+		/**/	success	: function (exito) {
+		/**/		console.log('En contrato se guardo con exito');
+		/**/		jsonServicios.idcontrato = exito.get('id');
+		/**/		jsonPagos.idcontrato = exito.get('id');
+		/**/		thiS.guardarServicios(jsonServicios);
+		/**/		thiS.guardarPagos(jsonPagos);
+		/**/	},
+		/**/	error	: function (error) {
+		/**/		console.log('El contrato no a sido guardado');
+		/**/	}
+		/**/});
+		/**/Backbone.emulateHTTP = false;
+		/**/Backbone.emulateJSON = false;
 		/* -------------------------------------------------------- */
 
-		console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
+		// console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
 		elem.preventDefault();
 	},
 	guardarServicios		: function (json) {

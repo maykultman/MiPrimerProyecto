@@ -274,9 +274,6 @@
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloContrato.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioContrato.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPago.js'?>"></script>
 <!-- colecciones -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>

@@ -128,7 +128,7 @@ class Escritorio extends REST {
 			$this->load->view($this->ruta(), $data);			
 		}
 		if($this->ruta() == 'modulo_proyectos_cronograma')
-		{
+		{			
 			$this->load->view($this->ruta());			
 		}
 	}
@@ -164,6 +164,14 @@ class Escritorio extends REST {
 		}
 		if($this->ruta() == 'modulo_contratos_historial')
 		{
+			$this->load->model('Model_ServiceContract');
+			$this->load->model('Model_contract');
+			$this->load->model('Model_payment');
+
+			$data['contratos'] = $this->Model_contract->get();
+			$data['serviciosDeContrato'] = $this->Model_ServiceContract->get();
+			$data['pagos'] = $this->Model_payment->get();
+
 			$this->load->view($this->ruta(), $data);
 		}
 	}
