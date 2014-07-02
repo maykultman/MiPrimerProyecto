@@ -121,6 +121,7 @@ app.VistaPago = Backbone.View.extend({
 		this.residuo = 0.0;
 	},
 	render			: function () {
+		console.log(this.model.toJSON());
 		this.$el.html(this.plantilla_tr_pagos(this.model.toJSON()));
 		var thiS = this,
 			input_renta = this.$el.find('.input_renta');
@@ -195,7 +196,14 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonServicios  = {},
 			jsonPagos	   = {},
 			thiS = this;
-		if ($('#porEvento').is(':checked') && $('#plazo').val() != "") {
+
+		if (json.idcliente == '') {
+			alert('Seleccione un cliente para el contrato');
+			elem.preventDefault();
+			return;
+		};
+
+		if ($('#porEvento').is(':checked')) {
 			delete json.mensualidades;
 			json.fechafinal = json.fechafinal[0];
 			/*------------------------------------------------------*/
@@ -208,78 +216,102 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			jsonContrato.plan 				= json.plan;
 			jsonContrato.plazo 				= json.plazo;
 
-			// jsonServicios.idcontrato	= 'json.idcontrato';
-			jsonServicios.idservicio	= json.idservicio;
-			jsonServicios.cantidad		= json.cantidad;
-			jsonServicios.descuento		= json.descuento;
-			jsonServicios.precio		= json.precio;
+			if (json.nPlazos == '' && json.plazo == '') {
+				alert('Especifique el plazo y el numero de plazos');
+				elem.preventDefault();
+				return;
+			};
 
-			
-
-			jsonPagos.idcontrato 	= 'json.idcontrato';
-			jsonPagos.fechapago 	= json.fechapago;
-			jsonPagos.pago 			= json.pago;
 		} else if ($('#iguala').is(':checked')){
 			delete json.plazo;
 			delete json.nPlazos;
 			json.fechafinal = json.fechafinal[1];
 			/*------------------------------------------------------*/
-		} else {console.log('Elija tipo de plan');};
+			jsonContrato.fechafirma 		= json.fechafirma;
+			jsonContrato.fechainicio 		= json.fechainicio;
+			jsonContrato.fechafinal 		= json.fechafinal;
+			jsonContrato.idcliente 			= json.idcliente;
+			jsonContrato.idrepresentante 	= json.idrepresentante;
+			jsonContrato.nplazos 			= json.mensualidades;
+			jsonContrato.plan 				= json.plan;
 
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
+			if (json.mensualidades == '') {
+				alert('Especifique las mensualidades');
+				elem.preventDefault();
+				return;
+			};
+		} else {
+			alert('Elija tipo de plan');
+			elem.preventDefault();
+			return;
+		};
+
+		if (json.fechainicio == '') {
+			alert('Especifique la fecha de inicio del contrato');
+			elem.preventDefault();
+			return;
+		};
+
+		/*Datos que poseen los dos tipos de planes*/
+		jsonServicios.idservicio	= json.idservicio;
+		jsonServicios.cantidad		= json.cantidad;
+		jsonServicios.descuento		= json.descuento;
+		jsonServicios.precio		= json.precio;
+		/*Datos que poseen los dos tipos de planes*/
+		jsonPagos.fechapago 	= json.fechapago;
+		jsonPagos.pago 			= json.pago;
+
 		/* -------------------------------------------------------- */
-		/**/app.coleccionContratos.create(jsonContrato,{
-		/**/	wait	: true,
-		/**/	success	: function (exito) {
-		/**/		thiS.guardarServicios(
-		/**/			this.jsonArray(exito.get('id'),
-		/**/			jsonServicios,
-		/**/			json.precio.length)
-		/**/		);
-		/**/		thiS.guardarPagos(
-		/**/			this.jsonArray(exito.get('id'),
-		/**/			jsonPagos,
-		/**/			jsonPagos.pago.length)
-		/**/		);
-		/**/	},
-		/**/	error	: function (error) {}
-		/**/});
+		// /**/Backbone.emulateHTTP = true;
+		// /**/Backbone.emulateJSON = true;
+		// /**/app.coleccionContratos.create(jsonContrato,{
+		// /**/	wait	: true,
+		// /**/	success	: function (exito) {
+		// /**/		console.log('En contrato se guardo con exito');
+		// /**/		jsonServicios.idcontrato = exito.get('id');
+		// /**/		jsonPagos.idcontrato = exito.get('id');
+		// /**/		thiS.guardarServicios(jsonServicios);
+		// /**/		thiS.guardarPagos(jsonPagos);
+		// /**/	},
+		// /**/	error	: function (error) {
+		// /**/		console.log('El contrato no a sido guardado');
+		// /**/	}
+		// /**/});
+		// /**/Backbone.emulateHTTP = false;
+		// /**/Backbone.emulateJSON = false;
 		/* -------------------------------------------------------- */
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
 
 		console.log(jsonContrato,'\n',jsonServicios,'\n',jsonPagos);
 		elem.preventDefault();
 	},
 	guardarServicios		: function (json) {
-		Backbone.emulateHTTP = true;
-		Backbone.emulateJSON = true;
 		/* -------------------------------------------------------- */
+		/**/Backbone.emulateHTTP = true;
+		/**/Backbone.emulateJSON = true;
 		/**/app.coleccionServiciosContrato.create(json,{
 		/**/	wait 	: true,
 		/**/	success	: function (exito) {
 		/**/		console.log('Se guardaron los Servicios');
 		/**/	},
 		/**/	error	: function (error) {
-		/**/		console.log('Al intentar guardar Servicios');
+		/**/		console.log('Error al intentar guardar Servicios');
 		/**/	}
 		/**/});
-		/* -------------------------------------------------------- */		
-		Backbone.emulateHTTP = false;
-		Backbone.emulateJSON = false;
+		/**/Backbone.emulateHTTP = false;
+		/**/Backbone.emulateJSON = false;
+		/* -------------------------------------------------------- */
 	},
 	guardarPagos			: function (json) {
 		Backbone.emulateHTTP = true;
 		Backbone.emulateJSON = true;
 		/* -------------------------------------------------------- */
-		/**/app.coleccionPagosContrato.create(json,{
+		/**/app.coleccionPagos.create(json,{
 		/**/	wait 	: true,
 		/**/	success	: function (exito) {
 		/**/		console.log('Se guardaron los Pagos');
 		/**/	},
 		/**/	error	: function (error) {
-		/**/		console.log('Al intentar guardar Pagos');
+		/**/		console.log('Error al intentar guardar Pagos');
 		/**/	}
 		/**/});
 		/* -------------------------------------------------------- */		
@@ -287,8 +319,20 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		Backbone.emulateJSON = false;
 	},
 
-	jsonArray	: function (json) {
-		
+	jsonArray	: function (claveId,valorId,arrayClaves,arrayValores,n) { /*PARA MI FRAMEWORK*/
+		var array = new Array();
+		var stringJson = '';
+		for (var i = 0; i < n; i++) {
+			stringJson = claveId +'":"'+valorId+'",';
+			for (var ii = 0; ii < arrayClaves.length; ii++) {
+				stringJson += '"'+arrayClaves[ii] + '":"' + arrayValores[ii][i];
+                if(ii != arrayClaves.length && ii < arrayClaves.length-1) stringJson += '",';
+			};
+            
+            array.push(jQuery.parseJSON('{"'+stringJson+'"}'));
+            stringJson = '';
+		};
+		return array;
 	},
 
 	cargarClientes			: function () {
@@ -373,7 +417,7 @@ app.VistaNuevoContrato = Backbone.View.extend({
 	obtenerAtributoValue	: function (elem) {
 		if ($(elem.currentTarget).val() < 101) {
 			this.establecerPagos( 
-				$(elem.currentTarget).val(), 
+				parseInt($(elem.currentTarget).val()), 
 				$('#totalNeto').text() );
 		} else{
 			$(elem.currentTarget).val(1);
@@ -392,18 +436,24 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		  función*/
 		$('#tbody_pagos').html('');
 
-		var plazo = 1;
-		var aumento = 0;
-		var fecha = '';
-		var fechaNormal = '';
-		var fecha2 = '';
+		var plazo = 1,
+			aumento = 0,
+			fecha = '',
+			fechaNormal = '',
+			fecha2 = '',
+			candado = 'icon-unlock',
+			checked = '';
 
-		if ($('#porEvento').is(':checked') && $('#plazo').val() != "") {
+		if ($('#porEvento').is(':checked')) {
 			plazo = parseInt($('#plazo').val());
 			aumento = plazo;
 			fecha = $('#fechainicio').val();
 			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
-			$('#vencimientoPlanEvento').val( fecha2 );
+			if (fecha2 != 'NaN/NaN/NaN') {
+				$('#vencimientoPlanEvento').val( fecha2 );
+			} else{
+				$('#vencimientoPlanEvento').val( '' );
+			};
 			fecha2 = fecha2.split('/');
 			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
 			$('#fechafinalEvento').val(fecha2);
@@ -412,13 +462,20 @@ app.VistaNuevoContrato = Backbone.View.extend({
 			aumento = plazo;
 			fecha = $('#fechainicio').val();
 			fecha2 = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + ((plazo*n)*24*60*60*1000)));
-			$('#vencimientoPlanIguala').val( fecha2 );
+			if (fecha2 != 'NaN/NaN/NaN') {
+				$('#vencimientoPlanIguala').val( fecha2 );
+			} else{
+				$('#vencimientoPlanIguala').val( '' );
+			};
 			fecha2 = fecha2.split('/');
 			fecha2 = fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0];
 			$('#fechafinalIguala').val(fecha2);
+
+			candado = '';
+			checked = 'disabled';
 		} else {console.log('Sin plan seleccionado');return;};
 		
-		fechaNormal = $('.input_fechaInicioPago').val();
+		fechaNormal = this.formatearFechaUsuario(new Date(new Date(fecha).getTime() + (1*24*60*60*1000)));
 		fecha2 = fechaNormal.split('/');
 
 		var Modelo;
@@ -431,9 +488,9 @@ app.VistaNuevoContrato = Backbone.View.extend({
 					fecha	: fechaNormal,
 					fecha2	: fecha2[2] + "-" + fecha2[1] + "-" + fecha2[0],
 					pago 	: (parseInt(totalNeto.join(''))/n).toFixed(2),
-					candado	: 'icon-unlock',
+					candado	: candado,
 					atrClase	: 'input_renta',
-					checked	: ''
+					checked	: checked
 				}
 			});
 			this.vistaPago[i] = new app.VistaPago({model : new Modelo});

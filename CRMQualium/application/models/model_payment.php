@@ -7,7 +7,17 @@
 
  	public function create($post)
  	{
- 		return $this->db->insert_batch('pagos', $post);
+ 		
+ 		for ($i=0; $i <count($post['pago']) ; $i++) { 
+ 			
+ 			$this->db->insert('pagos', 
+ 				array("idcontrato"=>$post['idcontrato'],
+ 					  "fechapago"=>$post['fechapago'][$i],
+ 					  "pago"=>$post['pago'][$i])
+ 				);
+ 		}
+ 		return true;
+ 		// return $this->db->insert_batch('pagos', $post);
 		// return $this->get( $this->db->insert_id() );
  	}
 

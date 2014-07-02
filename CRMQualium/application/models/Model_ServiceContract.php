@@ -7,7 +7,19 @@
 
  	public function create($post)
  	{
- 		return $this->db->insert_batch('servicios_contrato', $post);
+ 		for ($i=0; $i <count($post['idservicio']) ; $i++) { 
+ 			
+ 			$this->db->insert('servicios_contrato', 
+ 								array('idcontrato'=>$post['idcontrato'],
+ 									  'idservicio'=>$post['idservicio'][$i],
+ 									  'cantidad'  =>$post['cantidad'][$i],
+ 									  'descuento' =>$post['descuento'][$i],
+ 									  'precio'    =>$post['precio'][$i],
+ 									)
+ 				);
+ 		}
+ 		return true;
+ 		// return $this->db->insert_batch('servicios_contrato', $post);
 		// return $this->get( $this->db->insert_id() );
  	}
 

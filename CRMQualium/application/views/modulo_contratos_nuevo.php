@@ -166,7 +166,7 @@
 										  <option value="18">18 meses</option>
 										  <option value="24">24 meses</option>
 										  <option value="48">48 meses</option>
-										  <option selected disabled>Seleccione duración de contrato</option>
+										  <option selected value="">Seleccione duración de contrato</option>
 										</select>	
 									</div>
 									<div class="col-md-4">
@@ -251,8 +251,8 @@
 			</td>
 			<td colspan="3">
 				$
-				<input type="number" id="<%- id %>" min="1" max="" name="pago" value="<%- pago %>" class="<%- atrClase %>" <%- checked %>>
-				<input type="hidden" class="hidden_renta" value="<%- pago %>">
+				<input type="number" id="<%- id %>" min="1" max="" value="<%- pago %>" class="<%- atrClase %>" <%- checked %>>
+				<input type="hidden" class="hidden_renta" name="pago" value="<%- pago %>">
 				<span class="<%- candado %>"></span>
 			</td>
 	</script>
@@ -273,15 +273,21 @@
 <!-- modelos -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>}
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicio.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloContrato.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloServicioContrato.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloPago.js'?>"></script>
 <!-- colecciones -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionClientes.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionRepresentantes.js'?>"></script>
-	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>}
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServicios.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionContratos.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
+	<script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
 	<script type="text/javascript">
 		app.coleccionContratos = new ColeccionContratos();
+		app.coleccionServiciosContrato = new ColeccionServiciosContrato();
+		app.coleccionPagos = new ColeccionPagos();
 	</script>
 <!-- vistas -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
