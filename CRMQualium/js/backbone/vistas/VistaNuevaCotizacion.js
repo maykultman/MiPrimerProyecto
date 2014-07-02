@@ -99,14 +99,14 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
         buscarCliente : function (elemento)
         {
         	/*..Establecemos global el array de clientes por que nos servira en el metodo buscarRepresentante...*/
-        	this.clientes = new Array();  var cont  = 0;
+        	clientes = new Array();  var cont  = 0;
         	/*..Iteramos la coleccionDeClientes y Obtenemos a todos los clientes en un array...*/
             for(i in app.coleccionDeClientes)
             {
-                this.clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;
+                clientes[cont] = app.coleccionDeClientes[i].nombreComercial; cont++;
             };
             /*...EL array obtenido lo usamos para un autocomplete..*/
-            $('#cliente').autocomplete({ source: this.clientes});
+            $('#cliente').autocomplete({ source: clientes});
             var esto = this;
             /*...Ahora obtenemos el nombre del cliente que seleccionamos de la lista y lo pasamos 
                  a otra función para que se encargue de buscar a su representante..*/
@@ -172,14 +172,15 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
               $('#representante')   . val( representante.nombre ); 		
 	      },
 
-        vistaPrevia : function()
+        vistaPrevia : function(elemento)
         {
-          $('#vistaPrevia').attr('true');
-          var f = new Date();
-          var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
+          // var html = document;
+          // console.log(html);
+          // var f = new Date();
+          // var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
-          modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-          modelocotizacion.idempleado = '46';
+          // modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+          // modelocotizacion.idempleado = '46';
 
           elemento.preventDefault();
         },

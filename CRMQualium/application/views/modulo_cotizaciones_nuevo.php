@@ -24,8 +24,8 @@
 	<div id="txt_aliniado" >
 		<div class="panel panel-primary" style="width:23%;">
 		    <table class="table table-hover">
-		    	<div class="panel-heading"><input type="text" id="bserv" style = "width : 240px;" class="valor" val="" placeholder="Buscar Servicios"></div>
-	    		<tbody id="listaServicios">																									
+		    	<div class="panel-heading"><input type="text" id="bserv" style = "width : 100%;" class="valor" val="" placeholder="Buscar Servicios"></div>
+	    		<tbody id="listaServicios" style = "width : 100%;">																									
 				</tbody>
 			</table> <!-- Tabla de Servicios -->
 		</div>	        
@@ -123,6 +123,3 @@
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'				      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicioCotizacion.js'	      ?>"> </script>
 <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaNuevaCotizacion.js'		      ?>"> </script>
-<script type="text/javascript">	var app = app || {};													 	   </script>
-
-

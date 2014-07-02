@@ -1,7 +1,7 @@
 var app = app || {};
 
 var ColeccionCotizaciones = Backbone.Collection.extend({
-	url   : 'http://crmqualium.com/api_cotizaciones',
+	localStorage 	: new Backbone.LocalStorage('tareas-backbone'),
 	model : app.ModeloCotizacion,
 });
 
