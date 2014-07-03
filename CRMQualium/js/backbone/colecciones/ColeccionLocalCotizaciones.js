@@ -5,4 +5,4 @@ var ColeccionLocalCotizaciones = Backbone.Collection.extend({
 	model : app.ModeloLocalCotizacion,
 });
 
-app.coleccionLocalCotizaciones = new ColeccionLocalCotizaciones(app.coleccionLocalCotizaciones);
+app.coleccionLocalCotizaciones = new ColeccionLocalCotizaciones();

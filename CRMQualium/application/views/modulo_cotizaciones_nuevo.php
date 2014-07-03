@@ -42,7 +42,7 @@
 			<tfoot>
 			<tr>
 			    <td><button id="delete_varios"  type="button" class="btn btn-danger">  Eliminar varios 								   </button><td>
-				    <button id="vistaPrevia"    type="button" class="btn btn-primary" onclick="javascript:window.open('formato','','width=600,height=400,left=50,top=50,toolbar=yes');"> <span class="icon-preview"></span> Vista previa </button></td>		
+				    <button id="vistaPrevia"    type="button" class="btn btn-primary"> <span class="icon-preview"></span> Vista previa </button></td>		
 			</tr>
 			</tfoot>
 		</table>

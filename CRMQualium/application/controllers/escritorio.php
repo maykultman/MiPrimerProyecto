@@ -37,7 +37,7 @@ class Escritorio extends REST {
 		$this->load->model('Modelo_permisos', 'permisos');
 		$this->load->model('Modelo_permisoPerfil', 'perper');
 
-		if($this->ruta() == 'catalogo_Servicios')
+		if($this->ruta() == 'catalogo_servicios')
 		{
 			$data['servicios'] = $this->serv->get_s();
 			$this->load->view($this->ruta(), $data);	
@@ -176,10 +176,29 @@ class Escritorio extends REST {
 		}
 	}
 
-	public function formato (){
-				  
-		$this->load->view('formato_cotizacion');
+	public function formato ()
+	{
+		
+		if($this->ruta()==='formatoCotizacion')
+		{
+			$this->load->model('modelo_servicioProyecto');
+			$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+			$data['servicios'] 		  = $this->serv->get_Servicios_Proyecto();  	# Lista de Servicios
+			$data['representantes']	  = $this->representa->get();
+
+			$this->load->view('formato_cotizacion', $data);
 		}
+		if($this->ruta()==='formatoContrato')
+		{
+			$this->load->model('modelo_servicioProyecto');
+			$data['clientes']		  = $this->customer->get_customerProyect();	# Lista de clientes
+			$data['servicios'] 		  = $this->serv->get_Servicios_Proyecto();  	# Lista de Servicios
+			$data['representantes']	  = $this->representa->get();
+
+			$this->load->view('formato_contrato', $data);
+		}
+		
+	}
 
 	public function actividades(){
 		$this->area_Estatica('modulo_actividades.html');

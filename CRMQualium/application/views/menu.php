@@ -24,10 +24,10 @@
 		<a class="anclaMenu" href="modulo_cotizaciones"><i class="icono icon-calculator" style="float:left"></i> <span class="item-text">Cotización</span></a>
 		<div style="clear:both"></div>
 	</li>
-	<li class="item">
+<!-- 	<li class="item">
 		<a class="anclaMenu" href="prueba_ver_proyecto"><i class="icono icon-spreadsheet" style="float:left"></i> <span class="item-text">Facturas</span></a>
 		<div style="clear:both"></div>
-	</li>
+	</li> -->
 	<li class="item">
 		<a class="anclaMenu" href="#"><i class="icono icon-calendar2" style="float:left"></i> <span class="item-text">Actividades</span></a>
 		<div style="clear:both"></div>

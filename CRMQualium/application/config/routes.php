@@ -10,7 +10,8 @@ $route['pruebausuario'] = 'escritorio/prueba';
 # Dashboard
 $route['dashboard'] = 'escritorio/dashboard';
 
-$route['formato'] = 'escritorio/formato';
+$route['formatoCotizacion'] = 'escritorio/formato';
+$route['formatoContrato']   = 'escritorio/formato';
 
 # Rutas para el cliente
 $route['modulo_Clientes'] 			 = 'escritorio/clientes';
@@ -50,7 +51,7 @@ $route['pruebapdf'] = 'escritorio/pdf/$1';
 
 //Rutas para la catalogos...
 $route['modulo_catalogos']    = 'escritorio/catalogos/$1';
-$route['catalogo_Servicios']  = 'escritorio/catalogos/$1';
+$route['catalogo_servicios']  = 'escritorio/catalogos/$1';
 $route['catalogo_perfiles']  = 'escritorio/catalogos/$1';
 $route['catalogo_permisos']  = 'escritorio/catalogos/$1';
 $route['catalogo_empleados']  = 'escritorio/catalogos/$1';

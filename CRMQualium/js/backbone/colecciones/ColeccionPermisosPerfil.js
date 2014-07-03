@@ -1,7 +1,7 @@
 var app = app || {};
 
 var ColeccionPermisosPerfil = Backbone.Collection.extend({
-	url   : 'http://crmqualium.com/api_permisoPerfil',
+	url   : 'http://qualium.mx/sites/crmqualium/api_permisoPerfil',
 	model :  app.ModeloPermisoPerfil
 	
 });

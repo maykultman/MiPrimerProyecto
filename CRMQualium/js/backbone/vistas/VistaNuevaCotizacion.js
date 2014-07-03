@@ -174,27 +174,27 @@ app.VistaNuevaCotizacion = Backbone.View.extend({
 
         vistaPrevia : function(elemento)
         {
-          
+
 
           // var html = document;
           // console.log(html);
-          // var f = new Date();
-          // var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
 
-          // modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
-          // modelocotizacion.idempleado = '46';
+          var f = new Date();
+          var modelocotizacion = pasarAJson($('#registroCotizacion').serializeArray());
+          modelocotizacion.fecha = f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate();
+          modelocotizacion.idempleado = '46';
 
           
-          // app.coleccionLocalCotizaciones.create
-          // (
-          //   modelocotizacion,
-          //   {
-          //     wait: true,
-          //     success: function (data){ console.log('exito')},
-          //     error: function (error) {}
-          //   }
-          // );
-        
+          app.coleccionLocalCotizaciones.create
+          (
+            modelocotizacion,
+            {
+              wait: true,
+              success: function (data){ console.log('exito')},
+              error: function (error) {}
+            }
+          );
+        // javascript:window.open('formato','','width=600,height=400,left=50,top=50,toolbar=yes');
           
           elemento.preventDefault();
         },

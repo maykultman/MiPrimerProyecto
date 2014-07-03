@@ -1,6 +1,6 @@
 var app = app || {};
 
-urlRoot	:'http://crmqualium.com/api_archivos/'
+urlRoot	:'http://qualium.mx/sites/crmqualium/api_archivos/'
 
 app.ModeloArchivo = Backbone.Model.extend({
 	// defaults	: {

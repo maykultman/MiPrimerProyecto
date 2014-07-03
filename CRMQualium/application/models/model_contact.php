@@ -1,5 +1,4 @@
  <?php
-
     #           ..........DATOS DEL MODELO CONTACTO....
     #  'idcliente' => $post['idcliente' ],  'nombre' =>$post['nombre'],
     #  'correo'    => $post['correo'    ],  'cargo'  =>$post['cargo' ],

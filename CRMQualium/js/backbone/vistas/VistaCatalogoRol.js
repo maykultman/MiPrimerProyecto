@@ -66,7 +66,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 	events : {
 		'click     #guardar'    : 'guardar',   //...Guardamos el Nuevo rol....
 		'keypress  #buscar_rol' : 'buscarRol', //...Para hacer una busqueda en la lista roles...
-		'keyup     #buscar_rol' : 'buscarRol', //...Al soltar una tecla llamamos a la función buscarRol...		
+		'keyup     #buscar_rol' : 'buscarRol', //...Al soltar una tecla llamamos a la función buscarRol...
 		'keypress  #rol '		: 'validarCampo',
 		'keypress  #buscar_rol' : 'validarCampo'
 	},
@@ -78,16 +78,16 @@ app.VistaNuevoRol = Backbone.View.extend({
         /*...Una vez lista la tabla le cargamos la lista de roles...*/
         this.cargarRoles();
         this.listenTo( app.coleccionRoles, 'add',   this.cargarRol );
-        this.listenTo( app.coleccionRoles, 'reset', this.cargarRol );  
+        this.listenTo( app.coleccionRoles, 'reset', this.cargarRol );
 
         $('#rol').keydown(function(event) /*...eventos del teclado...*/
-        {   
+        {
     		if(event.keyCode===13) /*...Si la tecla fue enter...*/
     		{
      	    	$('#guardar').trigger('click');
-     	    	event.preventDefault();     	    	
+     	    	event.preventDefault();
     		};
-    	}); 
+    	});
 	},
 
 	render : function ()
@@ -123,7 +123,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 		this.sinCoincidencias();
 
 		this.$scroll_roles.html('');
-		this.cargarRoles();	
+		this.cargarRoles();
 	},
 
 	sinCoincidencias	: function () {
@@ -133,7 +133,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 			});
 		};
 	},
-	
+
 	guardar : function(evento)
 	{
 		var modeloRol = pasarAJson($('#registro_rol').serializeArray());
@@ -141,7 +141,7 @@ app.VistaNuevoRol = Backbone.View.extend({
 		if(modeloRol.nombre)
 		{
 			Backbone.emulateHTTP = true;
-			Backbone.emulateJSON = true;		
+			Backbone.emulateJSON = true;
 			app.coleccionRoles.create
 			(
 				modeloRol,
@@ -159,11 +159,11 @@ app.VistaNuevoRol = Backbone.View.extend({
 
 	cargarRol : function (rol)
 	{
-		var vistaRol = new app.VistaCatalogoRol({model : rol});		
+		var vistaRol = new app.VistaCatalogoRol({model : rol});
 		this.$scroll_roles.append(vistaRol.render().el);
 	},
 	cargarRoles : function ()
-	{	
+	{
 		app.coleccionRoles.each(this.cargarRol, this);
 	}
 });

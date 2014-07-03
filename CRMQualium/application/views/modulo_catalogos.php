@@ -52,7 +52,7 @@
 	                </a>
 	            </li>		  			       			
 	 			<li>
-	            	<a href="catalogo_Servicios">
+	            	<a href="catalogo_servicios">
 	             	   <div class="icono_menu_modulo">
 	                	 <span class="icon-websitebuilder"></span>
 	              	   </div>
