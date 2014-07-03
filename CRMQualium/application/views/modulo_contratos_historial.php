@@ -19,82 +19,63 @@
 	        <th>Operaciones</th>
         </tr>
         <tbody id="tbody_contratos"><!-- PLANTILLAS DE CONTRATOS --></tbody>
-       <!--  <tr>
-	        <td><input  type="checkbox"></td>
-	        <td>Qualium</td>
-	        <td>Rodrigo Viana</td>                     
-	        <td>04/06/2014</td>
-	        <td>04/06/2014</td>                            
-	        <td class="icon-operaciones">
-	            <div class="eliminar_cliente">
-	                <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-	            </div>
-	            <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>               
-	            <span class="icon-preview" data-toggle="modal" data-target="#myModal" title="Ver contrato"></span>
-	            <span class="icon-uniF7D5" data-toggle="modal" data-target="#myModal" title="Descargar"></span>
-	        </td>
-        </tr> -->
-        <!-- <tr>
-			<td><input type="checkbox"></td>
-			<td>Coliseo Yucatán</td>
-			<td>Geyser Ramirez Sanchez</td>                    
-			<td>04/06/2014</td>
-			<td>04/06/2014</td>
-			<td class="icon-operaciones">
-			    <div class="eliminar_cliente">
-			        <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-			    </div>
-			    <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>               
-			    <span class="icon-preview" data-toggle="modal" data-target="#myModal" title="Ver contrato"></span>
-			    <span class="icon-uniF7D5" data-toggle="modal" data-target="#myModal" title="Descargar"></span>
-			</td>              
-        </tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>Star Medical</td>
-            <td>jose alberto canul may</td>
-            <td>04/06/2014</td>
-            <td>04/06/2014</td>           
-            <td class="icon-operaciones">
-                <div class="eliminar_cliente">
-                <span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
-                </div>
-                <span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>               
-                <span class="icon-preview" data-toggle="modal" data-target="#myModal" title="Ver contrato"></span>
-                <span class="icon-uniF7D5" data-toggle="modal" data-target="#myModal" title="Descargar"></span>
-            </td>
-        </tr> -->
     </table>
     <button type="button" class="btn btn-danger">Eliminar varios</button>
     <button type="button" class="btn btn-default">Entregados</button>  
   </div>
 </div>
 
-<script type="text/template">
+<script type="text/javascript">
+	function formatearFechaUsuario (fecha) {
+		var fechaFormateada = '';
+		if ((fecha.getDate()) < 10 )
+		fechaFormateada = '0'+(fecha.getDate());
+		else
+			fechaFormateada = (fecha.getDate());
+		if ((fecha.getMonth() +1) < 10 )
+			fechaFormateada += '/0'+(fecha.getMonth() +1);
+		else
+			fechaFormateada +=  '/'+(fecha.getMonth() +1);
+
+		fechaFormateada +=  '/'+fecha.getFullYear();
+
+		return fechaFormateada;
+	}
+</script>
+
+<script type="text/template" id="plantilla_tr_contrato">
 	<td><input type="checkbox"></td>
 	<td><%- nombreComercial %></td>
 	<td>(sin sesiones)</td>                     
-	<td><%- fechacreacion %></td>
-	<td><%- fechafinal %></td>                            
+	<td><%- formatearFechaUsuario(new Date(fechacreacion)) %></td>
+	<td><%- formatearFechaUsuario(new Date(fechafinal)) %></td>
 	<td class="icon-operaciones">
 		<div class="eliminar_cliente">
-			<span class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
+			<span id="eliminar" class="icon-trash"   data-toggle="tooltip" data-placement="top" title="Eliminar"></span> 
 		</div>
-		<span class="icon-edit2"  data-toggle="tooltip" data-placement="top" title="Editar"></span>               
-		<span class="icon-preview" data-toggle="modal" data-target="#myModal" title="Ver contrato"></span>
-		<span class="icon-uniF7D5" data-toggle="modal" data-target="#myModal" title="Descargar"></span>
+		<span id="tr_btn_editar" class="icon-edit2" data-toggle="tooltip" data-placement="top" title="Editar"></span>               
+		<span id="tr_btn_verInfo" class="icon-preview" data-toggle="modal" data-target="#modal<%- id %>" title="Ver contrato"></span>
+		<span id="" class="icon-uniF7D5" data-toggle="modal" data-target="#modal<%- id %>" title="Descargar"></span>
 	</td>
+</script>
+<script type="text/template" id="plantilla_modal">
+	<div class="modal fade" id="modal<%- id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="panel panel-primary"><%- formatearFechaUsuario(new Date(fechacreacion)) %></div>
+			<div class="panel-heading"><%- nombreComercial %><%- formatearFechaUsuario(new Date(fechafinal)) %></div>
+		</div>
+	</div>
 </script>
 
 <script type="text/javascript" src="<?=base_url().'js/backbone/app.js'?>"></script>
 <script type="text/javascript">
     var app = app || {};
-    app.coleccionDeClientes     = <?php echo json_encode($clientes) ?>;
-    app.coleccionDeServicios    = <?php echo json_encode($servicios) ?>;
-    app.coleccionDeRepresentantes   = <?php echo json_encode($representantes) ?>;
-    app.coleccionDeContratos = <?=json_encode($contratos)?>;
-    app.coleccionDeServiciosContrato = <?=json_encode($serviciosDeContrato)?>;
-    app.coleccionDePagos = <?=json_encode($pagos)?>;
+    app.coleccionDeClientes     		= <?php echo json_encode($clientes) ?>;
+    app.coleccionDeServicios    		= <?php echo json_encode($servicios) ?>;
+    app.coleccionDeRepresentantes   	= <?php echo json_encode($representantes) ?>;
+    app.coleccionDeContratos 			= <?=json_encode($contratos)?>;
+    app.coleccionDeServiciosContrato 	= <?=json_encode($serviciosDeContrato)?>;
+    app.coleccionDePagos 				= <?=json_encode($pagos)?>;
 </script>
 <!-- Utilerias -->
     <script type="text/javascript" src="<?=base_url().'js/funcionescrm.js'?>"></script>
@@ -113,11 +94,10 @@
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionServiciosContrato.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/colecciones/ColeccionPagos.js'?>"></script>
     <script type="text/javascript">
-        app.coleccionContratos = new ColeccionContratos(app.coleccionDeContratos);
-        app.coleccionServiciosContrato = new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
-        app.coleccionPagos = new ColeccionPagos(app.coleccionDePagos);
+        app.coleccionContratos 			= new ColeccionContratos(app.coleccionDeContratos);
+        app.coleccionServiciosContrato 	= new ColeccionServiciosContrato(app.coleccionDeServiciosContrato);
+        app.coleccionPagos 				= new ColeccionPagos(app.coleccionDePagos);
     </script>
 <!-- vistas -->
   <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaServicio.js'?>"></script> <!-- Heredamos la clase VistaServicio -->
-  <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaContrato.js'?>"></script>
   <script type="text/javascript" src="<?=base_url().'js/backbone/vistas/VistaConsultaContrato.js'?>"></script>
