@@ -1,22 +1,34 @@
-<?php
-    $content = '
-    <!doctype html>
+<!doctype html>
 <html lang="es">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Cotizacion</title>		
+		<title>Cotizacion</title>	
+		<link rel="stylesheet" href="../../css/estilo_formato_cotizacion.css" type="text/css">
+		<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap.min.css">	
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-3.1.1-dist/js/bootstrap.min.js">
 	</head>
 	<body>
 		<div id="contenedor_formato" >
-			<div id="cabecera" style="background:blue; width:792px; height:180px; ">
+			<div id="cabecera" style="background: rgb(30,87,153);
+				background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 0%, rgba(32,124,202,1) 100%, rgba(125,185,232,1) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(0%,rgba(41,137,216,1)), color-stop(100%,rgba(32,124,202,1)), color-stop(100%,rgba(125,185,232,1)));
+				background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
+				background: -o-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
+				background: -ms-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%);
+				background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 0%,rgba(32,124,202,1) 100%,rgba(125,185,232,1) 100%)!important;">
 				<div id="contenedor_izq">					
 					<label id="p_titulo"><font color="white">PRESUPUESTO</font></label>
 					<div class="desborde"></div>
 					<label  id="label_nomcotizacion"><font color="white">Pagina web complicada y App</font></label>
 				</div>
 				<div id="contenedor_derecho">
-					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="100px" height="100px" style="margin-top: 10px; margin-left: -30px;">			
-					
+					<img  src="http://crmqualium.com/img/formatoCotizacion/logoQualium.png" alt="" width="150px" height="150px" style="margin-top: 10px; margin-left: -30px;">			
+					<script>
+				    var f = new Date();
+					document.write('<div id="div_fecha">'+' <font color="white">' + f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear() + '</font>' + '</div>');
+					</script>
 					<div id="lbl_cliente">
 					<label><font color="white"><b>Cliente:</b></font></label>
 				    </div>
@@ -79,7 +91,7 @@
 				background: -o-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
 				background: -ms-linear-gradient(top, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); 
 				background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%) !important;">
-				<img src="http://crmqualium.com/img/formatoCotizacion/face.png" alt="" class="img_redesociales">
+				<img  src="../../img/formatoCotizacion/face.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/twitter.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/google.png" alt="" class="img_redesociales">
 				<img src="http://crmqualium.com/img/formatoCotizacion/in.png" alt="" class="img_redesociales">
@@ -171,11 +183,3 @@
 		</div>
 	</body>
 </html>
-
-				';
-
-    require_once('/html2pdf/html2pdf.class.php');
-    $html2pdf = new HTML2PDF('P','A4','fr');
-    $html2pdf->WriteHTML($content);
-    $html2pdf->Output('exemple.pdf');
-?>
