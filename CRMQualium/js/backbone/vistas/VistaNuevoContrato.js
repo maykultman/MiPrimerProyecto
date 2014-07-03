@@ -189,7 +189,9 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	render					: function () {},
-	vistaPrevia 			: function () {},
+	vistaPrevia 			: function () {
+		window.open('formatoContrato.php','ventana1','scrollbars=NO') 
+	},
 	guardar					: function (elem) {
 		var json = pasarAJson($('form').serializeArray()),
 			jsonContrato = {},

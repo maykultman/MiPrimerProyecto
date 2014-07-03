@@ -269,7 +269,7 @@
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-
+    <script type="text/javascript" src="<?=base_url().'js/lib/backbone.localStorage.js'?>"></script>
 <!-- modelos -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>
