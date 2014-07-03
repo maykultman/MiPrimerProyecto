@@ -45,7 +45,7 @@
 							<span id="span_buscar" class="icon-search"></span>			
 							<input type="text" id="input_Representante" class="form-control input_largo" disabled placeholder="Representante">
 							<input type="hidden" id="hidden_idRepresentante" name="idrepresentante">
-							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se formará el contrato">
+							<input type="text" id="fechaFirma" class="form-control datepicker input_largo" placeholder="Fecha en que se firmará el contrato">
 							<input type="hidden" id="hidden_fechafirma" name="fechafirma">
 					    </div>
 						
@@ -201,8 +201,8 @@
 					</tbody>
 			    </table>  
 			   	<div class="desborde"></div>		 
-			   	<button type="submit" id="guardar" class="btn btn-default">Guardar</button>
-			   	<button type="button" class="btn btn-primary"><span class="icon-preview"></span> Vista previa</button>
+			   	<button type="submit" id="btn_guardar" class="btn btn-default">Guardar</button>
+			   	<button type="button" id="btn_vistaPrevia" class="btn btn-primary"><span class="icon-preview"></span>Vista previa</button>
 			   	<button type="button" class="btn btn-default">Cancelar</button>
 		   	</form>
 		</section>   	 
@@ -269,7 +269,7 @@
 <!-- Librerias Backbone -->
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/underscore.js'?>"></script>
     <script type="text/javascript" src="<?=base_url().'js/backbone/lib/backbone.js'?>"></script>
-
+    <script type="text/javascript" src="<?=base_url().'js/lib/backbone.localStorage.js'?>"></script>
 <!-- modelos -->
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloCliente.js'?>"></script>
 	<script type="text/javascript" src="<?=base_url().'js/backbone/modelos/ModeloRepresentante.js'?>"></script>

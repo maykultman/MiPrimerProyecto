@@ -28,6 +28,7 @@
       
       public function destroy (  $id  ) 
       { 
+        
         return $this->db->delete('contratos', array('id' => $id)  ); 
       }
   }    

@@ -159,7 +159,8 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		'change .n_pagos'		: 'obtenerAtributoValue',
 		// 'keyup .input_renta'	: 'modificarPagos',
 		// 'change .input_renta'	: 'modificarPagos',
-		'click	#guardar'		: 'guardar',
+		'click #btn_guardar'		: 'guardar',
+		'click #btn_vistaPrevia'	: 'vistaPrevia',
 		'click #btn_recargarPagos'	: 'recargarPagos'
 	},
 	initialize				: function () {
@@ -188,6 +189,9 @@ app.VistaNuevoContrato = Backbone.View.extend({
 		});
 	},
 	render					: function () {},
+	vistaPrevia 			: function () {
+		window.open('formatoContrato.php','ventana1','scrollbars=NO') 
+	},
 	guardar					: function (elem) {
 		var json = pasarAJson($('form').serializeArray()),
 			jsonContrato = {},
